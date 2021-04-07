@@ -3,6 +3,7 @@
 .idea/workspace.xml
 .idea/dataSources.local.xml
 .idea/httpRequests/
+.idea/.gitignore
 
 # Any files of type:
 # Compiled class file
