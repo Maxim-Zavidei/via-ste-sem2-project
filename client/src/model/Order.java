@@ -6,13 +6,13 @@ public class Order {
     private String id;
     private HashMap<Product, Integer> products = new HashMap<Product, Integer>();
    private DateTime date;
-   private User user;
+   private Customer customer;
 
-    public Order(String id, HashMap<Product, Integer>, User user)
+    public Order(String id, HashMap<Product, Integer> products, Customer customer)
     {
         this.id = id;
         this.products = products;
-        this.user = user;
+        this.customer = customer;
     }
 
     public void addNewProduct(Product product, int quantity){
