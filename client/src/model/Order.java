@@ -13,15 +13,17 @@ public class Order {
         this.id = id;
         this.products = products;
         this.customer = customer;
+        this.date = new DateTime();
     }
 
     public void addNewProduct(Product product, int quantity){
-        if(products.containsKey(product)){
+       /* if(products.containsKey(product)){
             products.put(product, quantity);
         }
         else{
             products.put(product, quantity);
-        }
+        }*/
+        products.put(product, quantity);
     }
     public void editProductQuantity(Product product, int quantity){
         //TODO decide what to return
