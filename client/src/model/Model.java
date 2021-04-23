@@ -1,5 +1,8 @@
 package model;
 
-public interface Model {
+import common.model.Product;
+import java.util.ArrayList;
 
+public interface Model {
+    ArrayList<Product> getCatalogOfProducts();
 }
