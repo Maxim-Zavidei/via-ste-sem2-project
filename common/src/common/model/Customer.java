@@ -1,14 +1,14 @@
-package model;
+package common.model;
 
 public class Customer {
 
     private String name;
     private String surname;
     private int age;
-    private MyDate birthday;
+    private DateTime birthday;
     private String gender;
 
-    public Customer(String name, String surname, int age, MyDate birthday, String gender) {
+    public Customer(String name, String surname, int age, DateTime birthday, String gender) {
         this.name = name;
         this.surname = surname;
         this.age =age;
@@ -32,7 +32,7 @@ public class Customer {
         return age;
     }
 
-    public MyDate getBirthday() {
+    public DateTime getBirthday() {
         return birthday;
     }
 
