@@ -8,14 +8,18 @@ public class Product implements Serializable {
     private int quantity;
     private String name;
     private String description;
-    private int price;
+    private double price;
 
-    public Product(String id, int quantity, String name, String description, int price) {
+    public Product(String id, int quantity, String name, String description, double price) {
         this.id = id;
         this.quantity = quantity;
         this.name = name;
         this.description = description;
         this.price = price;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public int getQuantity() {
@@ -30,7 +34,7 @@ public class Product implements Serializable {
         return description;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 }
