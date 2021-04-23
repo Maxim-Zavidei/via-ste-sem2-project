@@ -1,10 +1,11 @@
-package model;
+package common.model;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class DateTime implements Serializable {
+
     private String time;
     private int year;
     private int month;
@@ -28,6 +29,7 @@ public class DateTime implements Serializable {
     public String getSortableDate() {
         return String.format("%d-%d-%d", year,month,day);
     }
+
     @Override
     public String toString() {
         return getTimestamp();
