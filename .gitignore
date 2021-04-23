@@ -4,6 +4,8 @@
 .idea/dataSources.local.xml
 .idea/httpRequests/
 .idea/.gitignore
+.idea/uiDesigner.xml
+.idea/inspectionProfiles/
 
 # Any files of type:
 # Compiled class file
