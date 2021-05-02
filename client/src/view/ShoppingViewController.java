@@ -11,6 +11,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.util.converter.IntegerStringConverter;
 import viewmodel.ProductViewModel;
 import viewmodel.ShoppingViewModel;
 
@@ -82,6 +83,11 @@ public class ShoppingViewController extends ViewController {
 
         // Small snippet of code to change the color of the error label only when errors are displayed.
         viewModel.getErrorProperty().addListener((obs, oldVal, newVal) -> errorLabel.setStyle("-fx-text-fill:" + (newVal.charAt(0) == '!' ? "#FF0000" : "#000000")));
+
+        // Setting the quantity to be editable directly in view //
+
+        basketTable.setEditable(true);
+        basketQuantityColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
     }
 
     public void reset() {
