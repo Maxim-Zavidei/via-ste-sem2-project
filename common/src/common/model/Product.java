@@ -37,4 +37,13 @@ public class Product implements Serializable {
     public double getPrice() {
         return price;
     }
+
+    @Override
+    public String toString() {
+        return "id='" + id + '\'' +
+                ", quantity=" + quantity +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price;
+    }
 }

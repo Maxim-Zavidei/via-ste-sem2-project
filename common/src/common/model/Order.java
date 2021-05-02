@@ -9,6 +9,7 @@ public class Order {
     private DateTime date;
     private Customer customer;
 
+    /**Constructor*/
     public Order(String id, HashMap<Product, Integer> products, Customer customer) {
         this.id = id;
         this.products = products;
@@ -16,6 +17,8 @@ public class Order {
         this.date = new DateTime();
     }
 
+    /**Edit order
+     * adding new product*/
     public void addNewProduct(Product product, int quantity) {
        /* if(products.containsKey(product)){
             products.put(product, quantity);
@@ -26,12 +29,15 @@ public class Order {
         products.put(product, quantity);
     }
 
+    /**Edit order
+     * editing product's quantity*/
     public void editProductQuantity(Product product, int quantity) {
         //TODO decide what to return
         products.put(product, quantity);
         //return products;
     }
 
+    /**Remove product from order*/
     public void removeProduct(Product product) {
         products.remove(product);
         //return products;
