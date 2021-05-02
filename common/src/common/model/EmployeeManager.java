@@ -3,7 +3,7 @@ package common.model;
 public class EmployeeManager implements EmployeeManagement
 {
   /************************************
-   /* * Initiliaze both classes *
+   /* * Initialize both classes *
    /************************************/
   private ProductsList products;
   private EmployeeList employees;

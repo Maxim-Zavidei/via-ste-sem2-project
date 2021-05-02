@@ -8,6 +8,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.util.converter.IntegerStringConverter;
 import viewmodel.ProductViewModel;
 import viewmodel.ShoppingViewModel;
 
@@ -57,6 +59,8 @@ public class ShoppingViewController extends ViewController {
         basketCostColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getQuantityProperty().getValue() * cellData.getValue().getPriceProperty().getValue()));
         basketTable.setItems(viewModel.getBasketList());
         basketTable.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> viewModel.setSelectedBasketProductProperty(newVal));
+        basketTable.setEditable(true);
+        basketQuantityColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
 
         // Bindings for the rest of the user interface elements.
         errorLabel.textProperty().bind(viewModel.getErrorProperty());
