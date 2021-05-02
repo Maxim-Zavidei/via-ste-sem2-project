@@ -3,13 +3,14 @@ package view;
 import common.utility.converter.IntegerToString;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.MapChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.util.converter.IntegerStringConverter;
 import viewmodel.ProductViewModel;
 import viewmodel.ShoppingViewModel;
 
@@ -49,7 +50,13 @@ public class ShoppingViewController extends ViewController {
         catalogNameColumn.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
         catalogDescriptionColumn.setCellValueFactory(cellData -> cellData.getValue().getDescriptionProperty());
         catalogPriceColumn.setCellValueFactory(cellData -> cellData.getValue().getPriceProperty());
-        catalogTable.setItems(viewModel.getCatalogList());
+        viewModel.getCatalogMap().addListener((MapChangeListener.Change<? extends String, ? extends ProductViewModel> change) -> {
+            if (change.wasRemoved() ^ change.wasAdded()) if (change.wasRemoved()) {
+                catalogTable.getItems().remove(change.getValueRemoved());
+            } else {
+                catalogTable.getItems().add(change.getValueAdded());
+            }
+        });
         catalogTable.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> viewModel.setSelectedCatalogProductProperty(newVal));
 
         // Bindings for the basket table.
@@ -57,10 +64,14 @@ public class ShoppingViewController extends ViewController {
         basketNameColumn.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
         basketPriceColumn.setCellValueFactory(cellData -> cellData.getValue().getPriceProperty());
         basketCostColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getQuantityProperty().getValue() * cellData.getValue().getPriceProperty().getValue()));
-        basketTable.setItems(viewModel.getBasketList());
+        viewModel.getBasketMap().addListener((MapChangeListener.Change<? extends String, ? extends ProductViewModel> change) -> {
+            if (change.wasRemoved() ^ change.wasAdded()) if (change.wasRemoved()) {
+                basketTable.getItems().remove(change.getValueRemoved());
+            } else {
+                basketTable.getItems().add(change.getValueAdded());
+            }
+        });
         basketTable.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> viewModel.setSelectedBasketProductProperty(newVal));
-        basketTable.setEditable(true);
-        basketQuantityColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
 
         // Bindings for the rest of the user interface elements.
         errorLabel.textProperty().bind(viewModel.getErrorProperty());
@@ -87,11 +98,6 @@ public class ShoppingViewController extends ViewController {
     }
 
     @FXML
-    private void changeQuantity() {
-        viewModel.changeQuantity();
-    }
-
-    @FXML
     private void dropFromBasket() {
         if (viewModel.dropFromBasket()) basketTable.getSelectionModel().clearSelection();
     }
@@ -100,6 +106,11 @@ public class ShoppingViewController extends ViewController {
     private void clearBasket() {
         basketTable.getSelectionModel().clearSelection();
         viewModel.clearBasket();
+    }
+
+    @FXML
+    private void onQuantityEdit() {
+        viewModel.onQuantityEdit();
     }
 
     @FXML
