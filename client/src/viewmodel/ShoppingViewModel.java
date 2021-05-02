@@ -3,20 +3,19 @@ package viewmodel;
 import common.model.Product;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
 import model.Model;
-import java.util.stream.Collectors;
 
 public class ShoppingViewModel {
 
     private Model model;
 
     // Instance variables for storing the products of the catalog table.
-    private ObservableList<ProductViewModel> catalogList;
+    private ObservableMap<String, ProductViewModel> catalogMap;
     private ObjectProperty<ProductViewModel> selectedCatalogProductProperty;
 
     // Instance variables for storing the products of the basket table.
-    private ObservableList<ProductViewModel> basketList;
+    private ObservableMap<String, ProductViewModel> basketMap;
     private ObjectProperty<ProductViewModel> selectedBasketProductProperty;
 
     // Instance variables for linking and storing the other elements of the user interface.
@@ -30,10 +29,9 @@ public class ShoppingViewModel {
         this.model = model;
 
         // Initialize the view model instance variables responsible for storing the data of the tables.
-        // Magical code to initialize the catalog table with products in it upon opening the window for the first time.
-        catalogList = FXCollections.observableArrayList(model.getCatalogOfProducts().stream().map(ProductViewModel::new).collect(Collectors.toList()));
+        catalogMap = FXCollections.observableHashMap();
         selectedCatalogProductProperty = new SimpleObjectProperty<>();
-        basketList = FXCollections.observableArrayList();
+        basketMap = FXCollections.observableHashMap();
         selectedBasketProductProperty = new SimpleObjectProperty<>();
 
         // Initialize the instance variables responsible for storing data of the other ui elements.
@@ -45,9 +43,9 @@ public class ShoppingViewModel {
     }
 
     public void reset() {
-        // Refresh the catalog list with all the available product every time the window reopens.
-        catalogList.clear();
-        model.getCatalogOfProducts().forEach((product) -> catalogList.add(new ProductViewModel(product)));
+        // Refresh the catalog table with all the available products every time the window reopens.
+        catalogMap.clear();
+        model.getCatalogOfProducts().forEach((product) -> catalogMap.put(product.getId(), new ProductViewModel(product)));
         // Deselect any selected items if window reopens.
         selectedCatalogProductProperty.set(null);
         selectedBasketProductProperty.set(null);
@@ -55,12 +53,12 @@ public class ShoppingViewModel {
         updatePrices();
     }
 
-    public ObservableList<ProductViewModel> getCatalogList() {
-        return catalogList;
+    public ObservableMap<String, ProductViewModel> getCatalogMap() {
+        return catalogMap;
     }
 
-    public ObservableList<ProductViewModel> getBasketList() {
-        return basketList;
+    public ObservableMap<String, ProductViewModel> getBasketMap() {
+        return basketMap;
     }
 
     public StringProperty getErrorProperty() {
@@ -97,19 +95,19 @@ public class ShoppingViewModel {
             errorProperty.set("!Please select a product from the catalog to be added to the cart.");
             return;
         }
-        basketList.add(new ProductViewModel(new Product(
-            selectedCatalogProductViewModel.getIdProperty().getValue(),
-            1,
-            selectedCatalogProductViewModel.getNameProperty().getValue(),
-            selectedCatalogProductViewModel.getDescriptionProperty().getValue(),
-            selectedCatalogProductViewModel.getPriceProperty().getValue()
-        )));
-        updatePrices();
-    }
-
-    public void changeQuantity() {
-        // TODO: Needs consultation from our ui designer on how it should work.
-        updatePrices();
+        String selectedCatalogProductId = selectedCatalogProductViewModel.getIdProperty().getValue();
+        if (basketMap.get(selectedCatalogProductId) == null) {
+            basketMap.put(selectedCatalogProductId, new ProductViewModel(new Product(
+                    selectedCatalogProductId,
+                    1,
+                    selectedCatalogProductViewModel.getNameProperty().getValue(),
+                    selectedCatalogProductViewModel.getDescriptionProperty().getValue(),
+                    selectedCatalogProductViewModel.getPriceProperty().getValue()
+            )));
+            updatePrices();
+        } else {
+            errorProperty.set("!Product is already in the cart.");
+        }
     }
 
     public boolean dropFromBasket() {
@@ -119,15 +117,19 @@ public class ShoppingViewModel {
             return false;
         }
         selectedBasketProductProperty.set(null);
-        basketList.remove(selectedBasketProductViewModel);
+        basketMap.remove(selectedBasketProductViewModel.getIdProperty().getValue());
         updatePrices();
         return true;
     }
 
     public void clearBasket() {
         selectedBasketProductProperty.set(null);
-        basketList.clear();
+        basketMap.clear();
         updatePrices();
+    }
+
+    public void onQuantityEdit() {
+
     }
 
     public void applyCoupon() {
@@ -153,10 +155,10 @@ public class ShoppingViewModel {
     }
 
     private void updatePrices() {
-        double preliminaryPrice = 0.0;
-        for (ProductViewModel product : basketList) preliminaryPrice += product.getPriceProperty().getValue() * product.getQuantityProperty().getValue();
-        priceProperty.set(String.format("%.2f", preliminaryPrice));
+        final double[] preliminaryPrice = {0.0};
+        basketMap.forEach((key, value) -> preliminaryPrice[0] += value.getPriceProperty().getValue() * value.getQuantityProperty().getValue());
+        priceProperty.set(String.format("%.2f", preliminaryPrice[0]));
         int discount = discountProperty.getValue();
-        finalPriceProperty.set(String.format("%.2f", discount == 0 ? preliminaryPrice : preliminaryPrice * discount / 100));
+        finalPriceProperty.set(String.format("%.2f", discount == 0 ? preliminaryPrice[0] : preliminaryPrice[0] * discount / 100));
     }
 }

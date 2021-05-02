@@ -41,4 +41,8 @@ public class ProductViewModel {
     public ObjectProperty<Double> getPriceProperty() {
         return price;
     }
+
+    public void offsetQuantity(int offset) {
+        quantity.set(Math.max(0, quantity.getValue() + offset));
+    }
 }
