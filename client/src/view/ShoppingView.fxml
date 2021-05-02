@@ -24,7 +24,7 @@
       </TableView>
       <TableView fx:id="basketTable" editable="true" layoutX="14.0" layoutY="447.0" prefHeight="326.0" prefWidth="758.0">
          <columns>
-            <TableColumn fx:id="basketQuantityColumn" onEditCommit="#onQuantityEdit" prefWidth="87.0" resizable="false" style="-fx-alignment: CENTER;" text="Quantity" />
+            <TableColumn fx:id="basketQuantityColumn" prefWidth="87.0" resizable="false" style="-fx-alignment: CENTER;" text="Quantity" />
             <TableColumn fx:id="basketNameColumn" editable="false" minWidth="0.0" prefWidth="369.0" text="Name" />
             <TableColumn fx:id="basketPriceColumn" editable="false" minWidth="0.0" prefWidth="101.0" text="Price for Unit" />
             <TableColumn fx:id="basketCostColumn" editable="false" minWidth="0.0" prefWidth="205.0" resizable="false" text="Total Cost" />
