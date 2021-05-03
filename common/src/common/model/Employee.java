@@ -1,11 +1,12 @@
 package common.model;
 
-public class Employee
+public class Employee extends User
 {
   /**Instance variables*/
-  private String firstName;
-  private String lastName;
-  private String abbreviation;
+ // private String firstName;
+  //private String lastName;
+ // private String abbreviation;
+ // private String email;
   // ? private String username; ? part of super class user //
   // ? private String password; ? part of super class user //
   /***********************/
@@ -17,59 +18,57 @@ public class Employee
   * this(firstName, lastName);
   * } */
   public Employee(){
-    this.firstName = "No";
-    this.lastName = "Name";
-    setAbbreviation();
+    super(createAbbreviation("No", "Name"), "adm", "No", "Name", null, 'o');
+    //setAbbreviation();
   }
   public Employee(String firstName, String lastName){
-   this();
-   setFirstName(firstName);
-   setLastName(lastName);
-   setAbbreviation();
+    super(createAbbreviation(firstName,lastName), "adm", firstName, lastName, null, 'o');
   }
   public Employee(String firstName, String lastName, String abbreviation){
-    this(firstName, lastName);
-    this.abbreviation = abbreviation;
+    super(abbreviation, "adm", firstName, lastName, null, 'o');
   }
   /**************************************************************************************/
 
   /**Getters*/
   public String getFirstName()
   {
-    return firstName;
+    return super.getFirstName();
   }
   public String getLastName()
   {
-    return lastName;
+    return super.getLastName();
   }
   public String getAbbreviation()
   {
-    return abbreviation;
+    return super.getUsername();
   }
+  public String getFullName() { return super.getFullName();}
+  public int getAge() { return super.getAge(); }
+  public DateTime getBirthday() { return super.getBirthday(); }
+  public char getGender() {return super.getGender();}
   /************************************************/
 
   /**Setters*/
-  public void setFirstName(String firstName)
-  {
-    this.firstName = firstName;
-  }
-  public void setLastName(String lastName)
-  {
-    this.lastName = lastName;
-  }
   public void setAbbreviation() {
-    this.abbreviation = firstName.charAt(0)+lastName.charAt(0)+"";
+    super.setUsername(createAbbreviation(getFullName(), getLastName()));
   }
+  public void setPassword(String password) { super.setPassword(password); }
+  public void setFirstName(String firstName) { super.setFirstName(firstName); }
+  public void setLastName(String lastName) { super.setLastName(lastName); }
+  public void setGender(char gender) {super.setGender(gender); }
   /**************************************************************************************/
 
   /**Methods*/
   public String toString(){
-    return "{"+firstName+", " + lastName + "}\n";
+    return super.toString();
   }
   public boolean equals(Object obj){
     if(!(obj instanceof Employee))return false;
     Employee another = (Employee) obj;
     return another.getFirstName().equals(getFirstName()) && another.getLastName().equals(getLastName());
+  }
+  public static String createAbbreviation(String firstName, String lastName){
+    return firstName.charAt(0)+lastName.charAt(0)+"";
   }
   // * ^^ probably changed with super class methods
 }
