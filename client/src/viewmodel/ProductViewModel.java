@@ -42,7 +42,7 @@ public class ProductViewModel {
         return price;
     }
 
-    public void offsetQuantity(int offset) {
-        quantity.set(Math.max(0, quantity.getValue() + offset));
+    public void setQuantity(int quantity) {
+        this.quantity.set(quantity);
     }
 }
