@@ -6,7 +6,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.shape.Polyline?>
 <?import javafx.scene.text.*?>
-<AnchorPane prefHeight="720.0" prefWidth="1093.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.ShoppingViewController">
+<AnchorPane prefHeight="720.0" prefWidth="1093.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.ProductsViewController">
    <children>
       <TableView fx:id="catalogTable" layoutX="14.0" layoutY="84.0" prefHeight="481.0" prefWidth="1064.0">
         <columns>
@@ -16,7 +16,7 @@
             <TableColumn fx:id="catalogPriceColumn" minWidth="0.0" prefWidth="134.39996337890625" resizable="false" style="-fx-alignment: CENTER;" text="Price for Unit" />
         </columns>
       </TableView>
-      <Button layoutX="14.0" layoutY="594.0" mnemonicParsing="false"  prefHeight="91.0" prefWidth="187.0" text="ADD PRODUCT" textAlignment="CENTER">
+      <Button layoutX="14.0" layoutY="594.0" mnemonicParsing="false" onAction="#addProduct" prefHeight="91.0" prefWidth="187.0" text="ADD PRODUCT" textAlignment="CENTER">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
@@ -31,7 +31,7 @@
             </Lighting>
          </effect>
       </Button>
-      <Button layoutX="229.0" layoutY="594.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="187.0" text="DELETE PRODUCT" textAlignment="CENTER">
+      <Button layoutX="229.0" layoutY="594.0" mnemonicParsing="false" onAction="#deleteProduct" prefHeight="91.0" prefWidth="187.0" text="DELETE PRODUCT" textAlignment="CENTER">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
@@ -52,7 +52,7 @@
          </font>
       </Label>
       <Line endX="960.800048828125" layoutX="124.0" layoutY="63.0" startX="-113.59999084472656" />
-      <Button layoutX="750.0" layoutY="594.0" mnemonicParsing="false"  prefHeight="91.0" prefWidth="152.0" text="SAVE" textAlignment="CENTER">
+      <Button layoutX="750.0" layoutY="594.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="152.0" text="SAVE" textAlignment="CENTER">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
@@ -67,7 +67,7 @@
             </Lighting>
          </effect>
       </Button>
-      <Button layoutX="927.0" layoutY="594.0" mnemonicParsing="false"  prefHeight="91.0" prefWidth="152.0" text="CANCEL" textAlignment="CENTER">
+      <Button layoutX="927.0" layoutY="594.0" mnemonicParsing="false" onAction="#cancelManagement" prefHeight="91.0" prefWidth="152.0" text="CANCEL" textAlignment="CENTER">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
