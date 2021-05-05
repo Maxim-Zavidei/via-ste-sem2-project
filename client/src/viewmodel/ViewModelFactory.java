@@ -10,6 +10,7 @@ public class ViewModelFactory {
     private ShoppingViewModel shoppingViewModel;
     private UserViewModel userViewModel;
     private ManageProductsViewModel manageProductsViewModel;
+    private AddProductPopUpViewModel addProductPopUpViewModel;
 
     public ViewModelFactory(Model model) {
         this.model = model;
@@ -17,6 +18,7 @@ public class ViewModelFactory {
         this.shoppingViewModel = new ShoppingViewModel(model);
         this.userViewModel = new UserViewModel(management);
         this.manageProductsViewModel = new ManageProductsViewModel(model);
+        this.addProductPopUpViewModel = new AddProductPopUpViewModel(model);
     }
 
     public UserViewModel getEmployeeViewModel()
@@ -30,5 +32,9 @@ public class ViewModelFactory {
 
     public ManageProductsViewModel getManageProductsViewModel() {
         return manageProductsViewModel;
+    }
+
+    public AddProductPopUpViewModel getAddProductPopUpViewModel() {
+        return addProductPopUpViewModel;
     }
 }

@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
 <?import javafx.scene.control.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.*?>
-<AnchorPane prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.AddProductPopUpView">
+<AnchorPane prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.AddProductPopUpViewController">
    <children>
-      <Label layoutX="223.0" layoutY="21.0" text="Add Product" textFill="#ffb1b1">
+      <Label fx:id="errorLabel" layoutX="223.0" layoutY="21.0" text="Add Product" textFill="#ffb1b1">
          <font>
             <Font name="System Bold" size="26.0" />
          </font>
@@ -17,7 +16,7 @@
             <Font name="System Bold" size="22.0" />
          </font>
       </Label>
-      <TextField layoutX="300.0" layoutY="86.0">
+      <TextField fx:id="quantityField" layoutX="300.0" layoutY="86.0">
          <font>
             <Font size="22.0" />
          </font>
@@ -30,7 +29,7 @@
             <Font name="System Bold" size="22.0" />
          </font>
       </Label>
-      <TextField layoutX="300.0" layoutY="175.0">
+      <TextField fx:id="nameField" layoutX="300.0" layoutY="175.0">
          <font>
             <Font size="22.0" />
          </font>
@@ -43,7 +42,7 @@
             <Font name="System Bold" size="22.0" />
          </font>
       </Label>
-      <TextArea layoutX="299.0" layoutY="248.0" prefHeight="170.0" prefWidth="274.0">
+      <TextArea fx:id="descriptionField" layoutX="299.0" layoutY="248.0" prefHeight="170.0" prefWidth="274.0">
          <font>
             <Font size="18.0" />
          </font>
@@ -56,7 +55,7 @@
             <Font name="System Bold" size="22.0" />
          </font>
       </Label>
-      <TextField layoutX="300.0" layoutY="445.0">
+      <TextField fx:id="priceField" layoutX="300.0" layoutY="445.0">
          <font>
             <Font size="22.0" />
          </font>

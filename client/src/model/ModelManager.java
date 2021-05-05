@@ -3,13 +3,19 @@ package model;
 import common.model.UserManagement;
 import common.model.UserManager;
 import common.model.Product;
+
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 
 public class ModelManager implements Model {
 
     private UserManagement management;
+    private PropertyChangeSupport property;
     public ModelManager(){
         this.management = new UserManager();
+        property = new PropertyChangeSupport(this);
+
     }
     @Override
     public ArrayList<Product> getCatalogOfProducts() {
@@ -25,5 +31,23 @@ public class ModelManager implements Model {
     public UserManagement getManagement()
     {
         return management;
+    }
+
+    public void addProduct(Product product){
+        management.addProduct(product);
+        property.firePropertyChange("Add",null, product);
+        // for testing
+        System.out.println("Fired the product!!!");
+    }
+
+    @Override
+    public void addListener(String propertyName, PropertyChangeListener listener) {
+        property.addPropertyChangeListener(propertyName,listener);
+    }
+
+    @Override
+    public void removeListener(String propertyName, PropertyChangeListener listener) {
+
+        property.removePropertyChangeListener(propertyName, listener);
     }
 }
