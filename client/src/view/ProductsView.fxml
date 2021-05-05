@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Polyline?>
+<?import javafx.scene.text.*?>
+<AnchorPane prefHeight="720.0" prefWidth="1093.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.ShoppingViewController">
+   <children>
+      <TableView fx:id="catalogTable" layoutX="14.0" layoutY="84.0" prefHeight="481.0" prefWidth="1064.0">
+        <columns>
+          <TableColumn fx:id="catalogAvailabilityColumn" prefWidth="97.0" resizable="false" style="-fx-alignment: CENTER;" text="Available Units" />
+          <TableColumn fx:id="catalogNameColumn" minWidth="0.0" prefWidth="200.0" text="Name" />
+            <TableColumn fx:id="catalogDescriptionColumn" minWidth="0.0" prefWidth="631.2000427246094" text="Description" />
+            <TableColumn fx:id="catalogPriceColumn" minWidth="0.0" prefWidth="134.39996337890625" resizable="false" style="-fx-alignment: CENTER;" text="Price for Unit" />
+        </columns>
+      </TableView>
+      <Button layoutX="14.0" layoutY="594.0" mnemonicParsing="false"  prefHeight="91.0" prefWidth="187.0" text="ADD PRODUCT" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+         <effect>
+            <Lighting diffuseConstant="1.66" specularConstant="0.32" specularExponent="24.86" surfaceScale="1.96">
+               <bumpInput>
+                  <Shadow blurType="GAUSSIAN" color="#24ff03" height="255.0" radius="118.66" width="221.64" />
+               </bumpInput>
+               <light>
+                  <Light.Distant color="#ffb1b1" />
+               </light>
+            </Lighting>
+         </effect>
+      </Button>
+      <Button layoutX="229.0" layoutY="594.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="187.0" text="DELETE PRODUCT" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+         <effect>
+            <Lighting diffuseConstant="1.66" specularConstant="0.32" specularExponent="24.86" surfaceScale="1.96">
+               <bumpInput>
+                  <Shadow blurType="GAUSSIAN" color="#24ff03" height="255.0" radius="118.66" width="221.64" />
+               </bumpInput>
+               <light>
+                  <Light.Distant color="#ffb1b1" />
+               </light>
+            </Lighting>
+         </effect>
+      </Button>
+      <Label fx:id="errorLabel" alignment="CENTER" layoutX="48.0" layoutY="14.0" prefHeight="38.0" prefWidth="999.0" text="THE PRODUCTS!" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="26.0" />
+         </font>
+      </Label>
+      <Line endX="960.800048828125" layoutX="124.0" layoutY="63.0" startX="-113.59999084472656" />
+      <Button layoutX="750.0" layoutY="594.0" mnemonicParsing="false"  prefHeight="91.0" prefWidth="152.0" text="SAVE" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+         <effect>
+            <Lighting diffuseConstant="1.66" specularConstant="0.32" specularExponent="24.86" surfaceScale="1.96">
+               <bumpInput>
+                  <Shadow blurType="GAUSSIAN" color="#24ff03" height="255.0" radius="118.66" width="221.64" />
+               </bumpInput>
+               <light>
+                  <Light.Distant color="#ffb1b1" />
+               </light>
+            </Lighting>
+         </effect>
+      </Button>
+      <Button layoutX="927.0" layoutY="594.0" mnemonicParsing="false"  prefHeight="91.0" prefWidth="152.0" text="CANCEL" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+         <effect>
+            <Lighting diffuseConstant="1.66" specularConstant="0.32" specularExponent="24.86" surfaceScale="1.96">
+               <bumpInput>
+                  <Shadow blurType="GAUSSIAN" color="#24ff03" height="255.0" radius="118.66" width="221.64" />
+               </bumpInput>
+               <light>
+                  <Light.Distant color="#ffb1b1" />
+               </light>
+            </Lighting>
+         </effect>
+      </Button>
+      <Polyline fill="#cda0a0" layoutX="692.0" layoutY="611.0" opacity="0.39" points="384.800048828125, 73.4000244140625, 58.0, 74.20001220703125, 387.0, -17.0, 58.0, -17.0" strokeLineCap="BUTT" strokeType="INSIDE" strokeWidth="0.0" />
+   </children>
+</AnchorPane>
