@@ -18,14 +18,21 @@ public class Employee extends User
   * this(firstName, lastName);
   * } */
   public Employee(){
-    super(createAbbreviation("No", "Name"), "adm", "No", "Name", null, 'o');
+    super(createUsername("No", "Name"), "adm", "", "No", "Name", null, 'o');
     //setAbbreviation();
   }
   public Employee(String firstName, String lastName){
-    super(createAbbreviation(firstName,lastName), "adm", firstName, lastName, null, 'o');
+    super(createUsername(firstName,lastName), "adm","", firstName, lastName, null, 'o');
   }
-  public Employee(String firstName, String lastName, String abbreviation){
-    super(abbreviation, "adm", firstName, lastName, null, 'o');
+  public Employee(String firstName, String lastName, char gender){
+    super(createUsername(firstName,lastName), "adm","", firstName, lastName, null, gender);
+  }
+  public Employee(String firstName, String lastName, String abbreviation, char gender){
+    super(abbreviation, "adm","", firstName, lastName, null, gender);
+  }
+  public Employee(String username, String password,String email)
+  {
+    super(username, password, email);
   }
   /**************************************************************************************/
 
@@ -38,7 +45,7 @@ public class Employee extends User
   {
     return super.getLastName();
   }
-  public String getAbbreviation()
+  public String getUsername()
   {
     return super.getUsername();
   }
@@ -49,13 +56,14 @@ public class Employee extends User
   /************************************************/
 
   /**Setters*/
-  public void setAbbreviation() {
-    super.setUsername(createAbbreviation(getFullName(), getLastName()));
-  }
   public void setPassword(String password) { super.setPassword(password); }
   public void setFirstName(String firstName) { super.setFirstName(firstName); }
   public void setLastName(String lastName) { super.setLastName(lastName); }
   public void setGender(char gender) {super.setGender(gender); }
+
+  @Override String getStatus(){
+    return "Employee";
+  }
   /**************************************************************************************/
 
   /**Methods*/
@@ -67,7 +75,7 @@ public class Employee extends User
     Employee another = (Employee) obj;
     return another.getFirstName().equals(getFirstName()) && another.getLastName().equals(getLastName());
   }
-  public static String createAbbreviation(String firstName, String lastName){
+  public static String createUsername(String firstName, String lastName){
     return firstName.charAt(0)+lastName.charAt(0)+"";
   }
   // * ^^ probably changed with super class methods

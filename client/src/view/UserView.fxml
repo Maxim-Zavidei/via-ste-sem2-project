@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
-<AnchorPane prefHeight="720.0" prefWidth="1093.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.ShoppingViewController">
+<AnchorPane prefHeight="720.0" prefWidth="1093.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.UserViewController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#cda0a0" height="135.0" layoutX="881.0" layoutY="572.0" opacity="0.39" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="200.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#cda0a0" height="135.0" layoutX="307.0" layoutY="572.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="20.0" />
@@ -13,15 +13,15 @@
       <Polyline fill="#cda0a0" layoutX="98.0" layoutY="611.0" opacity="0.39" points="-84.00001525878906, 101.79998779296875, -84.00001525878906, -45.4000244140625, 523.2000122070312, 101.79998779296875, 523.2000122070312, -45.4000244140625" strokeLineCap="BUTT" strokeType="INSIDE" strokeWidth="0.0" />
       <TableView fx:id="usersTable" layoutX="14.0" layoutY="84.0" prefHeight="481.0" prefWidth="1064.0">
         <columns>
-          <TableColumn fx:id="catalogAvailabilityColumn" prefWidth="115.20000648498535" resizable="false" style="-fx-alignment: CENTER;" text="First Name" />
-          <TableColumn fx:id="catalogNameColumn" minWidth="0.0" prefWidth="142.39999389648438" text="Last Name" />
-            <TableColumn fx:id="catalogDescriptionColumn" minWidth="0.0" prefWidth="365.6000061035156" text="Email" />
+          <TableColumn fx:id="firstNameColumn" prefWidth="115.20000648498535" resizable="false" style="-fx-alignment: CENTER;" text="First Name" />
+          <TableColumn fx:id="lastNameColumn" minWidth="0.0" prefWidth="142.39999389648438" text="Last Name" />
+            <TableColumn fx:id="emailColumn" minWidth="0.0" prefWidth="365.6000061035156" text="Email" />
             <TableColumn fx:id="birthdayColumn" minWidth="0.0" prefWidth="187.99993896484375" resizable="false" style="-fx-alignment: CENTER;" text="Date of birth" />
             <TableColumn fx:id="genderColumn" minWidth="0.0" prefWidth="108.800048828125" resizable="false" style="-fx-alignment: CENTER;" text="Gender" />
             <TableColumn fx:id="statusColumn" minWidth="0.0" prefWidth="140.7999267578125" resizable="false" style="-fx-alignment: CENTER;" text="Status" />
         </columns>
       </TableView>
-      <Button fx:id="makeEmployeeButton" layoutX="14.0" layoutY="594.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="187.0" text="MAKE EMPLOYEE" textAlignment="CENTER">
+      <Button onAction="#makeEmployeeButton" layoutX="14.0" layoutY="594.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="187.0" text="MAKE EMPLOYEE" textAlignment="CENTER">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
@@ -36,7 +36,7 @@
             </Lighting>
          </effect>
       </Button>
-      <Button fx:id="deleteUserButton" layoutX="227.0" layoutY="594.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="187.0" text="DELETE USER" textAlignment="CENTER">
+      <Button onAction="#deleteUserButton" layoutX="227.0" layoutY="594.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="187.0" text="DELETE USER" textAlignment="CENTER">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
@@ -75,7 +75,7 @@
             </Lighting>
          </effect>
       </Button>
-      <Button fx:id="fireEmployeeButton" layoutX="434.0" layoutY="594.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="187.0" text="FIRE EMPLOYEE" textAlignment="CENTER">
+      <Button onAction="#fireEmployeeButton" layoutX="434.0" layoutY="594.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="187.0" text="FIRE EMPLOYEE" textAlignment="CENTER">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>

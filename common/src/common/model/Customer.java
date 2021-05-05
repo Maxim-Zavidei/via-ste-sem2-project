@@ -9,17 +9,27 @@ public class Customer extends User{
    // private String gender;
 
     /**Constructor calling the super constructor*/
-    public Customer(String username, String password, String name, String surname, DateTime birthday, char gender) {
-        super(username, password, name, surname, birthday, gender );
+    public Customer(String username, String password, String email, String name, String surname, DateTime birthday, char gender) {
+        super(username, password,email, name, surname, birthday, gender );
+    }
+    public Customer(String firstName, String lastName, String email){
+        super(firstName, lastName, email);
     }
 
     /**Getters calling the super getters*/
+    public String getUsername(){return super.getUsername();}
+    public String getPassword(){return super.getPassword();}
     public String getFirstName() { return super.getFirstName(); }
     public String getLastName() { return super.getLastName();}
     public String getFullName() { return super.getFullName();}
     public int getAge() { return super.getAge(); }
     public DateTime getBirthday() { return super.getBirthday(); }
     public char getGender() {return super.getGender();}
+
+    @Override String getStatus()
+    {
+        return "Customer";
+    }
 
     /**Setters calling the super setters*/
     public void setUsername(String username) { super.setUsername(username); }
@@ -39,4 +49,5 @@ public class Customer extends User{
     public String toString() {
         return super.toString();
     }
+
 }
