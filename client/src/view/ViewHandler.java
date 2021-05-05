@@ -19,7 +19,8 @@ public class ViewHandler extends ViewCreator {
 
     public void start(Stage primaryStage) throws IOException {
         this.primaryStage = primaryStage;
-        openView(View.SHOPPING);
+        // I tested shit here, if it is still around it means I forgot to change it back to SHOPPING view *_*
+        openView(View.MANAGEPRODUCTS);
     }
 
     public void openView(View view) throws IOException {
