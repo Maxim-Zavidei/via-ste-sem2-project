@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+<AnchorPane prefHeight="720.0" prefWidth="1093.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.ShoppingViewController">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#cda0a0" height="135.0" layoutX="881.0" layoutY="572.0" opacity="0.39" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="200.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#cda0a0" height="135.0" layoutX="307.0" layoutY="572.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="20.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#cda0a0" height="135.0" layoutX="250.0" layoutY="572.0" opacity="0.39" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="135.0" />
+      <Polyline fill="#cda0a0" layoutX="98.0" layoutY="611.0" opacity="0.39" points="-84.00001525878906, 101.79998779296875, -84.00001525878906, -45.4000244140625, 523.2000122070312, 101.79998779296875, 523.2000122070312, -45.4000244140625" strokeLineCap="BUTT" strokeType="INSIDE" strokeWidth="0.0" />
+      <TableView fx:id="usersTable" layoutX="14.0" layoutY="84.0" prefHeight="481.0" prefWidth="1064.0">
+        <columns>
+          <TableColumn fx:id="catalogAvailabilityColumn" prefWidth="115.20000648498535" resizable="false" style="-fx-alignment: CENTER;" text="First Name" />
+          <TableColumn fx:id="catalogNameColumn" minWidth="0.0" prefWidth="142.39999389648438" text="Last Name" />
+            <TableColumn fx:id="catalogDescriptionColumn" minWidth="0.0" prefWidth="365.6000061035156" text="Email" />
+            <TableColumn fx:id="birthdayColumn" minWidth="0.0" prefWidth="187.99993896484375" resizable="false" style="-fx-alignment: CENTER;" text="Date of birth" />
+            <TableColumn fx:id="genderColumn" minWidth="0.0" prefWidth="108.800048828125" resizable="false" style="-fx-alignment: CENTER;" text="Gender" />
+            <TableColumn fx:id="statusColumn" minWidth="0.0" prefWidth="140.7999267578125" resizable="false" style="-fx-alignment: CENTER;" text="Status" />
+        </columns>
+      </TableView>
+      <Button fx:id="makeEmployeeButton" layoutX="14.0" layoutY="594.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="187.0" text="MAKE EMPLOYEE" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+         <effect>
+            <Lighting diffuseConstant="1.66" specularConstant="0.32" specularExponent="24.86" surfaceScale="1.96">
+               <bumpInput>
+                  <Shadow blurType="GAUSSIAN" color="#24ff03" height="255.0" radius="118.66" width="221.64" />
+               </bumpInput>
+               <light>
+                  <Light.Distant color="#ffb1b1" />
+               </light>
+            </Lighting>
+         </effect>
+      </Button>
+      <Button fx:id="deleteUserButton" layoutX="227.0" layoutY="594.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="187.0" text="DELETE USER" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+         <effect>
+            <Lighting diffuseConstant="1.66" specularConstant="0.32" specularExponent="24.86" surfaceScale="1.96">
+               <bumpInput>
+                  <Shadow blurType="GAUSSIAN" color="#24ff03" height="255.0" radius="118.66" width="221.64" />
+               </bumpInput>
+               <light>
+                  <Light.Distant color="#ffb1b1" />
+               </light>
+            </Lighting>
+         </effect>
+      </Button>
+      <Label fx:id="errorLabel" alignment="CENTER" layoutX="48.0" layoutY="14.0" prefHeight="38.0" prefWidth="999.0" text="USERS" textAlignment="CENTER" textFill="#cda0a0">
+         <font>
+            <Font name="System Bold" size="26.0" />
+         </font>
+         <effect>
+            <DropShadow color="#cda0a0" height="35.3" radius="23.7025" width="61.51" />
+         </effect>
+      </Label>
+      <Line endX="960.800048828125" layoutX="124.0" layoutY="63.0" startX="-113.59999084472656" />
+      <Button layoutX="907.0" layoutY="593.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="152.0" text="CANCEL" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+         <effect>
+            <Lighting diffuseConstant="1.66" specularConstant="0.32" specularExponent="24.86" surfaceScale="1.96">
+               <bumpInput>
+                  <Shadow blurType="GAUSSIAN" color="#24ff03" height="255.0" radius="118.66" width="221.64" />
+               </bumpInput>
+               <light>
+                  <Light.Distant color="#ffb1b1" />
+               </light>
+            </Lighting>
+         </effect>
+      </Button>
+      <Button fx:id="fireEmployeeButton" layoutX="434.0" layoutY="594.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="187.0" text="FIRE EMPLOYEE" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+         <effect>
+            <Lighting diffuseConstant="1.66" specularConstant="0.32" specularExponent="24.86" surfaceScale="1.96">
+               <bumpInput>
+                  <Shadow blurType="GAUSSIAN" color="#24ff03" height="255.0" radius="118.66" width="221.64" />
+               </bumpInput>
+               <light>
+                  <Light.Distant color="#ffb1b1" />
+               </light>
+            </Lighting>
+         </effect>
+      </Button>
+   </children>
+</AnchorPane>
