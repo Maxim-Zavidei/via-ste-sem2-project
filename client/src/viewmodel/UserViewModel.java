@@ -20,14 +20,13 @@ public class UserViewModel
   /**Instance variable for other ui elements*/
   private StringProperty errorProperty;
 
-
   public UserViewModel(UserManagement model){
-    /**Initialize variables for list, selected item, management model*/
+    // Initialize variables for list, selected item, management model
     this.model = model;
     this.list = FXCollections.observableArrayList();
     this.selectedEmployee = new SimpleObjectProperty<>();
 
-    /**Initialize variable for other ui elements*/
+    // Initialize variable for other ui elements
     this.errorProperty = new SimpleStringProperty();
   }
 
@@ -35,17 +34,21 @@ public class UserViewModel
   public void setSelectedEmployee(UserView selectedEmployee){
     this.selectedEmployee.set(selectedEmployee);
   }
+
   public ObservableList<UserView> getList() {
     return list;
   }
+
   public void reset(){
     errorProperty.set("");
     setSelectedEmployee(null);
     updateUsers();
   }
+
   public StringProperty getErrorProperty() {
     return errorProperty;
   }
+
   public void makeEmployee(UserView selectedItem)
   {
     for (int i = 0; i < list.size(); i++)
@@ -80,7 +83,7 @@ public class UserViewModel
           && list.get(i).getLastName().get().equals(selectedItem.getLastName().get())
           && list.get(i).getBirthDate().get().equals(selectedItem.getBirthDate().get()))
       {
-        Customer newCustomer = new Customer(selectedItem.getFirstName().get(), selectedItem.getLastName().get(), selectedItem.getEmail().get());
+        Customer newCustomer = new Customer(selectedItem.getEmail().get(), "", selectedItem.getFirstName().get(), selectedItem.getLastName().get(), null, 'u');
         list.remove(selectedItem);
         list.add(new UserView(newCustomer));
       }
