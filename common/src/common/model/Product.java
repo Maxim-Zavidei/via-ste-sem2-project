@@ -11,6 +11,12 @@ public class Product implements Serializable {
     private double price;
 
     public Product(String id, int quantity, String name, String description, double price) {
+        if (id.equals("")) throw new IllegalArgumentException("Id cannot be empty");
+        if (name.equals("")) throw new IllegalArgumentException("Name cannot be empty");
+        if (description.equals("")) throw new IllegalArgumentException("Description cannot be empty");
+        if (price < 1) throw new IllegalArgumentException("Price cannot be less than 1");
+        if (quantity < 1) throw new IllegalArgumentException("Quantity cannot be less than 1");
+
         this.id = id;
         this.quantity = quantity;
         this.name = name;
