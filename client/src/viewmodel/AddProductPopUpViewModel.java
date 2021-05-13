@@ -58,13 +58,42 @@ public class AddProductPopUpViewModel {
         quantity.set(null);
         name.set("");
         description.set("");
+        errorProperty.set("Add Product");
         price.set(null);
     }
     public void addProduct(){
+        // need to do an automated ID generator or something!
         Product product = new Product("123", getQuantityProperty().get(), getNameProperty().get(),getDescriptionProperty().get(),getPriceProperty().get());
         model.addProduct(product);
 
     }
+
+    public Integer checkerInteger(String input){
+        try {
+            int toReturn = Integer.parseInt(input);
+            if (toReturn < 1) throw new NumberFormatException();
+            return toReturn;
+        } catch (NumberFormatException e) {
+            errorProperty.set("!Input a valid positive number.");
+        } catch (Exception e) {
+            errorProperty.set(e.getMessage());
+        }
+        return 1;
+    }
+
+    public Double checkerDouble(String input){
+        try {
+            double toReturn = Double.parseDouble(input);
+            if (toReturn < 1) throw new NumberFormatException();
+            return toReturn;
+        } catch (NumberFormatException e) {
+            errorProperty.set("!Input a valid positive number.");
+        } catch (Exception e) {
+            errorProperty.set(e.getMessage());
+        }
+        return 1.00;
+    }
+
 
 
 

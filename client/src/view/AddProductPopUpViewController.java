@@ -38,7 +38,7 @@ public class AddProductPopUpViewController extends ViewController {
 
             @Override
             public Integer fromString(String s) {
-                return Integer.parseInt(s);
+                return viewModel.checkerInteger(s);
             }
         });
         nameField.textProperty().bindBidirectional(viewModel.getNameProperty());
@@ -51,7 +51,7 @@ public class AddProductPopUpViewController extends ViewController {
 
             @Override
             public Double fromString(String s) {
-                return Double.parseDouble(s);
+                return viewModel.checkerDouble(s);
             }
         });
 

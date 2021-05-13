@@ -1,14 +1,12 @@
 package view;
 
 import javafx.collections.MapChangeListener;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import viewmodel.ManageProductsViewModel;
 import viewmodel.ProductViewModel;
-import viewmodel.ShoppingViewModel;
 
 import java.io.IOException;
 
@@ -58,6 +56,9 @@ public class ProductsViewController extends ViewController {
         catalogTable.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> viewModel.setSelectedCatalogProductProperty(newVal));
 
         errorLabel.textProperty().bind(viewModel.getErrorProperty());
+
+        // Small snippet of code to change the color of the error label only when errors are displayed.
+        viewModel.getErrorProperty().addListener((obs, oldVal, newVal) -> errorLabel.setStyle("-fx-text-fill:" + (newVal.charAt(0) == '!' ? "#FF0000" : "#000000")));
 
     }
 
