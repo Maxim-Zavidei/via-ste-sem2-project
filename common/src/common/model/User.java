@@ -98,9 +98,7 @@ public abstract class User {
         return String.format("%s - %s %s - %c", firstName, lastName, birthday.toString(), gender);
     }
 
-    public String userType(User user) {
-        if (user instanceof Employee) return "Employee";
-        else if (user instanceof Customer) return "Customer";
-        return "No type?";
+    public String userType() {
+        return this instanceof Employee ? "Employee" : "Customer";
     }
 }
