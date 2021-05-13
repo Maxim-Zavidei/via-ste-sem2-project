@@ -6,16 +6,16 @@ public class UserManager implements UserManagement
    /* * Initialize both classes *
    /************************************/
   private ProductsList products;
-  private UsersList users;
+  private UserList users;
 
   /************************************
    /* * Manager Constructor *
    /************************************/
   public UserManager(){
     products = new ProductsList();
-    users = new UsersList();
+    users = new UserList();
   }
-  public UserManager(ProductsList products, UsersList users){
+  public UserManager(ProductsList products, UserList users){
     this.products = products;
     this.users = users;
   }
@@ -77,7 +77,7 @@ public class UserManager implements UserManagement
    /* * Getters for lists *
    /************************************/
 
-  public UsersList getUsers()
+  public UserList getUsers()
   {
     return users;
   }

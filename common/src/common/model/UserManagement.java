@@ -24,6 +24,6 @@ public interface UserManagement
    /* * Getters for lists *
    /************************************/
 
-  UsersList getUsers();
+  UserList getUsers();
   ProductsList getProducts();
 }
