@@ -89,11 +89,14 @@ public class UserViewModel
       }
     }
   }
+
   public void updateUsers(){
     list.clear();
-    for (int i = 0; i < model.getUsers().getSize(); i++)
-    {
-      list.add(new UserView(model.getUsers().getUser(i)));
-    }
+    // TO DO: Later
+//    for (User user : model.)
+//    for (int i = 0; i < model.getUsers().getSize(); i++)
+//    {
+//      list.add(new UserView(model.getUsers().getUser(i)));
+//    }
   }
 }
