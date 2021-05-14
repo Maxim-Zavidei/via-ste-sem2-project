@@ -137,6 +137,6 @@
             <Font name="System Bold" size="22.0" />
          </font>
       </RadioButton>
-      <Label fx:id="errorLabel" layoutX="28.0" layoutY="58.0" prefHeight="17.0" prefWidth="611.0" textFill="RED" />
+      <Label fx:id="errorLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="28.0" layoutY="58.0" prefHeight="17.0" prefWidth="611.0" textFill="RED" />
    </children>
 </AnchorPane>

@@ -7,6 +7,7 @@ import model.Model;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Client implements Model, RemoteClientInterface {
@@ -46,6 +47,11 @@ public class Client implements Model, RemoteClientInterface {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    @Override
+    public void register(String email, String password, String firstName, String lastName, LocalDate birthday, char gender) throws Exception {
+        server.register(email, password, firstName, lastName, birthday, gender);
     }
 
     @Override

@@ -7,6 +7,7 @@ import model.Model;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public abstract class GenericAccessType implements RemoteServerInterface {
@@ -63,6 +64,11 @@ public abstract class GenericAccessType implements RemoteServerInterface {
         } catch (Exception e) {
             throw new IllegalStateException("Could not deauthenticate.");
         }
+    }
+
+    @Override
+    public void register(String email, String password, String firstName, String lastName, LocalDate birthday, char gender) throws RemoteException {
+        throw new IllegalStateException("Can't perform register request, already authenticated.");
     }
 
     @Override

@@ -10,6 +10,7 @@ import model.Model;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class AuthenticationProxy implements RemoteServerInterface {
@@ -50,6 +51,12 @@ public class AuthenticationProxy implements RemoteServerInterface {
     @Override
     public void deauthenticate(RemoteClientInterface client) {
         if (authenticatedInstances.getValue(client) != null) authenticatedInstances.remove(client);
+    }
+
+    @Override
+    public void register(String email, String password, String firstName, String lastName, LocalDate birthday, char gender) throws RemoteException {
+        model.register(email, password, firstName, lastName, birthday, gender);
+        cache = model.getAllRegisteredUsers();
     }
 
     @Override

@@ -2,6 +2,7 @@ package model;
 
 import common.model.Product;
 import mediator.Client;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class ModelManager implements Model {
@@ -29,6 +30,11 @@ public class ModelManager implements Model {
     @Override
     public boolean deauthenticate() {
         return client.deauthenticate();
+    }
+
+    @Override
+    public void register(String email, String password, String firstName, String lastName, LocalDate birthday, char gender) throws Exception {
+        client.register(email, password, firstName, lastName, birthday, gender);
     }
 
     @Override
