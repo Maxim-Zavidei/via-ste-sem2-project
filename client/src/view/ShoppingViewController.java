@@ -140,7 +140,16 @@ public class ShoppingViewController extends ViewController {
     }
 
     @FXML
-    private void cancelOrder() {
-        viewModel.cancelOrder();
+    private void logout() {
+        clearBasket();
+        if (!viewModel.deauthenticate()) {
+            errorLabel.textProperty().set("Could not deauthenticate the user.");
+            return;
+        }
+        try {
+            viewHandler.openView(View.AUTHENTICATION);
+        } catch (Exception e) {
+            errorLabel.textProperty().set("Could not logout at this time. Try later.");
+        }
     }
 }

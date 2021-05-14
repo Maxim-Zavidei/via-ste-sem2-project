@@ -45,7 +45,11 @@ public class ShoppingViewModel {
     public void reset() {
         // Refresh the catalog table with all the available products every time the window reopens.
         catalogMap.clear();
-        model.getCatalogOfProducts().forEach((product) -> catalogMap.put(product.getId(), new ProductViewModel(product)));
+        try {
+            model.getCatalogOfProducts().forEach((product) -> catalogMap.put(product.getId(), new ProductViewModel(product)));
+        } catch (Exception e) {
+            errorProperty.set(e.getMessage());
+        }
         // Deselect any selected items if window reopens.
         selectedCatalogProductProperty.set(null);
         selectedBasketProductProperty.set(null);
@@ -145,9 +149,8 @@ public class ShoppingViewModel {
         clearBasket();
     }
 
-    public void cancelOrder() {
-        // TODO: Needs consultation from our ui designer on how it should work.
-        clearBasket();
+    public boolean deauthenticate() {
+        return model.deauthenticate();
     }
 
     public Integer updateQuantity(String newQuantity) {
