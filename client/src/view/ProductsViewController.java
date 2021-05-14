@@ -72,10 +72,9 @@ public class ProductsViewController extends ViewController {
     public void addProduct() {
         try {
             viewHandler.openView(View.POPUPPRODUCTS);
-        } catch (IOException e) {
+        } catch (Exception e) {
             errorLabel.textProperty().setValue(e.getMessage());
         }
-
     }
 
     @FXML
