@@ -57,7 +57,7 @@ public class UserViewModel
       && list.get(i).getLastName().get().equals(selectedItem.getLastName().get())
       && list.get(i).getBirthDate().get().equals(selectedItem.getBirthDate().get()))
       {
-        Employee newEmployee = new Employee(selectedItem.getFirstName().get(), selectedItem.getLastName().get(), selectedItem.getEmail().get());
+        Employee newEmployee = new Employee(selectedItem.getEmail().get(), "", selectedItem.getFirstName().get(), selectedItem.getLastName().get(), null, 'u');
         list.remove(selectedItem);
         list.add(new UserView(newEmployee));
       }
