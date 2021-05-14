@@ -8,6 +8,7 @@ import javafx.beans.property.StringProperty;
 import model.Model;
 
 public class AddProductPopUpViewModel {
+
     private Model model;
 
     private StringProperty id;
@@ -15,7 +16,6 @@ public class AddProductPopUpViewModel {
     private StringProperty name;
     private StringProperty description;
     private ObjectProperty<Double> price;
-
     private StringProperty errorProperty;
 
     public AddProductPopUpViewModel(Model model) {
@@ -26,13 +26,8 @@ public class AddProductPopUpViewModel {
         name = new SimpleStringProperty();
         description = new SimpleStringProperty();
         price = new SimpleObjectProperty<>();
-
         errorProperty = new SimpleStringProperty("Add Product");
     }
-
-//    public StringProperty getIdProperty() {
-//        return id;
-//    }
 
     public ObjectProperty<Integer> getQuantityProperty() {
         return quantity;
@@ -54,27 +49,27 @@ public class AddProductPopUpViewModel {
         return errorProperty;
     }
 
-    public void reset(){
+    public void reset() {
         quantity.set(null);
         name.set("");
         description.set("");
         errorProperty.set("Add Product");
         price.set(null);
     }
-    public void addProduct(){
+
+    public void addProduct() {
         // need to do an automated ID generator or something!
         try {
-            Product product = new Product("123", getQuantityProperty().get(), getNameProperty().get(),getDescriptionProperty().get(),getPriceProperty().get());
-            model.addProduct(product);
-
-        }
-        catch (Exception e){
+            Product product = new Product("123", getQuantityProperty().get(), getNameProperty().get(), getDescriptionProperty().get(), getPriceProperty().get());
+            // TODO: Needs further development of the system.
+            // model.addProduct(product);
+        } catch (Exception e) {
             errorProperty.set(e.getMessage());
         }
 
     }
 
-    public Integer checkerInteger(String input){
+    public Integer checkerInteger(String input) {
         try {
             int toReturn = Integer.parseInt(input);
             if (toReturn < 1) throw new NumberFormatException();
@@ -87,7 +82,7 @@ public class AddProductPopUpViewModel {
         return 1;
     }
 
-    public Double checkerDouble(String input){
+    public Double checkerDouble(String input) {
         try {
             double toReturn = Double.parseDouble(input);
             if (toReturn < 1) throw new NumberFormatException();
@@ -99,8 +94,4 @@ public class AddProductPopUpViewModel {
         }
         return 1.00;
     }
-
-
-
-
 }
