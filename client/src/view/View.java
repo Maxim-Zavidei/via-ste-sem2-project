@@ -2,7 +2,8 @@ package view;
 
 public enum View {
 
-
+    AUTHENTICATION("AuthenticationView.fxml"),
+    REGISTRATION("RegistrationView.fxml"),
     SHOPPING("ShoppingView.fxml"),
     MANAGEPRODUCTS("ProductsView.fxml"),
     POPUPPRODUCTS("AddProductPopUpView.fxml");
