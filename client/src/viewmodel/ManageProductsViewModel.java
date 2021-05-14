@@ -1,7 +1,5 @@
 package viewmodel;
 
-import common.model.Product;
-import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -10,14 +8,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableMap;
 import model.Model;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
-public class ManageProductsViewModel implements PropertyChangeListener {
+public class ManageProductsViewModel {
 
     private Model model;
-
-
 
     // Instance variables for storing the products of the catalog table.
     private ObservableMap<String, ProductViewModel> catalogMap;
@@ -25,9 +18,8 @@ public class ManageProductsViewModel implements PropertyChangeListener {
 
     private StringProperty errorProperty;
 
-    public ManageProductsViewModel(Model model){
+    public ManageProductsViewModel(Model model) {
         this.model = model;
-        model.addListener("Add",this);
 
         // Initialize the view model instance variables responsible for storing the data of the tables.
         catalogMap = FXCollections.observableHashMap();
@@ -40,7 +32,11 @@ public class ManageProductsViewModel implements PropertyChangeListener {
     public void reset() {
         // Refresh the catalog table with all the available products every time the window reopens.
         catalogMap.clear();
-        model.getCatalogOfProducts().forEach((product) -> catalogMap.put(product.getId(), new ProductViewModel(product)));
+        try {
+            model.getCatalogOfProducts().forEach((product) -> catalogMap.put(product.getId(), new ProductViewModel(product)));
+        } catch (Exception e) {
+            errorProperty.set(e.getMessage());
+        }
 
         // Deselect any selected items if window reopens.
         selectedCatalogProductProperty.set(null);
@@ -70,17 +66,17 @@ public class ManageProductsViewModel implements PropertyChangeListener {
         return true;
     }
 
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        System.out.println("Add triggered!!!");
-
-        Platform.runLater(() -> {
-            Product product = (Product) evt.getNewValue();
-            if ("Add".equals(evt.getPropertyName())) {
-                catalogMap.put(product.getId(), new ProductViewModel(product));
-                // for testing
-                System.out.println("Add triggered!!!");
-            }
-        });
-    }
+//    @Override
+//    public void propertyChange(PropertyChangeEvent evt) {
+//        System.out.println("Add triggered!!!");
+//
+//        Platform.runLater(() -> {
+//            Product product = (Product) evt.getNewValue();
+//            if ("Add".equals(evt.getPropertyName())) {
+//                catalogMap.put(product.getId(), new ProductViewModel(product));
+//                // for testing
+//                System.out.println("Add triggered!!!");
+//            }
+//        });
+//    }
 }
