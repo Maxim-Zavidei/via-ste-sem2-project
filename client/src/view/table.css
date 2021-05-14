@@ -28,12 +28,12 @@
     -fx-background-color: #ffb1b1;
     -fx-text-background-color: #ffb1b1;
 }
-.table-row-cell: odd{
+.table-row-cell: odd {
     -fx-background-color: white;
     -fx-background-insets: 0, 0 0 1 0;
     -fx-padding: 0.0em;
 }
-.table-row-cell: even{
+.table-row-cell: even {
     -fx-background-color: #f5e1df;
     -fx-background-insets: 0, 0 0 1 0;
     -fx-padding: 0.0em;

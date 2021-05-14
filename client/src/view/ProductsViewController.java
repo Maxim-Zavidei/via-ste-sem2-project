@@ -8,28 +8,20 @@ import javafx.scene.control.TableView;
 import viewmodel.ManageProductsViewModel;
 import viewmodel.ProductViewModel;
 
-import java.io.IOException;
-
 public class ProductsViewController extends ViewController {
 
     private ViewHandler viewHandler;
     private ManageProductsViewModel viewModel;
 
     // FXML instance variables of catalog table.
-    @FXML
-    private TableView<ProductViewModel> catalogTable;
-    @FXML
-    private TableColumn<ProductViewModel, Integer> catalogAvailabilityColumn;
-    @FXML
-    private TableColumn<ProductViewModel, String> catalogNameColumn;
-    @FXML
-    private TableColumn<ProductViewModel, String> catalogDescriptionColumn;
-    @FXML
-    private TableColumn<ProductViewModel, Double> catalogPriceColumn;
+    @FXML private TableView<ProductViewModel> catalogTable;
+    @FXML private TableColumn<ProductViewModel, Integer> catalogAvailabilityColumn;
+    @FXML private TableColumn<ProductViewModel, String> catalogNameColumn;
+    @FXML private TableColumn<ProductViewModel, String> catalogDescriptionColumn;
+    @FXML private TableColumn<ProductViewModel, Double> catalogPriceColumn;
 
-    @FXML
-    private Label errorLabel;
-
+    // The rest FXML instance variables of the view.
+    @FXML private Label errorLabel;
 
     @Override
     protected void init() {
@@ -52,14 +44,13 @@ public class ProductsViewController extends ViewController {
                 catalogTable.getItems().add(change.getValueAdded());
             }
         });
-
         catalogTable.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> viewModel.setSelectedCatalogProductProperty(newVal));
 
+        // Bindings for the rest of the user interface elements.
         errorLabel.textProperty().bind(viewModel.getErrorProperty());
 
         // Small snippet of code to change the color of the error label only when errors are displayed.
         viewModel.getErrorProperty().addListener((obs, oldVal, newVal) -> errorLabel.setStyle("-fx-text-fill:" + (newVal.charAt(0) == '!' ? "#FF0000" : "#000000")));
-
     }
 
     @Override
