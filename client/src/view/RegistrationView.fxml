@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.Light.Distant?>
+<?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.effect.Shadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Polygon?>
-<?import javafx.scene.text.*?>
-<AnchorPane prefHeight="666.0" prefWidth="666.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.RegisterViewController">
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="666.0" prefWidth="666.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.RegistrationViewController">
    <children>
       <Polygon fill="#ffaeae" layoutX="337.0" layoutY="36.0" points="-25.400009155273438, 16.0, 17.79998779296875, 16.0, -3.79998779296875, -20.800003051757812" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0">
          <effect>
@@ -17,12 +27,12 @@
             <Font name="System Bold" size="26.0" />
          </font>
       </Label>
-      <Label layoutX="52.0" layoutY="94.0" text="Username">
+      <Label layoutX="52.0" layoutY="94.0" text="Email">
          <font>
             <Font name="System Bold" size="22.0" />
          </font>
       </Label>
-      <TextField fx:id="usernameField" layoutX="333.0" layoutY="86.0">
+      <TextField fx:id="emailField" layoutX="333.0" layoutY="86.0">
          <font>
             <Font size="22.0" />
          </font>
@@ -53,7 +63,7 @@
             <Font name="System Bold" size="22.0" />
          </font>
       </Label>
-      <Button fx:id="registerButton" layoutX="74.0" layoutY="571.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="227.0" text="REGISTER" textAlignment="CENTER">
+      <Button layoutX="74.0" layoutY="571.0" mnemonicParsing="false" onAction="#register" prefHeight="63.0" prefWidth="227.0" text="REGISTER" textAlignment="CENTER">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
@@ -68,7 +78,7 @@
             </Lighting>
          </effect>
       </Button>
-      <Button fx:id="cancelButton" layoutX="355.0" layoutY="571.0" mnemonicParsing="false"  prefHeight="63.0" prefWidth="227.0" text="CANCEL" textAlignment="CENTER">
+      <Button layoutX="355.0" layoutY="571.0" mnemonicParsing="false" onAction="#cancelRegistration" prefHeight="63.0" prefWidth="227.0" text="CANCEL" textAlignment="CENTER">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
@@ -122,10 +132,11 @@
             <Font name="System Bold" size="22.0" />
          </font>
       </RadioButton>
-      <RadioButton fx:id="FemaleRadioButton" layoutX="479.0" layoutY="479.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="134.0" text="Female" toggleGroup="$Gender">
+      <RadioButton fx:id="femaleRadioButton" layoutX="479.0" layoutY="479.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="134.0" text="Female" toggleGroup="$Gender">
          <font>
             <Font name="System Bold" size="22.0" />
          </font>
       </RadioButton>
+      <Label fx:id="errorLabel" layoutX="28.0" layoutY="58.0" prefHeight="17.0" prefWidth="611.0" textFill="RED" />
    </children>
 </AnchorPane>
