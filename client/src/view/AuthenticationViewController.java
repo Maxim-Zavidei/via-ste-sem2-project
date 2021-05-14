@@ -24,7 +24,7 @@ public class AuthenticationViewController extends ViewController {
         // Bindings for the user interface elements.
         Bindings.bindBidirectional(emailField.textProperty(), viewModel.getEmailProperty());
         Bindings.bindBidirectional(passwordField.textProperty(), viewModel.getPasswordProperty());
-        Bindings.bindBidirectional(errorLabel.textProperty(), viewModel.getErrorProperty());
+        errorLabel.textProperty().bind(viewModel.getErrorProperty());
     }
 
     public void reset() {
@@ -36,7 +36,7 @@ public class AuthenticationViewController extends ViewController {
         if (viewModel.authenticate()) try {
             viewHandler.openView(View.SHOPPING);
         } catch (Exception e) {
-            errorLabel.textProperty().set("Could not authenticate at this time. Try later.");
+            viewModel.getErrorProperty().set("Could not authenticate at this time. Try later.");
         }
     }
 
@@ -45,7 +45,7 @@ public class AuthenticationViewController extends ViewController {
         try {
             viewHandler.openView(View.REGISTRATION);
         } catch (Exception e) {
-            errorLabel.textProperty().set("Could not register at this time. Try later.");
+            viewModel.getErrorProperty().set("Could not register at this time. Try later.");
         }
     }
 }
