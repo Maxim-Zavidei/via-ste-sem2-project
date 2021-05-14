@@ -1,4 +1,6 @@
 package common.network;
 
-public interface RemoteClientInterface {
+import java.rmi.Remote;
+
+public interface RemoteClientInterface extends Remote {
 }
