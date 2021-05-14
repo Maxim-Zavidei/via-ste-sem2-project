@@ -5,25 +5,29 @@ import model.Model;
 
 public class ViewModelFactory {
 
-    private Model model;
-    private UserManagement management;
+    private AuthenticationViewModel authenticationViewModel;
+    private RegistrationViewModel registrationViewModel;
     private ShoppingViewModel shoppingViewModel;
-    private UserViewModel userViewModel;
     private ManageProductsViewModel manageProductsViewModel;
     private AddProductPopUpViewModel addProductPopUpViewModel;
+    private UserViewModel userViewModel;
+    private UserManagement management;
 
     public ViewModelFactory(Model model) {
-        this.model = model;
-        this.management = model.getManagement();
+        this.authenticationViewModel = new AuthenticationViewModel(model);
+        this.registrationViewModel = new RegistrationViewModel(model);
         this.shoppingViewModel = new ShoppingViewModel(model);
         this.userViewModel = new UserViewModel(management);
         this.manageProductsViewModel = new ManageProductsViewModel(model);
         this.addProductPopUpViewModel = new AddProductPopUpViewModel(model);
     }
 
-    public UserViewModel getEmployeeViewModel()
-    {
-        return userViewModel;
+    public AuthenticationViewModel getAuthenticationViewModel() {
+        return authenticationViewModel;
+    }
+
+    public RegistrationViewModel getRegistrationViewModel() {
+        return registrationViewModel;
     }
 
     public ShoppingViewModel getShoppingViewModel() {
@@ -36,5 +40,9 @@ public class ViewModelFactory {
 
     public AddProductPopUpViewModel getAddProductPopUpViewModel() {
         return addProductPopUpViewModel;
+    }
+
+    public UserViewModel getEmployeeViewModel() {
+        return userViewModel;
     }
 }
