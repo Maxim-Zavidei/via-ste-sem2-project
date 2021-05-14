@@ -8,7 +8,7 @@
 <?import javafx.scene.text.*?>
 <AnchorPane prefHeight="720.0" prefWidth="1093.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.ProductsViewController">
    <children>
-      <TableView fx:id="catalogTable" layoutX="14.0" layoutY="84.0" prefHeight="481.0" prefWidth="1064.0">
+      <TableView fx:id="catalogTable" layoutX="14.0" layoutY="84.0" prefHeight="481.0" prefWidth="1064.0" stylesheets="@table.css">
         <columns>
           <TableColumn fx:id="catalogAvailabilityColumn" prefWidth="97.0" resizable="false" style="-fx-alignment: CENTER;" text="Available Units" />
           <TableColumn fx:id="catalogNameColumn" minWidth="0.0" prefWidth="200.0" text="Name" />

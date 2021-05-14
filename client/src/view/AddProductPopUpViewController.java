@@ -33,12 +33,12 @@ public class AddProductPopUpViewController extends ViewController {
         quantityField.textProperty().bindBidirectional(viewModel.getQuantityProperty(), new StringConverter<Integer>() {
             @Override
             public String toString(Integer integer) {
-                return integer == null ? "1" : integer.toString();
+                return integer == null ? "" : integer.toString();
             }
 
             @Override
             public Integer fromString(String s) {
-                return Integer.parseInt(s);
+                return viewModel.checkerInteger(s);
             }
         });
         nameField.textProperty().bindBidirectional(viewModel.getNameProperty());
@@ -46,12 +46,12 @@ public class AddProductPopUpViewController extends ViewController {
         priceField.textProperty().bindBidirectional(viewModel.getPriceProperty(), new StringConverter<Double>() {
             @Override
             public String toString(Double aDouble) {
-                 return aDouble == null ? "1" : aDouble.toString();
+                 return aDouble == null ? "" : aDouble.toString();
             }
 
             @Override
             public Double fromString(String s) {
-                return Double.parseDouble(s);
+                return viewModel.checkerDouble(s);
             }
         });
 
@@ -64,8 +64,8 @@ public class AddProductPopUpViewController extends ViewController {
     }
 
     public void addProduct() {
-        viewModel.addProduct();
         try{
+            viewModel.addProduct();
             viewHandler.openView(View.MANAGEPRODUCTS);
         }catch (Exception e)
         {
