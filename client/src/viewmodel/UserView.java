@@ -22,7 +22,7 @@ public class UserView {
         this.email = new SimpleStringProperty(user.getEmail());
         this.birthDate = new SimpleObjectProperty<>(user.getBirthday());
         this.gender = new SimpleStringProperty(user.getGender() + "");
-        this.status = new SimpleStringProperty(user.userType());
+        this.status = new SimpleStringProperty(user.isEmployee() ? "Employee" : "Customer");
     }
 
     public StringProperty getFirstName() {
