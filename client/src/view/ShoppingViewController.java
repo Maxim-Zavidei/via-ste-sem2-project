@@ -80,7 +80,7 @@ public class ShoppingViewController extends ViewController {
         basketCostColumn.setCellValueFactory(cellData -> {
             ObjectProperty<Integer> cellProductQuantity = cellData.getValue().getQuantityProperty();
             ObjectProperty<Double> cellProductPrice = cellData.getValue().getPriceProperty();
-            return Bindings.createDoubleBinding(() -> cellProductQuantity.getValue() * cellProductPrice.getValue(), cellProductQuantity, cellProductPrice);
+            return Bindings.createDoubleBinding(() -> Math.floor(cellProductQuantity.getValue() * cellProductPrice.getValue() * 100) / 100, cellProductQuantity, cellProductPrice);
         });
         // Links the basket hash map of the view model to the displaying observable product list of the basket table.
         // On any product additions or removals from the view model hash map the list would behave accordingly by adding or removing the same product.
