@@ -100,7 +100,7 @@ public abstract class User {
         return String.format("%s - %s %s - %c", firstName, lastName, birthday.toString(), gender);
     }
 
-    public String userType() {
-        return this instanceof Employee ? "Employee" : "Customer";
+    public boolean isEmployee() {
+        return this instanceof Employee;
     }
 }
