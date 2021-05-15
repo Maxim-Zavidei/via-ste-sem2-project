@@ -2,11 +2,11 @@ package view;
 
 public enum View {
 
-    AUTHENTICATION("AuthenticationView.fxml"),
-    REGISTRATION("RegistrationView.fxml"),
-    SHOPPING("ShoppingView.fxml"),
-    MANAGEPRODUCTS("ProductsView.fxml"),
-    POPUPPRODUCTS("AddProductPopUpView.fxml");
+    AUTHENTICATION("fxml/AuthenticationView.fxml"),
+    REGISTRATION("fxml/RegistrationView.fxml"),
+    SHOPPING("fxml/ShoppingView.fxml"),
+    MANAGEPRODUCTS("fxml/ProductsView.fxml"),
+    POPUPPRODUCTS("fxml/AddProductPopUpView.fxml");
 
     private String fxmlFile;
     private ViewController viewController;
