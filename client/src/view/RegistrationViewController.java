@@ -1,7 +1,6 @@
 package view;
 
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.ObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -31,7 +30,7 @@ public class RegistrationViewController extends ViewController {
         viewModel = getViewModelFactory().getRegistrationViewModel();
 
         // Bindings for the user interface elements.
-        usernameLabel.textProperty().bind(Bindings.createStringBinding(() -> firstNameField.textProperty().getValue() + lastNameField.textProperty().getValue(), firstNameField.textProperty(), lastNameField.textProperty()));
+        usernameLabel.textProperty().bind(Bindings.createStringBinding(() -> firstNameField.textProperty().getValue() + " " + lastNameField.textProperty().getValue(), firstNameField.textProperty(), lastNameField.textProperty()));
         errorLabel.textProperty().bind(viewModel.getErrorProperty());
         Bindings.bindBidirectional(emailField.textProperty(), viewModel.getEmailProperty());
         Bindings.bindBidirectional(passwordField.textProperty(), viewModel.getPasswordProperty());
