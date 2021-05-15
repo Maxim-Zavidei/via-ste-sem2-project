@@ -1,6 +1,7 @@
 package view;
 
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.ObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -14,7 +15,7 @@ public class RegistrationViewController extends ViewController {
     private RegistrationViewModel viewModel;
 
     // FXML instance variables of the view.
-    @FXML private Label errorLabel;
+    @FXML private Label usernameLabel;
     @FXML private TextField emailField;
     @FXML private TextField passwordField;
     @FXML private TextField firstNameField;
@@ -22,6 +23,7 @@ public class RegistrationViewController extends ViewController {
     @FXML private DatePicker birthdaySelector;
     @FXML private RadioButton maleRadioButton;
     @FXML private RadioButton femaleRadioButton;
+    @FXML private Label errorLabel;
 
     @Override
     protected void init() {
@@ -29,6 +31,7 @@ public class RegistrationViewController extends ViewController {
         viewModel = getViewModelFactory().getRegistrationViewModel();
 
         // Bindings for the user interface elements.
+        usernameLabel.textProperty().bind(Bindings.createStringBinding(() -> firstNameField.textProperty().getValue() + lastNameField.textProperty().getValue(), firstNameField.textProperty(), lastNameField.textProperty()));
         errorLabel.textProperty().bind(viewModel.getErrorProperty());
         Bindings.bindBidirectional(emailField.textProperty(), viewModel.getEmailProperty());
         Bindings.bindBidirectional(passwordField.textProperty(), viewModel.getPasswordProperty());
