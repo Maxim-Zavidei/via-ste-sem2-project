@@ -173,7 +173,7 @@
             </Lighting>
          </effect>
       </Button>
-      <Label layoutX="372.0" layoutY="452.0" text="Last Name:" textFill="#522246">
+      <Label layoutX="383.0" layoutY="452.0" text="Last Name:" textFill="#522246">
          <font>
             <Font name="System Bold" size="19.0" />
          </font>
@@ -185,7 +185,7 @@
             </DropShadow>
          </effect>
       </Label>
-      <TextField fx:id="lastNameField" layoutX="313.0" layoutY="483.0" opacity="0.3" prefHeight="44.0" prefWidth="227.0">
+      <TextField fx:id="lastNameField" layoutX="319.0" layoutY="483.0" opacity="0.3" prefHeight="44.0" prefWidth="227.0">
          <font>
             <Font size="20.0" />
          </font>
@@ -196,7 +196,7 @@
                </input></DropShadow>
          </effect>
       </TextField>
-      <TextField fx:id="firstNameField" layoutX="46.0" layoutY="483.0" opacity="0.3" prefHeight="44.0" prefWidth="227.0">
+      <TextField fx:id="firstNameField" layoutX="50.0" layoutY="483.0" opacity="0.3" prefHeight="44.0" prefWidth="227.0">
          <font>
             <Font size="20.0" />
          </font>
@@ -207,7 +207,7 @@
                </input></DropShadow>
          </effect>
       </TextField>
-      <DatePicker fx:id="birthdaySelector" layoutX="312.0" layoutY="556.0" opacity="0.3" prefHeight="37.0" prefWidth="192.0">
+      <DatePicker fx:id="birthdaySelector" layoutX="319.0" layoutY="557.0" opacity="0.3" prefHeight="37.0" prefWidth="192.0">
          <effect>
             <DropShadow color="#ffaeae">
                <input>
@@ -227,7 +227,7 @@
             </DropShadow>
          </effect>
       </Label>
-      <RadioButton fx:id="maleRadioButton" layoutX="312.0" layoutY="604.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="90.0" selected="true" text="Male" textFill="#522246">
+      <RadioButton fx:id="maleRadioButton" layoutX="321.0" layoutY="604.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="90.0" selected="true" text="Male" textFill="#522246">
          <toggleGroup>
             <ToggleGroup fx:id="Gender" />
          </toggleGroup>
@@ -242,7 +242,7 @@
             </DropShadow>
          </effect>
       </RadioButton>
-      <RadioButton fx:id="femaleRadioButton" layoutX="402.0" layoutY="604.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="109.0" text="Female" textFill="#522246" toggleGroup="$Gender">
+      <RadioButton fx:id="femaleRadioButton" layoutX="406.0" layoutY="604.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="109.0" text="Female" textFill="#522246" toggleGroup="$Gender">
          <font>
             <Font name="System Bold" size="19.0" />
          </font>
