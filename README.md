@@ -1,4 +1,8 @@
-# Cake Store Client/Server System
+<p align="center">
+    <img src="assets/logo.png" alt="Project Logo">
+</p>
+<h1 align="center">Cake Store Client/Server System</h1>
+
 As a viable and reasonable case idea for the second semester project, undertaking *Software Technology Engineering* programme at VIA University College, the *Cake Store System* depicts separately a client and server side GUI application written in Java and JavaFX alongside with a PostgreSQL database for back end storage. The terse context of the case idea is to create a system which would allow the customers of an abstract made-up cake bakery view a catalog of available products, easily place any orders and receive notifications within the application itself.
 
 # Educational Purpose of the Project
