@@ -66,5 +66,15 @@ public class DateTime implements Serializable {
             }
     }
 
+    public int getDay() {
+        return day;
+    }
 
+    public int getMonth() {
+        return month;
+    }
+
+    public int getYear() {
+        return year;
+    }
 }

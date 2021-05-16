@@ -6,7 +6,7 @@ import java.util.Map;
 public class ProductsList
 {
   /**Instance variables*/
-  private Map<String, Product> products;
+  private HashMap<String, Product> products;
   /************************************/
 
   /**Constructor*/
@@ -35,5 +35,6 @@ public class ProductsList
     }
     return returnProducts.toString();
   }
+
   /**************************************/
 }
