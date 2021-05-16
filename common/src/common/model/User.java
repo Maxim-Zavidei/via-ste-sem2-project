@@ -9,7 +9,7 @@ public abstract class User {
     private DateTime birthday;
     private char gender;
 
-    // Constructor with extended number of defined values.
+    /** Constructor with extended number of defined values.*/
     public User(String email, String password, String firstName, String lastName, DateTime birthday, char gender) {
         if (email == null || email.isEmpty()) throw new IllegalArgumentException("Email argument can't be null or empty");
         if (password == null || password.isEmpty()) throw new IllegalArgumentException("Password argument can't be null or empty.");
@@ -25,7 +25,7 @@ public abstract class User {
         this(email, password, firstName, lastName, null, 'u');
     }
 
-    // Constructor with minimal required values.
+    /** Constructor with minimal required values.*/
     public User(String email, String password) {
         this(email, password, null, null, null, 'u');
     }

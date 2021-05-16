@@ -2,10 +2,7 @@ package view;
 
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import viewmodel.RegistrationViewModel;
 
 public class RegistrationViewController extends ViewController {
@@ -16,7 +13,7 @@ public class RegistrationViewController extends ViewController {
     // FXML instance variables of the view.
     @FXML private Label usernameLabel;
     @FXML private TextField emailField;
-    @FXML private TextField passwordField;
+    @FXML private PasswordField passwordField;
     @FXML private TextField firstNameField;
     @FXML private TextField lastNameField;
     @FXML private DatePicker birthdaySelector;

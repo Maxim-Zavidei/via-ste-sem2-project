@@ -19,6 +19,7 @@
 <?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.control.PasswordField?>
 <AnchorPane onKeyPressed="#authenticate" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.AuthenticationViewController">
    <children>
       <Circle fill="#ffb1b1" layoutX="297.0" layoutY="300.0" opacity="0.29" radius="300.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0">
@@ -40,14 +41,14 @@
             <Insets />
          </opaqueInsets>
       </TextField>
-      <TextField fx:id="passwordField" layoutX="238.0" layoutY="409.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.3">
+      <PasswordField fx:id="passwordField" layoutX="238.0" layoutY="409.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.3">
          <font>
             <Font size="22.0" />
          </font>
          <effect>
             <InnerShadow />
          </effect>
-      </TextField>
+      </PasswordField>
       <Button layoutX="49.0" layoutY="487.0" mnemonicParsing="false" onAction="#authenticate" prefHeight="80.0" prefWidth="227.0" text="Authenticate" textAlignment="CENTER" textFill="#522246">
          <font>
             <Font name="Arial Black" size="16.0" />

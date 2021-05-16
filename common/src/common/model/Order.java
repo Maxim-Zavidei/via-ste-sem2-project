@@ -20,12 +20,6 @@ public class Order {
     /**Edit order
      * adding new product*/
     public void addNewProduct(Product product, int quantity) {
-       /* if(products.containsKey(product)){
-            products.put(product, quantity);
-        }
-        else{
-            products.put(product, quantity);
-        }*/
         products.put(product, quantity);
     }
 

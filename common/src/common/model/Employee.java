@@ -2,12 +2,12 @@ package common.model;
 
 public class Employee extends User {
 
-    // Constructor with extended number of defined values.
+    /** Constructor with extended number of defined values.*/
     public Employee(String email, String password, String name, String surname, DateTime birthday, char gender) {
         super(email, password, name, surname, birthday, gender);
     }
 
-    // Constructor with minimal required values.
+    /** Constructor with minimal required values.*/
     public Employee(String email, String password) {
         super(email, password);
     }
