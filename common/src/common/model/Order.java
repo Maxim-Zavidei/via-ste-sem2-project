@@ -17,6 +17,14 @@ public class Order {
         this.date = new DateTime();
     }
 
+    public void setDate(DateTime date) {
+        this.date = date;
+    }
+
+    public String getId() {
+        return id;
+    }
+
     /**Edit order
      * adding new product*/
     public void addNewProduct(Product product, int quantity) {
