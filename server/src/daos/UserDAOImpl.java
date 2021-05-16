@@ -1,9 +1,10 @@
 package daos;
 
-import com.sun.tools.attach.AgentInitializationException;
 import common.model.*;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDAOImpl  implements UserDAO{
     private  static UserDAOImpl instance;
@@ -38,7 +39,7 @@ public class UserDAOImpl  implements UserDAO{
             statement.setString(4, lastName);
             statement.setObject(5, birthday, Types.DATE);
             statement.setInt(6, DateTime.yearsBetween(birthday));
-            statement.setObject(7, birthday, Types.CHAR);
+            statement.setObject(7, sex, Types.CHAR);
             statement.setBoolean(8, isEmployee);
             statement.executeUpdate();
             if(isEmployee){
@@ -50,11 +51,73 @@ public class UserDAOImpl  implements UserDAO{
 
     @Override
     public void update(User user)  throws SQLException{
+        try(Connection connection = getConnection()){
+            PreparedStatement statement =
+                    connection.prepareStatement("UPDATE user SET  password = ?, f_name = ?, l_name = ?, birthday = ?, age = ?, gender = ?, isEmployee = ? WHERE email = ?");
+            statement.setString(1, user.getPassword());
+            statement.setString(2, user.getFirstName());
+            statement.setString(3, user.getLastName());
+            statement.setObject(4, user.getBirthday(), Types.DATE);
+            statement.setInt(5, user.getAge());
+            statement.setObject(6, user.getGender(), Types.CHAR);
+            statement.setBoolean(7, user instanceof Employee);
+            statement.setString(8, user.getEmail());
+            statement.executeUpdate();
+        }
+    }
 
+    @Override
+    public void updateAge(User user) throws SQLException {
+        try(Connection connection = getConnection()){
+            PreparedStatement statement =
+                    connection.prepareStatement("UPDATE user SET  age = ? WHERE email = ?");
+            statement.setInt(1, DateTime.yearsBetween(user.getBirthday()));
+            statement.setString(2, user.getEmail());
+            statement.executeUpdate();
+        }
+    }
+
+    @Override
+    public void updatePassword(User user) throws SQLException {
+        try(Connection connection = getConnection()){
+            PreparedStatement statement =
+                    connection.prepareStatement("UPDATE user SET  password = ? WHERE email = ?");
+            statement.setString(1, user.getPassword());
+            statement.setString(2, user.getEmail());
+            statement.executeUpdate();
+        }
     }
 
     @Override
     public void delete(User user)  throws SQLException{
+        try(Connection connection = getConnection()){
+            PreparedStatement statement =
+                    connection.prepareStatement("DELETE FROM product WHERE email = ?");
+            statement.setInt(1, Integer.parseInt(user.getEmail()));
+            statement.executeUpdate();
+        }
+    }
 
+    @Override
+    public List<Employee> allEmployees() throws SQLException {
+        try(Connection connection = getConnection()){
+            PreparedStatement statement =
+                    connection.prepareStatement("SELECT * FROM user WHERE isEmployee = true");
+            ResultSet employeeSet = statement.executeQuery();
+            ArrayList<Employee> employees = new ArrayList<>();
+            while (employeeSet.next()){
+                String email = employeeSet.getString("email");
+                String pass = employeeSet.getString("password");
+                String fname = employeeSet.getString("f_name");
+                String lname = employeeSet.getString("l_name");
+                Date date = (Date) employeeSet.getObject("birthday");
+                DateTime bday = new DateTime(date.toLocalDate().getDayOfMonth(), date.toLocalDate().getMonthValue(), date.toLocalDate().getYear());
+                int age = employeeSet.getInt("age");
+                char gender = (char) employeeSet.getObject("gender");
+                Employee employee = new Employee(email, pass, fname, lname, bday, gender);
+                employees.add(employee);
+            }
+            return employees;
+        }
     }
 }
