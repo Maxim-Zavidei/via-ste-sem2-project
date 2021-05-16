@@ -38,7 +38,7 @@ public class DateTime implements Serializable {
 
     @Override
     public String toString() {
-        return getTimestamp();
+        return String.format("%02d/%02d/%d", day,month,year);
     }
 
     public static String getToday(){

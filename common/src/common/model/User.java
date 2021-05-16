@@ -97,7 +97,7 @@ public abstract class User {
      */
     @Override
     public String toString() {
-        return String.format("%s - %s %s - %c", firstName, lastName, birthday.toString(), gender);
+        return String.format("%s %s - %s - %c", firstName, lastName, birthday.toString(), gender);
     }
 
     public boolean isEmployee() {

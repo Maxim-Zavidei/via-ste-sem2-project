@@ -10,7 +10,6 @@ import java.sql.SQLException;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ProductDAOImplTest {
-    Product product;
     ProductDAO productDAO;
 
     @BeforeEach
