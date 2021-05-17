@@ -3,7 +3,6 @@ package daos;
 import common.model.*;
 
 import java.sql.SQLException;
-import java.util.List;
 
 public interface UserDAO extends DAO{
     User create(String email, String password, String firstName, String lastName, DateTime birthday, char sex, boolean isEmployee) throws SQLException;
