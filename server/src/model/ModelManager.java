@@ -8,42 +8,43 @@ import java.util.ArrayList;
 
 public class ModelManager implements Model {
 
-    private ProductDAOImpl productDAO;
-    private UserDAOImpl userDAO;
+    private ProductDAO productDAO;
+    private UserDAO userDAO;
     private OrderDAO orderDAO;
 
-    public ModelManager() {
-        try {
-            productDAO = ProductDAOImpl.getInstance();
-            userDAO = UserDAOImpl.getInstance();
-            orderDAO = OrderDAOImpl.getInstance();
-            createDummyData();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+    public ModelManager() throws SQLException {
+        productDAO = ProductDAOImpl.getInstance();
+        userDAO = UserDAOImpl.getInstance();
+        orderDAO = OrderDAOImpl.getInstance();
+        createDummyData();
+    }
+
+    private void createDummyData() throws SQLException {
+        // Dummy data users.
+        userDAO.createDummyData("bob@gmail.com", "1234", "Bob", "Bob", new DateTime(2, 3, 2001), 'M', false);
+        userDAO.createDummyData("george@gmail.com", "5678", "George", "George", new DateTime(4, 2, 2001), 'M', false);
+        userDAO.createDummyData("steve@gmail.com", "9876", "Steve", "Steve", new DateTime(26, 8, 2001), 'M', true);
+        userDAO.createDummyData("katy@gmail.com", "123456", "Katy", "Katy", new DateTime(6, 1, 2001), 'F', true);
+
+        // Dummy data products.
+        productDAO.createDummyData(3, "Baklava", "Baklava is very tasty", 2.5);
+        productDAO.createDummyData(4, "Pain au Chocolate", "nice", 5);
+        productDAO.createDummyData(1, "Golden Apple", "extra nice", 7.41);
+        productDAO.createDummyData(3, "Sugar Bombs", "niche", 3.22);
+        productDAO.createDummyData(7, "2 kg of Sweets", "niche extra", 1);
     }
 
     @Override
     public UserList getAllRegisteredUsers() {
         try {
             return userDAO.allUsers();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (Exception e) {
+            throw new IllegalStateException("Server is unavailable at the moment. Try Later.");
         }
-        return null;
     }
 
     @Override
     public void register(String email, String password, String firstName, String lastName, LocalDate birthday, char gender) throws IllegalArgumentException, IllegalStateException {
-        checkRegister(email, password, firstName, lastName, birthday, gender);
-        try {
-            User user = userDAO.create(email, password, firstName, lastName, new DateTime(birthday.getDayOfMonth(), birthday.getMonthValue(), birthday.getYear()), gender, false);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-    }
-
-    private void checkRegister(String email, String password, String firstName, String lastName, LocalDate birthday, char gender){
         // Checks for null or empty arguments.
         if (email == null || email.isEmpty()) throw new IllegalArgumentException("Email can't be empty.");
         if (password == null || password.isEmpty()) throw new IllegalArgumentException("Password can't be empty.");
@@ -87,44 +88,33 @@ public class ModelManager implements Model {
         // Checks for gender argument.
         if (!(gender == 'm' || gender == 'M' || gender == 'f' || gender == 'F')) throw new IllegalArgumentException("User can either be male or female.");
 
-        // Checks if an user with this email is already registered.
-       // if (userDAO.readByEmail(email) != null) throw new IllegalStateException("An user with this email is already registered.");
+        try {
+            // Checks if an user with this email is already registered.
+            if (userDAO.readByEmail(email) != null) throw new IllegalStateException("An user with this email is already registered.");
+            // Store the newly registered user in the database.
+            userDAO.create(email, password, firstName, lastName, new DateTime(birthday.getDayOfMonth(), birthday.getMonthValue(), birthday.getYear()), gender, false);
+        } catch (Exception e) {
+            throw new IllegalStateException("Server is unavailable at the moment. Try Later.");
+        }
     }
 
     @Override
-    public User getAuthenticatedUser(String email) throws IllegalStateException {
-//       // User toReturn = userDAO.readByEmail(email);
-//        if (toReturn == null) throw new IllegalStateException("No currently authenticated user with such email has been found.");
-        return null;
+    public User getUser(String email) throws IllegalStateException {
+        try {
+            User toReturn = userDAO.readByEmail(email);
+            if (toReturn == null) throw new IllegalStateException("No registered user with such email could be found.");
+            return toReturn;
+        } catch (Exception e) {
+            throw new IllegalStateException("Server is unavailable at the moment. Try Later.");
+        }
     }
 
     @Override
     public ArrayList<Product> getCatalogOfProducts() {
         try {
-            return (ArrayList<Product>) ProductDAOImpl.getInstance().read();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return null;
-    }
-
-    @Override
-    public void createDummyData() {
-        try {
-            /** Dummy data users.*/
-            userDAO.createDummyData("bob@gmail.com", "1234", "Bob", "Bob", new DateTime(2, 3, 2001), 'M', false);
-            userDAO.createDummyData("george@gmail.com", "5678", "George", "George", new DateTime(4, 2, 2001), 'M', false);
-            userDAO.createDummyData("steve@gmail.com", "9876", "Steve", "Steve", new DateTime(26, 8, 2001), 'M', true);
-            userDAO.createDummyData("katy@gmail.com", "123456", "Katy", "Katy", new DateTime(6, 1, 2001), 'F', true);
-
-            /**Dummy data products.*/
-            productDAO.createDummyData(3, "Baklava", "Baklava is very tasty", 2.5);
-            productDAO.createDummyData(4, "Pain au Chocolate", "nice", 5);
-            productDAO.createDummyData(1, "Golden Apple", "extra nice", 7.41);
-            productDAO.createDummyData(3, "Sugar Bombs", "niche", 3.22);
-            productDAO.createDummyData(7, "2 kg of Sweets", "niche extra", 1);
-        } catch (SQLException throwables){
-            throwables.printStackTrace();
+            return new ArrayList<>(ProductDAOImpl.getInstance().read());
+        } catch (Exception e) {
+            throw new IllegalStateException("Server is unavailable at the moment. Try Later.");
         }
     }
 
