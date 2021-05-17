@@ -29,8 +29,8 @@ public class ViewHandler extends ViewCreator {
         String title;
         primaryStage.setTitle((title = (String) root.getUserData()) != null ? title : "");
         primaryStage.setScene(currentScene);
-        primaryStage.setWidth(root.getPrefWidth() + 25);
-        primaryStage.setHeight(root.getPrefHeight() + 43);
+        primaryStage.setWidth(root.getPrefWidth() + 16);
+        primaryStage.setHeight(root.getPrefHeight() + 39);
         primaryStage.setResizable(false);
         viewController.reset();
         primaryStage.show();

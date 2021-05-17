@@ -2,14 +2,11 @@ package model;
 
 import common.model.*;
 import daos.*;
-
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class ModelManager implements Model {
-
-    private UserList registeredUsers;
 
     private ProductDAOImpl productDAO;
     private UserDAOImpl userDAO;
@@ -21,17 +18,13 @@ public class ModelManager implements Model {
             userDAO = UserDAOImpl.getInstance();
             orderDAO = OrderDAOImpl.getInstance();
             createDummyData();
-        } catch (SQLException throwables){
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        registeredUsers = new UserList();
-
     }
 
     @Override
     public UserList getAllRegisteredUsers() {
-
-        //return registeredUsers;
         try {
             return userDAO.allUsers();
         } catch (SQLException throwables) {
@@ -45,8 +38,7 @@ public class ModelManager implements Model {
         checkRegister(email, password, firstName, lastName, birthday, gender);
         try {
             User user = userDAO.create(email, password, firstName, lastName, new DateTime(birthday.getDayOfMonth(), birthday.getMonthValue(), birthday.getYear()), gender, false);
-            //registeredUsers.addUser(user);
-        } catch (SQLException throwables){
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
@@ -96,18 +88,18 @@ public class ModelManager implements Model {
         if (!(gender == 'm' || gender == 'M' || gender == 'f' || gender == 'F')) throw new IllegalArgumentException("User can either be male or female.");
 
         // Checks if an user with this email is already registered.
-        if (registeredUsers.getUser(email) != null) throw new IllegalStateException("An user with this email is already registered.");
+       // if (userDAO.readByEmail(email) != null) throw new IllegalStateException("An user with this email is already registered.");
+    }
+
+    @Override
+    public User getAuthenticatedUser(String email) throws IllegalStateException {
+//       // User toReturn = userDAO.readByEmail(email);
+//        if (toReturn == null) throw new IllegalStateException("No currently authenticated user with such email has been found.");
+        return null;
     }
 
     @Override
     public ArrayList<Product> getCatalogOfProducts() {
-        // Dummy data.
-        //ArrayList<Product> toReturn = new ArrayList<>();
-       // toReturn.add(new Product("1", 4, "Pain au Chocolate", "nice", 5));
-       // toReturn.add(new Product("2", 1, "Golden Apple", "extra nice", 7.41));
-       // toReturn.add(new Product("3", 3, "Sugar Bombs", "niche", 3.22));
-        //toReturn.add(new Product("4", 7, "2 kg of Sweets", "niche extra", 1));
-        //return toReturn;
         try {
             return (ArrayList<Product>) ProductDAOImpl.getInstance().read();
         } catch (SQLException throwables) {
@@ -124,9 +116,6 @@ public class ModelManager implements Model {
             userDAO.createDummyData("george@gmail.com", "5678", "George", "George", new DateTime(4, 2, 2001), 'M', false);
             userDAO.createDummyData("steve@gmail.com", "9876", "Steve", "Steve", new DateTime(26, 8, 2001), 'M', true);
             userDAO.createDummyData("katy@gmail.com", "123456", "Katy", "Katy", new DateTime(6, 1, 2001), 'F', true);
-            /*registeredUsers.addUser(new Customer("bob@gmail.com", "1234"));
-        registeredUsers.addUser(new Customer("george@gmail.com", "5678"));
-        registeredUsers.addUser(new Employee("steve@gmail.com", "9876"));*/
 
             /**Dummy data products.*/
             productDAO.createDummyData(3, "Baklava", "Baklava is very tasty", 2.5);
@@ -137,5 +126,10 @@ public class ModelManager implements Model {
         } catch (SQLException throwables){
             throwables.printStackTrace();
         }
+    }
+
+    @Override
+    public void addProduct(Product product) throws IllegalArgumentException, IllegalStateException {
+
     }
 }

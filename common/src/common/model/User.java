@@ -1,6 +1,8 @@
 package common.model;
 
-public abstract class User {
+import java.io.Serializable;
+
+public abstract class User implements Serializable {
 
     private String email;
     private String password;
@@ -9,7 +11,7 @@ public abstract class User {
     private DateTime birthday;
     private char gender;
 
-    /** Constructor with extended number of defined values.*/
+    // Constructor with extended number of defined values.
     public User(String email, String password, String firstName, String lastName, DateTime birthday, char gender) {
         if (email == null || email.isEmpty()) throw new IllegalArgumentException("Email argument can't be null or empty");
         if (password == null || password.isEmpty()) throw new IllegalArgumentException("Password argument can't be null or empty.");
@@ -21,18 +23,35 @@ public abstract class User {
         this.gender = gender;
     }
 
-    public User(String email, String password, String firstName, String lastName) {
-        this(email, password, firstName, lastName, null, 'u');
-    }
-
-    /** Constructor with minimal required values.*/
+    // Constructor with minimal required values.
     public User(String email, String password) {
         this(email, password, null, null, null, 'u');
     }
 
-    /**
-     * Getters
-     */
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setGender(char gender) {
+        this.gender = gender;
+    }
+
+    public void setBirthday(DateTime birthday) {
+        this.birthday = birthday;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -65,36 +84,6 @@ public abstract class User {
         return gender;
     }
 
-    /**
-     * Setters
-     */
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public void setGender(char gender) {
-        this.gender = gender;
-    }
-
-    public void setBirthday(DateTime birthday) {
-        this.birthday = birthday;
-    }
-
-    /**
-     * Methods
-     */
     @Override
     public String toString() {
         return String.format("%s %s - %s - %c", firstName, lastName, birthday.toString(), gender);

@@ -35,7 +35,7 @@ public class AuthenticationViewController extends ViewController {
     @FXML
     private void authenticate() {
         if (viewModel.authenticate()) try {
-            viewHandler.openView(View.SHOPPING);
+            viewHandler.openView(View.CATALOG);
         } catch (Exception e) {
             viewModel.getErrorProperty().set("Could not authenticate at this time. Try later.");
         }

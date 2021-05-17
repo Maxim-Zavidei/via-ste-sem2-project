@@ -1,6 +1,7 @@
 package mediator;
 
 import common.model.Product;
+import common.model.User;
 import common.network.RemoteClientInterface;
 import common.network.RemoteServerInterface;
 import model.Model;
@@ -55,8 +56,18 @@ public class Client implements Model, RemoteClientInterface {
     }
 
     @Override
+    public User getAuthenticatedUser() throws Exception {
+        return server.getAuthenticatedUser();
+    }
+
+    @Override
     public ArrayList<Product> getCatalogOfProducts() throws Exception {
         return server.getCatalogOfProducts();
+    }
+
+    @Override
+    public void addProduct(Product product) throws Exception {
+        server.addProduct(product);
     }
 
 

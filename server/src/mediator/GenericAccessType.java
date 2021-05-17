@@ -1,6 +1,7 @@
 package mediator;
 
 import common.model.Product;
+import common.model.User;
 import common.network.RemoteClientInterface;
 import common.network.RemoteServerInterface;
 import model.Model;
@@ -69,6 +70,11 @@ public abstract class GenericAccessType implements RemoteServerInterface {
     @Override
     public void register(String email, String password, String firstName, String lastName, LocalDate birthday, char gender) throws RemoteException {
         throw new IllegalStateException("Can't perform register request, already authenticated.");
+    }
+
+    @Override
+    public User getAuthenticatedUser() throws RemoteException {
+        return model.getAuthenticatedUser(email);
     }
 
     @Override

@@ -4,7 +4,6 @@ import common.model.Customer;
 import common.model.DateTime;
 import common.model.Order;
 import common.model.Product;
-
 import java.sql.*;
 import java.util.HashMap;
 

@@ -4,6 +4,8 @@ public enum View {
 
     AUTHENTICATION("fxml/AuthenticationView.fxml"),
     REGISTRATION("fxml/RegistrationView.fxml"),
+    CATALOG("fxml/CatalogView.fxml"),
+    BASKET("fxml/BasketView.fxml"),
     SHOPPING("fxml/ShoppingView.fxml"),
     MANAGEPRODUCTS("fxml/ProductsView.fxml"),
     POPUPPRODUCTS("fxml/AddProductPopUpView.fxml");

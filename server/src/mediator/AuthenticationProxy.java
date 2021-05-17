@@ -60,7 +60,17 @@ public class AuthenticationProxy implements RemoteServerInterface {
     }
 
     @Override
+    public User getAuthenticatedUser() throws RemoteException {
+        throw new IllegalStateException("Authenticate in order to perform this request.");
+    }
+
+    @Override
     public ArrayList<Product> getCatalogOfProducts() throws RemoteException {
+        throw new IllegalStateException("Authenticate in order to perform this request.");
+    }
+
+    @Override
+    public void addProduct(Product product) throws RemoteException {
         throw new IllegalStateException("Authenticate in order to perform this request.");
     }
 }
