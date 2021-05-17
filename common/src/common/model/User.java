@@ -10,6 +10,7 @@ public abstract class User implements Serializable {
     private String lastName;
     private DateTime birthday;
     private char gender;
+    private boolean isEmployee;
 
     // Constructor with extended number of defined values.
     public User(String email, String password, String firstName, String lastName, DateTime birthday, char gender) {
@@ -21,6 +22,7 @@ public abstract class User implements Serializable {
         this.lastName = lastName;
         this.birthday = birthday;
         this.gender = gender;
+        isEmployee();
     }
 
     // Constructor with minimal required values.
@@ -90,6 +92,6 @@ public abstract class User implements Serializable {
     }
 
     public boolean isEmployee() {
-        return this instanceof Employee;
+        return isEmployee = this instanceof Employee;
     }
 }

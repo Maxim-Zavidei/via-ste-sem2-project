@@ -2,38 +2,47 @@ package viewmodel;
 
 import common.model.Customer;
 import common.model.Employee;
-import common.model.UserManagement;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import common.model.User;
+import common.model.UserList;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import model.Model;
+import view.ViewState;
+
+import java.util.ArrayList;
 
 public class UserViewModel
 {
   /**Instance variables for list, selected item, management model*/
-  private UserManagement model;
+  private Model model;
   private ObservableList<UserView> list;
-  private ObjectProperty<UserView> selectedEmployee;
+  private boolean wasAuthenticatedUserQueried;
 
   /**Instance variable for other ui elements*/
   private StringProperty errorProperty;
 
-  public UserViewModel(UserManagement model){
+  public UserViewModel(Model model){
     // Initialize variables for list, selected item, management model
     this.model = model;
     this.list = FXCollections.observableArrayList();
-    this.selectedEmployee = new SimpleObjectProperty<>();
+
+    this.wasAuthenticatedUserQueried = false;
 
     // Initialize variable for other ui elements
     this.errorProperty = new SimpleStringProperty();
+    try
+    {
+      updateUsers();
+    }
+    catch (Exception e)
+    {
+      errorProperty.set("Error in updating users");
+    }
   }
 
   /**Methods, methods, methods*/
-  public void setSelectedEmployee(UserView selectedEmployee){
-    this.selectedEmployee.set(selectedEmployee);
-  }
 
   public ObservableList<UserView> getList() {
     return list;
@@ -41,62 +50,97 @@ public class UserViewModel
 
   public void reset(){
     errorProperty.set("");
-    setSelectedEmployee(null);
-    updateUsers();
+    if (!wasAuthenticatedUserQueried) {
+      try {
+        User authenticatedUser = model.getAuthenticatedUser();
+
+      } catch (Exception e) {
+
+        errorProperty.set(e.getMessage());
+      }
+      wasAuthenticatedUserQueried = true;
+    }
+    try
+    {
+      updateUsers();
+    }
+    catch (Exception e)
+    {
+      errorProperty.set("Error in updating users");
+    }
   }
 
   public StringProperty getErrorProperty() {
     return errorProperty;
   }
 
-  public void makeEmployee(UserView selectedItem)
+  public void makeEmployee(String selectedUser)
+  {
+    //Totally bad approach, need ideas! (Maybe some extra variables in User or its subclasses?
+    try
+    {
+      Employee newEmp = (Employee) model.getUsers().getUser(selectedUser);
+      model.getUsers().removeUser(selectedUser);
+      model.getUsers().addUser(newEmp);
+    }
+    catch (Exception e)
+    {
+      errorProperty.set("Error in promoting customer");
+    }
+  }
+
+  public void deleteUser(String selectedUser)
   {
     for (int i = 0; i < list.size(); i++)
     {
-      if(list.get(i).getFirstName().get().equals(selectedItem.getFirstName().get())
-      && list.get(i).getLastName().get().equals(selectedItem.getLastName().get())
-      && list.get(i).getBirthDate().get().equals(selectedItem.getBirthDate().get()))
-      {
-        Employee newEmployee = new Employee(selectedItem.getEmail().get(), "", selectedItem.getFirstName().get(), selectedItem.getLastName().get(), null, 'u');
-        list.remove(selectedItem);
-        list.add(new UserView(newEmployee));
+      if(list.get(i).getEmail().get().equals(selectedUser)){
+        list.remove(i);
+        try
+        {
+          model.getUsers().removeUser(selectedUser);
+        }
+        catch (Exception e)
+        {
+          errorProperty.set("Error in fetching user data");
+        }
       }
     }
   }
 
-  public void deleteUser(UserView selectedItem)
+  public void fireEmployee(String selectedUser)
   {
-    for (int i = 0; i < list.size(); i++)
+    //Totally bad approach, need ideas! (Maybe some extra variables in User or its subclasses?
+    try
     {
-      if(list.get(i).getFirstName().get().equals(selectedItem.getFirstName().get())
-          && list.get(i).getLastName().get().equals(selectedItem.getLastName().get())
-          && list.get(i).getBirthDate().get().equals(selectedItem.getBirthDate().get()))
-        list.remove(selectedItem);
+      Customer newCust = (Customer) model.getUsers().getUser(selectedUser);
+      model.getUsers().removeUser(selectedUser);
+      model.getUsers().addUser(newCust);
+    }
+    catch (Exception e)
+    {
+      errorProperty.set("Error in resigning employee");
     }
   }
 
-  public void fireEmployee(UserView selectedItem)
+  public void updateUsers() throws Exception
   {
-    for (int i = 0; i < list.size(); i++)
-    {
-      if(list.get(i).getFirstName().get().equals(selectedItem.getFirstName().get())
-          && list.get(i).getLastName().get().equals(selectedItem.getLastName().get())
-          && list.get(i).getBirthDate().get().equals(selectedItem.getBirthDate().get()))
-      {
-        Customer newCustomer = new Customer(selectedItem.getEmail().get(), "", selectedItem.getFirstName().get(), selectedItem.getLastName().get(), null, 'u');
-        list.remove(selectedItem);
-        list.add(new UserView(newCustomer));
-      }
-    }
-  }
-
-  public void updateUsers(){
     list.clear();
-    // TO DO: Later
-//    for (User user : model.)
-//    for (int i = 0; i < model.getUsers().getSize(); i++)
-//    {
-//      list.add(new UserView(model.getUsers().getUser(i)));
-//    }
+    ArrayList<User> users = model.getUsers().getAllUsers();
+    for (int i = 0; i < model.getUsers().getSize(); i++)
+    {
+      list.add(new UserView(users.get(i)));
+    }
+  }
+  public boolean deauthenticate() {
+    wasAuthenticatedUserQueried = false;
+    return model.deauthenticate();
+  }
+
+  public void backToUsers()
+  {
+  }
+
+  public void addEdit(String selectedUser)
+  {
   }
 }

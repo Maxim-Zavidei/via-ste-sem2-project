@@ -8,7 +8,9 @@ public enum View {
     BASKET("fxml/BasketView.fxml"),
     SHOPPING("fxml/ShoppingView.fxml"),
     MANAGEPRODUCTS("fxml/ProductsView.fxml"),
-    POPUPPRODUCTS("fxml/AddProductPopUpView.fxml");
+    POPUPPRODUCTS("fxml/AddProductPopUpView.fxml"),
+    USERS("fxml/UserView.fxml"),
+    MANAGEUSERS("fxml/UserManageView.fxml");
 
     private String fxmlFile;
     private ViewController viewController;

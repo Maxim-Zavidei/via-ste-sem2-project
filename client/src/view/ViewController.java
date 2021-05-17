@@ -8,6 +8,7 @@ public abstract class ViewController {
     private Region root;
     private ViewHandler viewHandler;
     private ViewModelFactory viewModelFactory;
+    private ViewState viewState;
 
     protected abstract void init();
     protected abstract void reset();
@@ -16,6 +17,13 @@ public abstract class ViewController {
         this.viewHandler = viewHandler;
         this.viewModelFactory = viewModelFactory;
         this.root = root;
+        init();
+    }
+    public void init(ViewHandler viewHandler, ViewModelFactory viewModelFactory, Region root, ViewState viewState) {
+        this.viewHandler = viewHandler;
+        this.viewModelFactory = viewModelFactory;
+        this.root = root;
+        this.viewState = viewState;
         init();
     }
 
@@ -29,5 +37,10 @@ public abstract class ViewController {
 
     public ViewHandler getViewHandler() {
         return viewHandler;
+    }
+
+    public ViewState getViewState()
+    {
+        return viewState;
     }
 }
