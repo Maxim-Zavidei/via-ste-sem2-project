@@ -19,12 +19,16 @@ public class AuthenticationProxy implements RemoteServerInterface {
     private UserList cache;
     private BidirectionalHashMap<RemoteClientInterface, GenericAccessType> authenticatedInstances;
 
-    public AuthenticationProxy(Model model) throws Exception {
+    public AuthenticationProxy(Model model) throws InstantiationException {
         this.model = model;
         cache = model.getAllRegisteredUsers();
         authenticatedInstances = new BidirectionalHashMap<>();
-        UnicastRemoteObject.exportObject(this, 0);
-        Naming.rebind("access", this);
+        try {
+            UnicastRemoteObject.exportObject(this, 0);
+            Naming.rebind("access", this);
+        } catch (Exception e) {
+            throw new InstantiationException("Authentication proxy could not be started.");
+        }
     }
 
     @Override
