@@ -116,6 +116,7 @@ public class ModelManager implements Model {
             userDAO.createDummyData("george@gmail.com", "5678", "George", "George", new DateTime(4, 2, 2001), 'M', false);
             userDAO.createDummyData("steve@gmail.com", "9876", "Steve", "Steve", new DateTime(26, 8, 2001), 'M', true);
             userDAO.createDummyData("katy@gmail.com", "123456", "Katy", "Katy", new DateTime(6, 1, 2001), 'F', true);
+            userDAO.createDummyData("k", "k", "K", "K", new DateTime(1, 1, 1001), 'M', true);
 
             /**Dummy data products.*/
             productDAO.createDummyData(3, "Baklava", "Baklava is very tasty", 2.5);
