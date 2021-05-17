@@ -90,4 +90,17 @@ public class ProductDAOImpl implements ProductDAO{
             return productsList;
         }
     }
+
+    @Override
+    public void createDummyData(int quantity, String name, String description, double price) throws SQLException {
+        try(Connection connection = getConnection()){
+            PreparedStatement statement =
+                    connection.prepareStatement("INSERT INTO product(quantity, name, description, price) VALUES(?, ?, ?, ?) ON CONFLICT(name) DO NOTHING;", PreparedStatement.RETURN_GENERATED_KEYS);
+            statement.setInt(1, quantity);
+            statement.setString(2, name);
+            statement.setString(3, description);
+            statement.setDouble(4, price);
+            statement.executeUpdate();
+        }
+    }
 }

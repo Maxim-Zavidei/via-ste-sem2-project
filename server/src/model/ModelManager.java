@@ -1,6 +1,9 @@
 package model;
 
 import common.model.*;
+import daos.*;
+
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -8,21 +11,47 @@ public class ModelManager implements Model {
 
     private UserList registeredUsers;
 
+    private ProductDAOImpl productDAO;
+    private UserDAOImpl userDAO;
+    private OrderDAO orderDAO;
+
     public ModelManager() {
+        try {
+            productDAO = ProductDAOImpl.getInstance();
+            userDAO = UserDAOImpl.getInstance();
+            orderDAO = OrderDAOImpl.getInstance();
+            createDummyData();
+        } catch (SQLException throwables){
+            throwables.printStackTrace();
+        }
         registeredUsers = new UserList();
-        // Dummy data.
-        registeredUsers.addUser(new Customer("bob@gmail.com", "1234"));
-        registeredUsers.addUser(new Customer("george@gmail.com", "5678"));
-        registeredUsers.addUser(new Employee("steve@gmail.com", "9876"));
+
     }
 
     @Override
     public UserList getAllRegisteredUsers() {
-        return registeredUsers;
+
+        //return registeredUsers;
+        try {
+            return userDAO.allUsers();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
     }
 
     @Override
     public void register(String email, String password, String firstName, String lastName, LocalDate birthday, char gender) throws IllegalArgumentException, IllegalStateException {
+        checkRegister(email, password, firstName, lastName, birthday, gender);
+        try {
+            User user = userDAO.create(email, password, firstName, lastName, new DateTime(birthday.getDayOfMonth(), birthday.getMonthValue(), birthday.getYear()), gender, false);
+            //registeredUsers.addUser(user);
+        } catch (SQLException throwables){
+            throwables.printStackTrace();
+        }
+    }
+
+    private void checkRegister(String email, String password, String firstName, String lastName, LocalDate birthday, char gender){
         // Checks for null or empty arguments.
         if (email == null || email.isEmpty()) throw new IllegalArgumentException("Email can't be empty.");
         if (password == null || password.isEmpty()) throw new IllegalArgumentException("Password can't be empty.");
@@ -68,18 +97,44 @@ public class ModelManager implements Model {
 
         // Checks if an user with this email is already registered.
         if (registeredUsers.getUser(email) != null) throw new IllegalStateException("An user with this email is already registered.");
-
-        registeredUsers.addUser(new Customer(email, password, firstName, lastName, new DateTime(birthday.getYear(), birthday.getMonthValue(), birthday.getDayOfMonth()), gender));
     }
 
     @Override
     public ArrayList<Product> getCatalogOfProducts() {
         // Dummy data.
-        ArrayList<Product> toReturn = new ArrayList<>();
-        toReturn.add(new Product("1", 4, "Pain au Chocolate", "nice", 5));
-        toReturn.add(new Product("2", 1, "Golden Apple", "extra nice", 7.41));
-        toReturn.add(new Product("3", 3, "Sugar Bombs", "niche", 3.22));
-        toReturn.add(new Product("4", 7, "2 kg of Sweets", "niche extra", 1));
-        return toReturn;
+        //ArrayList<Product> toReturn = new ArrayList<>();
+       // toReturn.add(new Product("1", 4, "Pain au Chocolate", "nice", 5));
+       // toReturn.add(new Product("2", 1, "Golden Apple", "extra nice", 7.41));
+       // toReturn.add(new Product("3", 3, "Sugar Bombs", "niche", 3.22));
+        //toReturn.add(new Product("4", 7, "2 kg of Sweets", "niche extra", 1));
+        //return toReturn;
+        try {
+            return (ArrayList<Product>) ProductDAOImpl.getInstance().read();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public void createDummyData() {
+        try {
+            /** Dummy data users.*/
+            userDAO.createDummyData("bob@gmail.com", "1234", "Bob", "Bob", new DateTime(2, 3, 2001), 'M', false);
+            userDAO.createDummyData("george@gmail.com", "5678", "George", "George", new DateTime(4, 2, 2001), 'M', false);
+            userDAO.createDummyData("steve@gmail.com", "9876", "Steve", "Steve", new DateTime(26, 8, 2001), 'M', true);
+            userDAO.createDummyData("katy@gmail.com", "123456", "Katy", "Katy", new DateTime(6, 1, 2001), 'F', true);
+            /*registeredUsers.addUser(new Customer("bob@gmail.com", "1234"));
+        registeredUsers.addUser(new Customer("george@gmail.com", "5678"));
+        registeredUsers.addUser(new Employee("steve@gmail.com", "9876"));*/
+
+            /**Dummy data products.*/
+            productDAO.createDummyData(4, "Pain au Chocolate", "nice", 5);
+            productDAO.createDummyData(1, "Golden Apple", "extra nice", 7.41);
+            productDAO.createDummyData(3, "Sugar Bombs", "niche", 3.22);
+            productDAO.createDummyData(7, "2 kg of Sweets", "niche extra", 1);
+        } catch (SQLException throwables){
+            throwables.printStackTrace();
+        }
     }
 }

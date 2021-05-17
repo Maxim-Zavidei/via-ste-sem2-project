@@ -11,5 +11,6 @@ public interface ProductDAO {
     void update(Product product) throws SQLException;
     void delete(Product product) throws SQLException;
     List<Product> read() throws SQLException;
+    void createDummyData(int quantity, String name, String description, double price) throws SQLException;
 
 }

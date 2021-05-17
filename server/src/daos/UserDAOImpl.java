@@ -99,12 +99,12 @@ public class UserDAOImpl  implements UserDAO{
     }
 
     @Override
-    public List<Employee> allEmployees() throws SQLException {
+    public UserList allEmployees() throws SQLException {
         try(Connection connection = getConnection()){
             PreparedStatement statement =
                     connection.prepareStatement("SELECT * FROM \"user\" WHERE isemployee = true");
             ResultSet employeeSet = statement.executeQuery();
-            ArrayList<Employee> employees = new ArrayList<>();
+            UserList employees = new UserList();
             while (employeeSet.next()){
                 String email = employeeSet.getString("email");
                 String pass = employeeSet.getString("password");
@@ -115,9 +115,78 @@ public class UserDAOImpl  implements UserDAO{
                 int age = employeeSet.getInt("age");
                 char gender = (Character) employeeSet.getString("gender").charAt(0);
                 Employee employee = new Employee(email, pass, fname, lname, bday, gender);
-                employees.add(employee);
+                employees.addUser(employee);
             }
             return employees;
+        }
+    }
+
+    @Override
+    public UserList allCustomers() throws SQLException {
+        try (Connection connection = getConnection()) {
+            PreparedStatement statement =
+                    connection.prepareStatement("SELECT * FROM \"user\" WHERE isemployee = false");
+            ResultSet customerSet = statement.executeQuery();
+            UserList customers = new UserList();
+            while (customerSet.next()) {
+                String email = customerSet.getString("email");
+                String pass = customerSet.getString("password");
+                String fname = customerSet.getString("f_name");
+                String lname = customerSet.getString("l_name");
+                Date date = (Date) customerSet.getObject("birthday");
+                DateTime bday = new DateTime(date.toLocalDate().getDayOfMonth(), date.toLocalDate().getMonthValue(), date.toLocalDate().getYear());
+                int age = customerSet.getInt("age");
+                char gender = (Character) customerSet.getString("gender").charAt(0);
+                Customer customer = new Customer(email, pass, fname, lname, bday, gender);
+                customers.addUser(customer);
+            }
+            return customers;
+        }
+    }
+     @Override
+     public UserList allUsers() throws SQLException {
+         try (Connection connection = getConnection()) {
+             PreparedStatement statement =
+                     connection.prepareStatement("SELECT * FROM \"user\"");
+             ResultSet userSet = statement.executeQuery();
+             UserList users = new UserList();
+             while (userSet.next()) {
+                 String email = userSet.getString("email");
+                 String pass = userSet.getString("password");
+                 String fname = userSet.getString("f_name");
+                 String lname = userSet.getString("l_name");
+                 Date date = (Date) userSet.getObject("birthday");
+                 DateTime bday = new DateTime(date.toLocalDate().getDayOfMonth(), date.toLocalDate().getMonthValue(), date.toLocalDate().getYear());
+                 int age = userSet.getInt("age");
+                 char gender = (Character) userSet.getString("gender").charAt(0);
+                 boolean isEmployee = userSet.getBoolean("isemployee");
+                 if(isEmployee){
+                     Employee employee = new Employee(email, pass, fname, lname, bday, gender);
+                     users.addUser(employee);
+                 } else {
+
+                     Customer customer = new Customer(email, pass, fname, lname, bday, gender);
+                     users.addUser(customer);
+                 }
+             }
+             return users;
+         }
+     }
+
+    @Override
+    public void createDummyData(String email, String password, String firstName, String lastName, DateTime birthday, char sex, boolean isEmployee) throws SQLException {
+        try(Connection connection = getConnection()){
+            PreparedStatement statement =
+                    connection.prepareStatement("INSERT INTO \"user\"(email, password, f_name, l_name, birthday, age, gender, isemployee) VALUES( ?, ?, ?, ?, ?, ?, ?, ?) ON CONFLICT (email) DO NOTHING;");
+            statement.setString(1, email);
+            statement.setString(2, password);
+            statement.setString(3, firstName);
+            statement.setString(4, lastName);
+            statement.setObject(5, birthday.getSortableDate(), Types.DATE);
+            statement.setInt(6, DateTime.yearsBetween(birthday));
+            statement.setObject(7, sex, Types.CHAR);
+            statement.setBoolean(8, isEmployee);
+            statement.executeUpdate();
         }
     }
 }
