@@ -14,5 +14,6 @@ public interface UserDAO extends DAO{
     UserList allEmployees() throws SQLException;
     UserList allCustomers() throws SQLException;
     UserList allUsers() throws SQLException;
+    User readByEmail(String email) throws SQLException;
     void createDummyData(String email, String password, String firstName, String lastName, DateTime birthday, char sex, boolean isEmployee) throws SQLException;
 }
