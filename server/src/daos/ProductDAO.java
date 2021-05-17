@@ -6,7 +6,7 @@ import common.model.ProductsList;
 import java.sql.SQLException;
 import java.util.List;
 
-public interface ProductDAO {
+public interface ProductDAO extends DAO{
     Product create(int quantity, String name, String description, double price) throws SQLException;
     void update(Product product) throws SQLException;
     void delete(Product product) throws SQLException;

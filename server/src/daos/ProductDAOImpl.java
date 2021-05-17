@@ -10,10 +10,6 @@ import java.util.List;
 public class ProductDAOImpl implements ProductDAO{
     private  static ProductDAOImpl instance;
 
-    private static final String CONNECTION_URL = "jdbc:postgresql://localhost:5432/postgres?currentSchema=cake_store";
-    private static final String CONNECTION_USER = "postgres";
-    private static final String CONNECTION_PASSWORD = "6364";
-
     private ProductDAOImpl() throws SQLException{
         DriverManager.registerDriver(new org.postgresql.Driver());
     }

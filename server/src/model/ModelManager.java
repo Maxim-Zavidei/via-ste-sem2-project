@@ -129,6 +129,7 @@ public class ModelManager implements Model {
         registeredUsers.addUser(new Employee("steve@gmail.com", "9876"));*/
 
             /**Dummy data products.*/
+            productDAO.createDummyData(3, "Baklava", "Baklava is very tasty", 2.5);
             productDAO.createDummyData(4, "Pain au Chocolate", "nice", 5);
             productDAO.createDummyData(1, "Golden Apple", "extra nice", 7.41);
             productDAO.createDummyData(3, "Sugar Bombs", "niche", 3.22);

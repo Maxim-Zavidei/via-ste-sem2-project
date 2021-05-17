@@ -25,6 +25,18 @@ public class Order {
         return id;
     }
 
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public DateTime getDate() {
+        return date;
+    }
+
+    public HashMap<Product, Integer> getProducts() {
+        return products;
+    }
+
     /**Edit order
      * adding new product*/
     public void addNewProduct(Product product, int quantity) {

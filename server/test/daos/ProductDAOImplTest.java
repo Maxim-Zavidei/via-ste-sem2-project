@@ -1,6 +1,5 @@
 package daos;
 
-import common.model.Product;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -45,7 +44,7 @@ class ProductDAOImplTest {
     @Test
     void read() {
         try {
-            assertEquals("[id='1', quantity=3, name='Baklava', description='Baklava is very tasty', price=2.5]", productDAO.read().toString());
+            assertEquals("[id='1', quantity=3, name='Baklava', description='Baklava is very tasty', price=2.5, id='2', quantity=4, name='Pain au Chocolate', description='nice', price=5.0, id='3', quantity=1, name='Golden Apple', description='extra nice', price=7.41, id='4', quantity=3, name='Sugar Bombs', description='niche', price=3.22, id='5', quantity=7, name='2 kg of Sweets', description='niche extra', price=1.0]", productDAO.read().toString());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

@@ -11,10 +11,6 @@ import java.util.HashMap;
 public class OrderDAOImpl implements OrderDAO{
     private  static OrderDAOImpl instance;
 
-    private static final String CONNECTION_URL = "jdbc:postgresql://localhost:5432/postgres?currentSchema=cake_store";
-    private static final String CONNECTION_USER = "postgres";
-    private static final String CONNECTION_PASSWORD = "6364";
-
     private OrderDAOImpl() throws SQLException {
         DriverManager.registerDriver(new org.postgresql.Driver());
     }
@@ -50,13 +46,43 @@ public class OrderDAOImpl implements OrderDAO{
     }
 
     @Override
-    public void update() {
-
+    public void update(Order order) throws SQLException{
+        try(Connection connection = getConnection()){
+            PreparedStatement statement =
+                    connection.prepareStatement("UPDATE order SET date = ?, email = ? WHERE id = ?");
+            statement.setObject(1, order.getDate(), Types.DATE);
+            statement.setString(2, order.getCustomer().getEmail());
+            statement.setString(3, order.getId());
+            statement.executeUpdate();
+            updateProductOrder(order);
+        }
     }
 
     @Override
-    public void delete() {
+    public void updateProductOrder(Order order) throws SQLException{
+        try(Connection connection = getConnection()) {
+            int size = order.getProducts().size();
+            Product[] product = order.getProducts().keySet().toArray(Product[]::new);
+            Integer[] quantities = order.getProducts().values().toArray(new Integer[0]);
+            for (int i = 0; i < size; i++) {
+                PreparedStatement statement =
+                        connection.prepareStatement("UPDATE productorder SET quantity = ?) WHERE orderid = ? AND productid = ?;");
+                statement.setInt(1, quantities[i]);
+                statement.setString(2, order.getId());
+                statement.setString(3, product[i].getId());
+                statement.executeUpdate();
+            }
+        }
+    }
 
+    @Override
+    public void delete(Order order) throws SQLException {
+        try(Connection connection = getConnection()){
+            PreparedStatement statement =
+                    connection.prepareStatement("DELETE FROM order WHERE id = ?");
+            statement.setInt(1, Integer.parseInt(order.getId()));
+            statement.executeUpdate();
+        }
     }
 
     @Override
@@ -67,7 +93,7 @@ public class OrderDAOImpl implements OrderDAO{
             Integer[] quantities = products.values().toArray(new Integer[0]);
             for(int i = 0; i<size; i++){
                 PreparedStatement statement =
-                        connection.prepareStatement("INSERT INTO productorder(orderid, productid, quantity) VALUES(?, ?);");
+                        connection.prepareStatement("INSERT INTO productorder(orderid, productid, quantity) VALUES(?, ?, ?);");
                 statement.setString(1, orderId);
                 statement.setString(2, product[i].getId());
                 statement.setInt(3, quantities[i]);

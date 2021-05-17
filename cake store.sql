@@ -24,7 +24,7 @@ CREATE TABLE cake_store.order(
 CREATE TABLE cake_store.product(
 	id SERIAL PRIMARY KEY,
     quantity INT,
-    name VARCHAR(100),
+    name VARCHAR(100) UNIQUE,
     description VARCHAR(10000),
     price DECIMAL(5,2)
 );
