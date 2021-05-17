@@ -76,10 +76,10 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public void delete(User user) throws SQLException {
+    public void delete(String email) throws SQLException {
         try (Connection connection = getConnection()) {
             PreparedStatement statement = connection.prepareStatement("DELETE FROM \"user\" WHERE email = ?");
-            statement.setInt(1, Integer.parseInt(user.getEmail()));
+            statement.setInt(1, Integer.parseInt(email));
             statement.executeUpdate();
         }
     }
