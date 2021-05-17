@@ -3,12 +3,13 @@ package model;
 import common.model.Product;
 import common.model.User;
 import mediator.Client;
+import mediator.ClientTarget;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class ModelManager implements Model {
 
-    private Client client;
+    private ClientTarget client;
 
     public ModelManager() throws Exception {
         try {

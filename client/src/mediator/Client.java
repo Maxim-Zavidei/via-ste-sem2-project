@@ -4,14 +4,13 @@ import common.model.Product;
 import common.model.User;
 import common.network.RemoteClientInterface;
 import common.network.RemoteServerInterface;
-import model.Model;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Client implements Model, RemoteClientInterface {
+public class Client implements ClientTarget, RemoteClientInterface {
 
     private RemoteServerInterface server;
 
