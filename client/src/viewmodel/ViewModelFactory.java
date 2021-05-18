@@ -1,6 +1,7 @@
 package viewmodel;
 
 import model.Model;
+import view.ViewState;
 
 public class ViewModelFactory {
 
@@ -12,16 +13,20 @@ public class ViewModelFactory {
     private ManageProductsViewModel manageProductsViewModel;
     private AddProductPopUpViewModel addProductPopUpViewModel;
     private UserViewModel userViewModel;
+    private UserManageViewModel userManageViewModel;
+    private ViewState viewState;
 
     public ViewModelFactory(Model model) {
+        this.viewState = new ViewState();
         this.authenticationViewModel = new AuthenticationViewModel(model);
         this.registrationViewModel = new RegistrationViewModel(model);
         this.catalogViewModel = new CatalogViewModel(model);
         this.basketViewModel = new BasketViewModel(model);
         this.catalogBasketViewState = new CatalogBasketViewState();
-        this.userViewModel = new UserViewModel(null);
+        this.userViewModel = new UserViewModel(model);
         this.manageProductsViewModel = new ManageProductsViewModel(model);
         this.addProductPopUpViewModel = new AddProductPopUpViewModel(model);
+        this.userManageViewModel = new UserManageViewModel(model, viewState);
     }
 
     public AuthenticationViewModel getAuthenticationViewModel() {
@@ -52,7 +57,17 @@ public class ViewModelFactory {
         return addProductPopUpViewModel;
     }
 
-    public UserViewModel getEmployeeViewModel() {
+    public UserViewModel getUserViewModel() {
         return userViewModel;
+    }
+
+    public UserManageViewModel getUserManageViewModel()
+    {
+        return userManageViewModel;
+    }
+
+    public ViewState getViewState()
+    {
+        return viewState;
     }
 }
