@@ -66,8 +66,8 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void addProduct(Product product) throws Exception {
-        client.addProduct(product);
+    public void addProduct(int quantity, String name, String description, double price) throws Exception {
+        client.addProduct(quantity,name, description, price);
     }
 
     @Override

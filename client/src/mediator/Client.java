@@ -81,8 +81,8 @@ public class Client implements ClientTarget, RemoteClientInterface {
     }
 
     @Override
-    public void addProduct(Product product) throws Exception {
-        server.addProduct(product);
+    public void addProduct(int quantity, String name, String description, double price) throws Exception {
+        server.addProduct(quantity, name, description, price);
     }
 
     @Override

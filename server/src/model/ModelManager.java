@@ -105,10 +105,16 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void addProduct(Product product) throws IllegalStateException {
+    public void addProduct(int quantity, String name, String description, double price) throws IllegalStateException {
+        if (quantity < 1) throw new IllegalArgumentException("Product quantity can't be less then 1.");
+        if (name == null || name.isEmpty()) throw new IllegalArgumentException("Product name can't be empty.");
+        if (name.length() > 100) throw new IllegalArgumentException("Product name can't be longer then 100 chars.");
+        if (description == null) description = "";
+        if (description.length() > 10000) throw new IllegalArgumentException("Product description can't be longer then 10 000 chars.");
+        if (price < 0) throw new IllegalArgumentException("Product price can't be negative.");
         try {
-            if (!productDAO.readByName(product.getName()).isEmpty()) throw new IllegalStateException("A product with this name already exists.");
-            productDAO.create(product.getQuantity(), product.getName(), product.getDescription(), product.getPrice());
+            if (!productDAO.readByName(name).isEmpty()) throw new IllegalStateException("A product with this name already exists.");
+            productDAO.create(quantity, name, description, price);
         } catch (SQLException e) {
             throw new IllegalStateException("Server is unavailable at the moment. Try Later.");
         }

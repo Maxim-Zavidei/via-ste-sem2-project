@@ -89,7 +89,7 @@ public class AuthenticationProxy implements RemoteServerInterface {
     }
 
     @Override
-    public void addProduct(Product product) throws RemoteException {
+    public void addProduct(int quantity, String name, String description, double price) throws RemoteException {
         throw new IllegalStateException("Authenticate in order to perform this request.");
     }
 
