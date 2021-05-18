@@ -2,6 +2,7 @@ package common.model;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 
 public class DateTime implements Serializable {
@@ -26,6 +27,15 @@ public class DateTime implements Serializable {
         this.day = day;
         this.month = month;
         this.year = year;
+    }
+    public DateTime(LocalDate date){
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        this.time = formatter.format(date);
+        String help = this.time.substring(0,10);
+        String[] helps = help.split("/");
+        this.day = Integer.parseInt(helps[0]);
+        this.month = Integer.parseInt(helps[1]);
+        this.year = Integer.parseInt(helps[2]);
     }
 
     public String getTimestamp() {

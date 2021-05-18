@@ -2,6 +2,8 @@ package common.network;
 
 import common.model.Product;
 import common.model.User;
+import common.model.UserList;
+
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.time.LocalDate;
@@ -14,4 +16,5 @@ public interface RemoteServerInterface extends Remote {
     User getAuthenticatedUser() throws RemoteException;
     ArrayList<Product> getCatalogOfProducts() throws RemoteException;
     void addProduct(Product product) throws RemoteException;
+    UserList getUsers() throws RemoteException;
 }

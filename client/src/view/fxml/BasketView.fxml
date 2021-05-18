@@ -1,34 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.Group?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.BoxBlur?>
-<?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.effect.Glow?>
-<?import javafx.scene.effect.InnerShadow?>
-<?import javafx.scene.effect.Light.Distant?>
-<?import javafx.scene.effect.Lighting?>
-<?import javafx.scene.effect.Shadow?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.paint.LinearGradient?>
-<?import javafx.scene.paint.RadialGradient?>
-<?import javafx.scene.paint.Stop?>
-<?import javafx.scene.shape.Circle?>
-<?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.shape.SVGPath?>
-<?import javafx.scene.text.Font?>
-
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.BasketViewController">
    <children>
       <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -70,61 +49,37 @@
                   <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="300.0">
                      <children>
                         <Button mnemonicParsing="false" onAction="#openCatalogView" opacity="0.75" prefHeight="50.0" prefWidth="261.0" styleClass="menu-button" text="Catalog" textAlignment="CENTER">
-                           <effect>
-                              <DropShadow color="#1e0518d1" height="8.02" radius="2.9875" width="5.93">
-                                 <input>
-                                    <InnerShadow choke="0.02" height="29.6625" radius="14.330625000000001" width="29.66">
-                                       <input>
-                                          <Glow level="0.17" />
-                                       </input>
-                                    </InnerShadow>
-                                 </input>
-                              </DropShadow>
-                           </effect>
                            <font>
                               <Font name="Forte" size="31.0" />
                            </font>
                            <VBox.margin>
-                              <Insets bottom="5.0" top="5.0" />
+                              <Insets top="10.0" />
                            </VBox.margin>
+                           <effect>
+                              <InnerShadow choke="0.01" color="#471d5f" height="91.68" radius="45.545" width="92.5" />
+                           </effect>
                         </Button>
                         <Button fx:id="manageProductsButton" mnemonicParsing="false" onAction="#openProductManagementView" opacity="0.75" prefHeight="50.0" prefWidth="261.0" styleClass="menu-button" text="Manage Products" textAlignment="CENTER">
-                           <effect>
-                              <DropShadow color="#1e0518d1" height="8.02" radius="2.9875" width="5.93">
-                                 <input>
-                                    <InnerShadow choke="0.02" height="29.6625" radius="14.330625000000001" width="29.66">
-                                       <input>
-                                          <Glow level="0.17" />
-                                       </input>
-                                    </InnerShadow>
-                                 </input>
-                              </DropShadow>
-                           </effect>
                            <font>
                               <Font name="Forte" size="31.0" />
                            </font>
                            <VBox.margin>
-                              <Insets bottom="5.0" top="5.0" />
+                              <Insets top="10.0" />
                            </VBox.margin>
+                           <effect>
+                              <InnerShadow choke="0.01" color="#471d5f" height="91.68" radius="45.545" width="92.5" />
+                           </effect>
                         </Button>
                         <Button fx:id="manageUsersButton" mnemonicParsing="false" onAction="#openUserManagementView" opacity="0.75" prefHeight="50.0" prefWidth="261.0" styleClass="menu-button" text="Manage Users" textAlignment="CENTER">
-                           <effect>
-                              <DropShadow color="#1e0518d1" height="8.02" radius="2.9875" width="5.93">
-                                 <input>
-                                    <InnerShadow choke="0.02" height="29.6625" radius="14.330625000000001" width="29.66">
-                                       <input>
-                                          <Glow level="0.17" />
-                                       </input>
-                                    </InnerShadow>
-                                 </input>
-                              </DropShadow>
-                           </effect>
                            <font>
                               <Font name="Forte" size="31.0" />
                            </font>
                            <VBox.margin>
-                              <Insets bottom="10.0" top="5.0" />
+                              <Insets top="10.0" />
                            </VBox.margin>
+                           <effect>
+                              <InnerShadow choke="0.01" color="#471d5f" height="91.68" radius="45.545" width="92.5" />
+                           </effect>
                         </Button>
                      </children>
                   </VBox>
@@ -167,7 +122,7 @@
                               </StackPane>
                            </children>
                            <effect>
-                              <InnerShadow color="#000000d9" height="26.93" offsetY="1.0" width="15.07" />
+                              <InnerShadow choke="0.2" color="#471d5fd9" height="63.41" offsetY="1.0" radius="32.2275" width="67.5" />
                            </effect>
                         </HBox>
                      </children>
@@ -183,9 +138,43 @@
                <children>
                   <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="90.0" prefWidth="900.0" styleClass="top-panel" stylesheets="@../css/BasketView.css">
                      <effect>
-                        <DropShadow height="35.83" radius="8.4575" width="0.0" />
+                        <DropShadow color="#461d5e" height="17.92" radius="3.9800000000000004" width="0.0" />
                      </effect>
                      <children>
+                        <Pane prefHeight="90.0" prefWidth="607.0">
+                           <children>
+                              <Button layoutX="83.0" layoutY="27.0" mnemonicParsing="false" onAction="#clearBasket" text="CLEAR THE CART" textAlignment="CENTER">
+                                 <font>
+                                    <Font name="System Bold" size="16.0" />
+                                 </font>
+                                 <effect>
+                                    <Lighting diffuseConstant="1.66" specularConstant="0.32" specularExponent="24.86" surfaceScale="1.96">
+                                       <bumpInput>
+                                          <Shadow blurType="GAUSSIAN" color="#24ff03" height="255.0" radius="118.66" width="221.64" />
+                                       </bumpInput>
+                                       <light>
+                                          <Light.Distant color="#ffb1b1" />
+                                       </light>
+                                    </Lighting>
+                                 </effect>
+                              </Button>
+                              <Button layoutX="282.0" layoutY="27.0" mnemonicParsing="false" onAction="#dropFromBasket" text="DROP FROM CART" textAlignment="CENTER">
+                                 <font>
+                                    <Font name="System Bold" size="16.0" />
+                                 </font>
+                                 <effect>
+                                    <Lighting diffuseConstant="1.66" specularConstant="0.32" specularExponent="24.86" surfaceScale="1.96">
+                                       <bumpInput>
+                                          <Shadow blurType="GAUSSIAN" color="#24ff03" height="255.0" radius="118.66" width="221.64" />
+                                       </bumpInput>
+                                       <light>
+                                          <Light.Distant color="#ffb1b1" />
+                                       </light>
+                                    </Lighting>
+                                 </effect>
+                              </Button>
+                           </children>
+                        </Pane>
                         <Label fx:id="usernameLabel" prefHeight="40.0" prefWidth="350.0" textFill="WHITE">
                            <font>
                               <Font name="Bodoni MT Italic" size="31.0" />
@@ -203,7 +192,7 @@
                      <children>
                         <StackPane alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="475.0" prefWidth="900.0">
                            <children>
-                              <TableView fx:id="basketTable" editable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="475.0" prefWidth="900.0">
+                              <TableView fx:id="basketTable" editable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="475.0" prefWidth="900.0" stylesheets="@../css/table.css">
                                  <columns>
                                     <TableColumn fx:id="basketQuantityColumn" prefWidth="87.0" resizable="false" style="-fx-alignment: CENTER;" text="Quantity" />
                                     <TableColumn fx:id="basketNameColumn" editable="false" minWidth="0.0" prefWidth="533.0" text="Name" />
@@ -211,8 +200,14 @@
                                     <TableColumn fx:id="basketCostColumn" editable="false" minWidth="0.0" prefWidth="139.0" resizable="false" style="-fx-alignment: CENTER;" text="Total Cost" />
                                  </columns>
                               </TableView>
-                           </children></StackPane>
+                           </children>
+                           <effect>
+                              <DropShadow color="#461d5e" height="98.9" offsetX="10.0" offsetY="8.0" radius="33.160000000000004" width="35.74" />
+                           </effect></StackPane>
                      </children>
+                     <effect>
+                        <InnerShadow choke="0.6" color="#461d5e" height="16.23" radius="9.4025" width="23.38" />
+                     </effect>
                   </HBox>
                   <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="135.0" prefWidth="900.0">
                      <effect>
@@ -239,7 +234,11 @@
                                           <Font name="Bodoni MT" size="14.0" />
                                        </font>
                                     </Label>
-                                    <Button layoutX="241.0" layoutY="43.0" mnemonicParsing="false" onAction="#clearBasket" text="CLEAR THE CART" textAlignment="CENTER">
+                                    <TextField fx:id="inputCouponField" layoutX="460.0" layoutY="53.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="39.0" prefWidth="221.0" promptText="Coupon">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font></TextField>
+                                    <Button layoutX="279.0" layoutY="54.0" mnemonicParsing="false" onAction="#applyCoupon" prefHeight="17.0" prefWidth="149.0" text="APPLY COUPON" textAlignment="CENTER">
                                        <font>
                                           <Font name="System Bold" size="16.0" />
                                        </font>
@@ -254,7 +253,7 @@
                                           </Lighting>
                                        </effect>
                                     </Button>
-                                    <Button layoutX="52.0" layoutY="43.0" mnemonicParsing="false" onAction="#dropFromBasket" text="DROP FROM CART" textAlignment="CENTER">
+                                    <Button layoutX="91.0" layoutY="54.0" mnemonicParsing="false" onAction="#placeOrder" prefHeight="30.0" prefWidth="87.0" text="ORDER" textAlignment="CENTER">
                                        <font>
                                           <Font name="System Bold" size="16.0" />
                                        </font>
@@ -269,72 +268,64 @@
                                           </Lighting>
                                        </effect>
                                     </Button>
-                                    <Label layoutX="437.0" layoutY="30.0" text="Order Details">
-                                       <font>
-                                          <Font size="26.0" />
-                                       </font>
-                                    </Label>
-                                    <Label layoutX="628.0" layoutY="28.0" text="Total: ">
-                                       <font>
-                                          <Font size="20.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="priceLabel" layoutX="710.0" layoutY="28.0" text="0">
-                                       <font>
-                                          <Font size="20.0" />
-                                       </font>
-                                    </Label>
-                                    <Label layoutX="599.0" layoutY="53.0" text="Discount:" textFill="#79df25">
-                                       <font>
-                                          <Font size="20.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="discountLabel" layoutX="716.0" layoutY="61.0" text="0" textFill="#79df25">
-                                       <font>
-                                          <Font size="20.0" />
-                                       </font>
-                                    </Label>
-                                    <TextField fx:id="inputCouponField" layoutX="99.0" layoutY="83.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="211.0" promptText="Coupon" />
-                                    <Button layoutX="405.0" layoutY="74.0" mnemonicParsing="false" onAction="#applyCoupon" prefHeight="17.0" prefWidth="149.0" text="APPLY COUPON" textAlignment="CENTER">
-                                       <font>
-                                          <Font name="System Bold" size="12.0" />
-                                       </font>
-                                       <effect>
-                                          <Lighting diffuseConstant="1.66" specularConstant="0.32" specularExponent="24.86" surfaceScale="1.96">
-                                             <bumpInput>
-                                                <Shadow blurType="GAUSSIAN" color="#24ff03" height="255.0" radius="118.66" width="221.64" />
-                                             </bumpInput>
-                                             <light>
-                                                <Light.Distant color="#ffb1b1" />
-                                             </light>
-                                          </Lighting>
-                                       </effect>
-                                    </Button>
-                                    <Label layoutX="713.0" layoutY="83.0" text="Final Price: ">
-                                       <font>
-                                          <Font name="System Bold" size="20.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="finalPriceLabel" layoutX="846.0" layoutY="78.0" text="0">
-                                       <font>
-                                          <Font name="System Bold" size="20.0" />
-                                       </font>
-                                    </Label>
-                                    <Button layoutX="25.0" layoutY="81.0" mnemonicParsing="false" onAction="#placeOrder" prefHeight="30.0" prefWidth="87.0" text="ORDER" textAlignment="CENTER">
-                                       <font>
-                                          <Font name="System Bold" size="16.0" />
-                                       </font>
-                                       <effect>
-                                          <Lighting diffuseConstant="1.66" specularConstant="0.32" specularExponent="24.86" surfaceScale="1.96">
-                                             <bumpInput>
-                                                <Shadow blurType="GAUSSIAN" color="#24ff03" height="255.0" radius="118.66" width="221.64" />
-                                             </bumpInput>
-                                             <light>
-                                                <Light.Distant color="#ffb1b1" />
-                                             </light>
-                                          </Lighting>
-                                       </effect>
-                                    </Button>
+                                    <VBox layoutX="695.0" prefHeight="143.0" prefWidth="208.0">
+                                       <children>
+                                          <Label fx:id="priceLabel" text="0" textFill="WHITE">
+                                             <font>
+                                                <Font name="System Bold" size="20.0" />
+                                             </font>
+                                             <graphic>
+                                                <Label text="Total: " textFill="WHITE">
+                                                   <font>
+                                                      <Font name="System Bold" size="20.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets right="79.0" />
+                                                   </padding>
+                                                </Label>
+                                             </graphic>
+                                             <padding>
+                                                <Insets bottom="5.0" />
+                                             </padding>
+                                          </Label>
+                                          <Label fx:id="discountLabel" text="0" textFill="#79df25">
+                                             <font>
+                                                <Font name="System Bold" size="20.0" />
+                                             </font>
+                                             <graphic>
+                                                <Label text="Discount:" textFill="#79df25">
+                                                   <font>
+                                                      <Font name="System Bold" size="20.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets right="50.0" />
+                                                   </padding>
+                                                </Label>
+                                             </graphic>
+                                             <padding>
+                                                <Insets bottom="5.0" />
+                                             </padding>
+                                          </Label>
+                                          <Label fx:id="finalPriceLabel" text="0" textFill="WHITE">
+                                             <font>
+                                                <Font name="System Bold" size="20.0" />
+                                             </font>
+                                             <graphic>
+                                                <Label text="Final Price: " textFill="WHITE">
+                                                   <font>
+                                                      <Font name="System Bold" size="20.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets bottom="5.0" right="30.0" />
+                                                   </padding>
+                                                </Label>
+                                             </graphic>
+                                          </Label>
+                                       </children>
+                                       <padding>
+                                          <Insets bottom="20.0" top="20.0" />
+                                       </padding>
+                                    </VBox>
                                  </children></Pane>
                            </children>
                         </StackPane>

@@ -2,6 +2,8 @@ package mediator;
 
 import common.model.Product;
 import common.model.User;
+import common.model.UserList;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -13,4 +15,5 @@ public interface ClientTarget {
     User getAuthenticatedUser() throws Exception;
     ArrayList<Product> getCatalogOfProducts() throws Exception;
     void addProduct(Product product) throws Exception;
+    UserList getUsers() throws Exception;
 }

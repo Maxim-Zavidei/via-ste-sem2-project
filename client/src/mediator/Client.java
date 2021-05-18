@@ -2,6 +2,7 @@ package mediator;
 
 import common.model.Product;
 import common.model.User;
+import common.model.UserList;
 import common.network.RemoteClientInterface;
 import common.network.RemoteServerInterface;
 import java.rmi.Naming;
@@ -69,5 +70,9 @@ public class Client implements ClientTarget, RemoteClientInterface {
         server.addProduct(product);
     }
 
+    @Override public UserList getUsers() throws Exception
+    {
+        return server.getUsers();
+    }
 
 }

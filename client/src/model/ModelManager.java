@@ -2,6 +2,7 @@ package model;
 
 import common.model.Product;
 import common.model.User;
+import common.model.UserList;
 import mediator.Client;
 import mediator.ClientTarget;
 import java.time.LocalDate;
@@ -47,6 +48,11 @@ public class ModelManager implements Model {
     @Override
     public ArrayList<Product> getCatalogOfProducts() throws Exception {
         return client.getCatalogOfProducts();
+    }
+
+    @Override public UserList getUsers() throws Exception
+    {
+        return client.getUsers();
     }
 
     @Override

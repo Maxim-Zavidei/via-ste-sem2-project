@@ -1,6 +1,7 @@
 package view;
 
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import viewmodel.ViewModelFactory;
@@ -27,6 +28,8 @@ public class ViewHandler extends ViewCreator {
         currentScene.setRoot(root);
 
         String title;
+        primaryStage.getIcons().add(new Image("file:assets/cake2.png"));
+
         primaryStage.setTitle((title = (String) root.getUserData()) != null ? title : "");
         primaryStage.setScene(currentScene);
         primaryStage.setWidth(root.getPrefWidth() + 16);

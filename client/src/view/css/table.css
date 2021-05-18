@@ -11,10 +11,10 @@
 }
 
 .table-view .column-header-background{
-    -fx-background-color: linear-gradient(to bottom, #e8b0a9,#f0d0cc );
-    -fx-background-radius: 7px 7px 0px 0px;
+    -fx-background-color: linear-gradient(to bottom, #ae298fcc,#ffb1b1cc );
+    -fx-background-radius: 9px 9px 0px 0px;
     -fx-background-insets: 0 0 0 0;
-    -fx-padding: 0 0 5px 0;
+    -fx-padding: 0 0 0 0;
 }
 
 .table-view .column-header {
@@ -25,16 +25,18 @@
     -fx-padding: 2 0 2 10px;
 }
 .table-row-cell: hover {
-    -fx-background-color: #ffb1b1;
+    -fx-background-color: #461d5e;
     -fx-text-background-color: #ffb1b1;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em;
 }
 .table-row-cell: odd {
-    -fx-background-color: white;
+    -fx-background-color: #ae298fcc;
     -fx-background-insets: 0, 0 0 1 0;
     -fx-padding: 0.0em;
 }
 .table-row-cell: even {
-    -fx-background-color: #f5e1df;
+    -fx-background-color: #ffb1b1cc;
     -fx-background-insets: 0, 0 0 1 0;
     -fx-padding: 0.0em;
 }
@@ -53,15 +55,15 @@
     -fx-padding: 2;
 }
 .table-view .virtual-flow .scroll-bar:vertical .thumb{
-    -fx-background-color:  linear-gradient(to bottom, #e8b0a9,#f0d0cc);
+    -fx-background-color:  linear-gradient(to bottom, #ae298fcc,#ffb1b1cc);
 }
 .table-view .virtual-flow .scroll-bar:horizontal .thumb {
-    -fx-background-color:  linear-gradient(to right, #e8b0a9,#f0d0cc);
+    -fx-background-color:  linear-gradient(to right,#ae298fcc,#ffb1b1cc);
 }
 .table-row-cell:selected {
-    -fx-background-color: #0a1e20;
+    -fx-background-color: #FFF800;
 }
 .table-row-cell:selected .text {
-    -fx-fill: #f5e1df ;
+    -fx-fill: #461d5e ;
 
 }

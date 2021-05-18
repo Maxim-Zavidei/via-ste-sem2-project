@@ -1,30 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.Group?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.effect.BoxBlur?>
-<?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.effect.Glow?>
-<?import javafx.scene.effect.InnerShadow?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.paint.LinearGradient?>
-<?import javafx.scene.paint.RadialGradient?>
-<?import javafx.scene.paint.Stop?>
-<?import javafx.scene.shape.Circle?>
-<?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.shape.SVGPath?>
-<?import javafx.scene.text.Font?>
-
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.CatalogViewController">
    <children>
       <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -66,60 +49,36 @@
                   <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="300.0">
                      <children>
                         <Button mnemonicParsing="false" onAction="#openBasketView" opacity="0.75" prefHeight="50.0" prefWidth="261.0" styleClass="menu-button" text="Basket" textAlignment="CENTER">
-                           <effect>
-                              <DropShadow color="#1e0518d1" height="8.02" radius="2.9875" width="5.93">
-                                 <input>
-                                    <InnerShadow choke="0.02" height="29.6625" radius="14.330625000000001" width="29.66">
-                                       <input>
-                                          <Glow level="0.17" />
-                                       </input>
-                                    </InnerShadow>
-                                 </input>
-                              </DropShadow>
-                           </effect>
                            <font>
                               <Font name="Forte" size="31.0" />
                            </font>
                            <VBox.margin>
-                              <Insets bottom="5.0" top="5.0" />
+                              <Insets top="10.0" />
                            </VBox.margin>
+                           <effect>
+                              <InnerShadow choke="0.01" color="#471d5f" height="91.68" radius="45.545" width="92.5" />
+                           </effect>
                         </Button>
                         <Button fx:id="manageProductsButton" mnemonicParsing="false" onAction="#openProductManagementView" opacity="0.75" prefHeight="50.0" prefWidth="261.0" styleClass="menu-button" text="Manage Products" textAlignment="CENTER">
-                           <effect>
-                              <DropShadow color="#1e0518d1" height="8.02" radius="2.9875" width="5.93">
-                                 <input>
-                                    <InnerShadow choke="0.02" height="29.6625" radius="14.330625000000001" width="29.66">
-                                       <input>
-                                          <Glow level="0.17" />
-                                       </input>
-                                    </InnerShadow>
-                                 </input>
-                              </DropShadow>
-                           </effect>
                            <font>
                               <Font name="Forte" size="31.0" />
                            </font>
+                           <effect>
+                              <InnerShadow choke="0.01" color="#471d5f" height="90.86" radius="45.34" width="92.5" />
+                           </effect>
                            <VBox.margin>
-                              <Insets bottom="5.0" top="5.0" />
+                              <Insets top="10.0" />
                            </VBox.margin>
                         </Button>
                         <Button fx:id="manageUsersButton" mnemonicParsing="false" onAction="#openUserManagementView" opacity="0.75" prefHeight="50.0" prefWidth="261.0" styleClass="menu-button" text="Manage Users" textAlignment="CENTER">
-                           <effect>
-                              <DropShadow color="#1e0518d1" height="8.02" radius="2.9875" width="5.93">
-                                 <input>
-                                    <InnerShadow choke="0.02" height="29.6625" radius="14.330625000000001" width="29.66">
-                                       <input>
-                                          <Glow level="0.17" />
-                                       </input>
-                                    </InnerShadow>
-                                 </input>
-                              </DropShadow>
-                           </effect>
                            <font>
                               <Font name="Forte" size="31.0" />
                            </font>
+                           <effect>
+                              <InnerShadow choke="0.01" color="#471d5f" height="90.86" radius="45.34" width="92.5" />
+                           </effect>
                            <VBox.margin>
-                              <Insets bottom="10.0" top="5.0" />
+                              <Insets top="10.0" />
                            </VBox.margin>
                         </Button>
                      </children>
@@ -147,7 +106,7 @@
                                           <Font name="Forte" size="31.0" />
                                        </font>
                                        <effect>
-                                          <DropShadow color="#000000df" height="6.86" offsetY="2.0" radius="3.5" width="9.14">
+                                          <DropShadow color="#000000df" height="8.0" offsetY="2.0" radius="3.785" width="9.14">
                                              <input>
                                                 <Glow level="0.17" />
                                              </input>
@@ -160,10 +119,20 @@
                                        </font>
                                     </Button>
                                  </children>
+                                 <effect>
+                                    <Lighting>
+                                       <bumpInput>
+                                          <Shadow />
+                                       </bumpInput>
+                                       <light>
+                                          <Light.Distant />
+                                       </light>
+                                    </Lighting>
+                                 </effect>
                               </StackPane>
                            </children>
                            <effect>
-                              <InnerShadow color="#000000d9" height="26.93" offsetY="1.0" width="15.07" />
+                              <InnerShadow choke="0.2" color="#471d5fd9" height="63.41" offsetY="1.0" radius="32.2275" width="67.5" />
                            </effect>
                         </HBox>
                      </children>
@@ -178,9 +147,6 @@
             <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                <children>
                   <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="90.0" prefWidth="900.0" styleClass="top-panel" stylesheets="@../css/CatalogView.css">
-                     <effect>
-                        <DropShadow height="35.83" radius="8.4575" width="0.0" />
-                     </effect>
                      <children>
                         <Label fx:id="usernameLabel" prefHeight="40.0" prefWidth="350.0" textFill="WHITE">
                            <font>
@@ -194,12 +160,15 @@
                            </effect>
                         </Label>
                      </children>
+                     <effect>
+                        <DropShadow height="8.96" radius="1.7400000000000002" width="0.0" />
+                     </effect>
                   </HBox>
                   <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="475.0" prefWidth="900.0" styleClass="catalog-panel" stylesheets="@../css/CatalogView.css">
                      <children>
                         <StackPane alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="475.0" prefWidth="900.0">
                            <children>
-                              <TableView fx:id="catalogTable" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="475.0" prefWidth="900.0">
+                              <TableView fx:id="catalogTable" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="475.0" prefWidth="900.0" stylesheets="@../css/table.css">
                                  <columns>
                                     <TableColumn fx:id="catalogAvailabilityColumn" prefWidth="99.0" resizable="false" style="-fx-alignment: CENTER;" text="Available Units" />
                                     <TableColumn fx:id="catalogNameColumn" minWidth="0.0" prefWidth="198.0" text="Name" />
@@ -210,11 +179,11 @@
                            </children>
                         </StackPane>
                      </children>
+                     <effect>
+                        <InnerShadow choke="0.52" color="#461d5e" radius="11.7875" width="28.15" />
+                     </effect>
                   </HBox>
                   <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="135.0" prefWidth="900.0">
-                     <effect>
-                        <InnerShadow blurType="TWO_PASS_BOX" height="65.23" radius="15.807500000000001" width="0.0" />
-                     </effect>
                      <children>
                         <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.88" prefHeight="135.0" prefWidth="900.0">
                            <children>
@@ -230,21 +199,34 @@
                               </Rectangle>
                               <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="135.0" prefWidth="900.0">
                                  <children>
-                                    <Button layoutX="716.0" layoutY="59.0" mnemonicParsing="false" onAction="#addToBasket" text="ADD TO CART" textAlignment="CENTER">
-                                       <font>
-                                          <Font name="System Bold" size="16.0" />
-                                       </font>
-                                    </Button>
                                     <Separator layoutX="11.0" layoutY="14.0" prefHeight="8.0" prefWidth="878.0" />
                                     <Label fx:id="errorLabel" alignment="CENTER" layoutX="145.0" layoutY="96.0" prefHeight="27.0" prefWidth="611.0" textFill="WHITE">
                                        <font>
                                           <Font name="Bodoni MT" size="14.0" />
                                        </font>
                                     </Label>
+                                    <Button layoutX="81.0" layoutY="49.0" mnemonicParsing="false" onAction="#addToBasket" text="ADD TO CART" textAlignment="CENTER">
+                                       <font>
+                                          <Font name="System Bold" size="16.0" />
+                                       </font>
+                                       <effect>
+                                          <Lighting diffuseConstant="1.66" specularConstant="0.32" specularExponent="24.86" surfaceScale="1.96">
+                                             <bumpInput>
+                                                <Shadow blurType="GAUSSIAN" color="#24ff03" height="255.0" radius="118.66" width="221.64" />
+                                             </bumpInput>
+                                             <light>
+                                                <Light.Distant color="#ffb1b1" />
+                                             </light>
+                                          </Lighting>
+                                       </effect>
+                                    </Button>
                                  </children></Pane>
                            </children>
                         </StackPane>
                      </children>
+                     <effect>
+                        <InnerShadow blurType="TWO_PASS_BOX" height="32.615" radius="7.6537500000000005" width="0.0" />
+                     </effect>
                   </HBox>
                </children>
             </VBox>
