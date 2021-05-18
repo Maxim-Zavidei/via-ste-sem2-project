@@ -81,7 +81,7 @@ public class CatalogViewController extends ViewController {
         try {
             viewHandler.openView(View.BASKET);
         } catch (Exception e) {
-            viewModel.getErrorProperty().set("Could not manage basket at this time. Try later.");
+            viewModel.getErrorProperty().set("Can not manage the basket at this time. Try later.");
         }
     }
 
@@ -90,7 +90,7 @@ public class CatalogViewController extends ViewController {
         try {
             viewHandler.openView(View.MANAGEPRODUCTS);
         } catch (Exception e) {
-            viewModel.getErrorProperty().set("Could not manage products at this time. Try later.");
+            viewModel.getErrorProperty().set("Can not manage products at this time. Try later.");
         }
     }
 
@@ -99,7 +99,7 @@ public class CatalogViewController extends ViewController {
         try {
             viewHandler.openView(View.USERS);
         } catch (Exception e) {
-            viewModel.getErrorProperty().set("Could not manage users at this time. Try later.");
+            viewModel.getErrorProperty().set("Can not manage users at this time. Try later.");
         }
     }
 
