@@ -29,6 +29,7 @@ public class ModelManager implements Model {
 //        productDAO.create(1, "Golden Apple", "extra nice", 7.41);
 //        productDAO.create(3, "Sugar Bombs", "niche", 3.22);
 //        productDAO.create(7, "2 kg of Sweets", "niche extra", 1);
+
     }
 
     @Override
