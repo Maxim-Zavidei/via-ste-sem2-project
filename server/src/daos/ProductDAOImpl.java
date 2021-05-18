@@ -87,6 +87,25 @@ public class ProductDAOImpl implements ProductDAO{
         }
     }
 
+    public List<Product> readByName(String name) throws SQLException {
+        try(Connection connection = getConnection()){
+            PreparedStatement statement =
+                    connection.prepareStatement("SELECT * FROM product WHERE name = ?");
+            statement.setString(1, name);
+            ResultSet productsSet = statement.executeQuery();
+            ArrayList<Product> productsList = new ArrayList<>();
+            while (productsSet.next()){
+                String id = String.valueOf(productsSet.getInt("id"));
+                String description = productsSet.getString("description");
+                int quantity = productsSet.getInt("quantity");
+                double price = productsSet.getDouble("price");
+                Product product = new Product(id, quantity, name,description, price);
+                productsList.add(product);
+            }
+            return productsList;
+        }
+    }
+
     @Override
     public void createDummyData(int quantity, String name, String description, double price) throws SQLException {
         try(Connection connection = getConnection()){

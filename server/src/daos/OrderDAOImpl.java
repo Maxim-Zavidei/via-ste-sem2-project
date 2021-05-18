@@ -29,8 +29,8 @@ public class OrderDAOImpl implements OrderDAO{
     public Order create(HashMap<Product, Integer> products, DateTime date, Customer customer) throws SQLException{
         try(Connection connection = getConnection()){
             PreparedStatement statement =
-                    connection.prepareStatement("INSERT INTO order(date, email) VALUES(?, ?);", PreparedStatement.RETURN_GENERATED_KEYS);
-            statement.setObject(1, date, Types.DATE);
+                    connection.prepareStatement("INSERT INTO \"order\"(date, email) VALUES(?, ?);", PreparedStatement.RETURN_GENERATED_KEYS);
+            statement.setObject(1, date.getSortableDate(), Types.DATE);
             statement.setString(2, customer.getEmail());
             statement.executeUpdate();
             ResultSet keys =  statement.getGeneratedKeys();
@@ -51,7 +51,7 @@ public class OrderDAOImpl implements OrderDAO{
                     connection.prepareStatement("UPDATE order SET date = ?, email = ? WHERE id = ?");
             statement.setObject(1, order.getDate(), Types.DATE);
             statement.setString(2, order.getCustomer().getEmail());
-            statement.setString(3, order.getId());
+            statement.setInt(3, Integer.parseInt(order.getId()));
             statement.executeUpdate();
             updateProductOrder(order);
         }
@@ -60,15 +60,12 @@ public class OrderDAOImpl implements OrderDAO{
     @Override
     public void updateProductOrder(Order order) throws SQLException{
         try(Connection connection = getConnection()) {
-            int size = order.getProducts().size();
-            Product[] product = order.getProducts().keySet().toArray(Product[]::new);
-            Integer[] quantities = order.getProducts().values().toArray(new Integer[0]);
-            for (int i = 0; i < size; i++) {
+            for (HashMap.Entry<Product,Integer> entry : order.getProducts().entrySet()) {
                 PreparedStatement statement =
-                        connection.prepareStatement("UPDATE productorder SET quantity = ?) WHERE orderid = ? AND productid = ?;");
-                statement.setInt(1, quantities[i]);
-                statement.setString(2, order.getId());
-                statement.setString(3, product[i].getId());
+                        connection.prepareStatement("UPDATE producrorder SET quantity = ?) WHERE orderid = ? AND productid = ?;");
+                statement.setInt(1, entry.getValue());
+                statement.setInt(2, Integer.parseInt(order.getId()));
+                statement.setInt(3, Integer.parseInt(entry.getKey().getId()));
                 statement.executeUpdate();
             }
         }
@@ -87,15 +84,12 @@ public class OrderDAOImpl implements OrderDAO{
     @Override
     public void addToProductOrder(HashMap<Product, Integer> products, String orderId) throws SQLException {
         try(Connection connection = getConnection()){
-            int size = products.size();
-            Product[] product = products.keySet().toArray(Product[]::new);
-            Integer[] quantities = products.values().toArray(new Integer[0]);
-            for(int i = 0; i<size; i++){
+            for (HashMap.Entry<Product,Integer> entry : products.entrySet()) {
                 PreparedStatement statement =
-                        connection.prepareStatement("INSERT INTO productorder(orderid, productid, quantity) VALUES(?, ?, ?);");
-                statement.setString(1, orderId);
-                statement.setString(2, product[i].getId());
-                statement.setInt(3, quantities[i]);
+                        connection.prepareStatement("INSERT INTO producrorder(orderid, productid, quantity) VALUES(?, ?, ?);");
+                statement.setInt(1, Integer.parseInt(orderId));
+                statement.setInt(2, Integer.parseInt(entry.getKey().getId()));
+                statement.setInt(3, entry.getValue());
                 statement.executeUpdate();
             }
         }
