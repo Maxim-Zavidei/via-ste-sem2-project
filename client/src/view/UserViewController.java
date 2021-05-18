@@ -72,7 +72,7 @@ public class UserViewController extends ViewController
     }
     catch (Exception e)
     {
-      errorLabel.setText("Please select a user to promote first!");
+      viewModel.getErrorProperty().set("Please select a user to promote first!");
     }
   }
 
@@ -85,7 +85,7 @@ public class UserViewController extends ViewController
     }
     catch (Exception e)
     {
-      errorLabel.setText("Please select a user to remove first!");
+      viewModel.getErrorProperty().set("Please select a user to remove first!");
     }
   }
 
@@ -98,7 +98,7 @@ public class UserViewController extends ViewController
     }
     catch (Exception e)
     {
-      errorLabel.setText("Please select a user to resign first!");
+      viewModel.getErrorProperty().set("Please select a user to resign first!");
     }
   }
 
