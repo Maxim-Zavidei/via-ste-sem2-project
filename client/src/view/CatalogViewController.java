@@ -19,12 +19,7 @@ import javafx.scene.layout.StackPane;
 import viewmodel.CatalogViewModel;
 import viewmodel.ProductViewModel;
 
-
-
 public class CatalogViewController extends ViewController {
-
-   @FXML public StackPane rootPane;
-   @FXML public BorderPane borderPane;
 
     private ViewHandler viewHandler;
     private CatalogViewModel viewModel;
@@ -37,14 +32,16 @@ public class CatalogViewController extends ViewController {
     @FXML private TableColumn<ProductViewModel, Double> catalogPriceColumn;
 
     // The rest FXML instance variables of the view.
+    @FXML public StackPane rootPane;
+    @FXML public BorderPane borderPane;
     @FXML private Label usernameLabel;
+    @FXML private Button basketButton;
     @FXML private Button manageProductsButton;
     @FXML private Button manageUsersButton;
     @FXML private Label errorLabel;
 
     @Override
     protected void init() {
-
         viewHandler = getViewHandler();
         viewModel = getViewModelFactory().getCatalogViewModel();
 
@@ -67,6 +64,7 @@ public class CatalogViewController extends ViewController {
 
         // Bindings for the rest of the user interface elements.
         usernameLabel.textProperty().bind(viewModel.getUsernameProperty());
+        basketButton.textProperty().bind(viewModel.getBasketButtonTitleProperty());
         manageProductsButton.visibleProperty().bind(viewModel.getShowProductManagementButtonProperty());
         manageUsersButton.visibleProperty().bind(viewModel.getShowUserManagementButtonProperty());
         errorLabel.textProperty().bind(viewModel.getErrorProperty());
@@ -101,33 +99,31 @@ public class CatalogViewController extends ViewController {
         try {
             viewHandler.openView(View.USERS);
         } catch (Exception e) {
-            viewModel.getErrorProperty().set(e.getMessage());
+            viewModel.getErrorProperty().set("Could not manage users at this time. Try later.");
         }
     }
 
     @FXML
     private void addToBasket() {
-        notificationProduct();
         viewModel.addToBasket();
     }
 
     @FXML
     private void deauthenticate() {
-        //model.clear basket
         if (!viewModel.deauthenticate()) {
-            viewModel.getErrorProperty().set("!Could not deauthenticate the user.");
+            viewModel.getErrorProperty().set("Could not deauthenticate the user.");
             return;
         }
         try {
             viewHandler.openView(View.AUTHENTICATION);
         } catch (Exception e) {
-            viewModel.getErrorProperty().set("!Could not logout at this time. Try later.");
+            viewModel.getErrorProperty().set("Could not logout at this time. Try later.");
         }
     }
 
-    public void notificationProduct(){
-
-        //trying an image background
+    // TODO This method is responsible for popping up a notification. Not yet finished.
+    private void notificationProduct() {
+        // Trying an image background.
         Image image = new Image("file:assets/cakeArt.png");
 
         ImageInput imageInput = new ImageInput();
@@ -156,11 +152,6 @@ public class CatalogViewController extends ViewController {
             borderPane.setEffect(null);
 
         });
-
-
-
         borderPane.setEffect(blur);
-
-
     }
 }

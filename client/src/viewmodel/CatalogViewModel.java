@@ -1,10 +1,8 @@
 package viewmodel;
 
+import common.model.Product;
 import common.model.User;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableMap;
 import model.Model;
@@ -19,6 +17,7 @@ public class CatalogViewModel {
 
     // Instance variables for linking and storing the other elements of the user interface.
     private StringProperty usernameProperty;
+    private StringProperty basketButtonTitleProperty;
     private ObjectProperty<Boolean> showProductManagementButtonProperty;
     private ObjectProperty<Boolean> showUserManagementButtonProperty;
     private StringProperty errorProperty;
@@ -35,6 +34,7 @@ public class CatalogViewModel {
 
         // Initialize the instance variables responsible for storing data of the other ui elements.
         usernameProperty = new SimpleStringProperty("");
+        basketButtonTitleProperty = new SimpleStringProperty("Basket");
         showProductManagementButtonProperty = new SimpleObjectProperty<>(false);
         showUserManagementButtonProperty = new SimpleObjectProperty<>(false);
         errorProperty = new SimpleStringProperty("");
@@ -45,6 +45,7 @@ public class CatalogViewModel {
 
     public void reset() {
         errorProperty.set("");
+
         // Refresh the catalog table with all the available products every time the window reopens.
         catalogMap.clear();
         try {
@@ -55,7 +56,7 @@ public class CatalogViewModel {
         // Deselect any selected items if window reopens.
         selectedCatalogProductProperty.set(null);
 
-        // Configure properly the product and user management and the username label based if the user is an employee or not.
+        // Configure properly the product and user management buttons and the username label based if the user is an employee or not.
         if (!wasAuthenticatedUserQueried) {
             boolean isEmployee = false;
             try {
@@ -70,6 +71,10 @@ public class CatalogViewModel {
             showUserManagementButtonProperty.set(isEmployee);
             wasAuthenticatedUserQueried = true;
         }
+
+        // Updates the number of products indicator in the basket button title.
+        int tmp = model.getAllProductsInBasket().size();
+        basketButtonTitleProperty.set(tmp == 0 ? "Basket" : "Basket (" + tmp + ")");
     }
 
     public ObservableMap<String, ProductViewModel> getCatalogMap() {
@@ -78,6 +83,10 @@ public class CatalogViewModel {
 
     public StringProperty getUsernameProperty() {
         return usernameProperty;
+    }
+
+    public StringProperty getBasketButtonTitleProperty() {
+        return basketButtonTitleProperty;
     }
 
     public ObjectProperty<Boolean> getShowProductManagementButtonProperty() {
@@ -99,21 +108,21 @@ public class CatalogViewModel {
     public void addToBasket() {
         ProductViewModel selectedCatalogProductViewModel = selectedCatalogProductProperty.get();
         if (selectedCatalogProductViewModel == null) {
-            errorProperty.set("!Please select a product from the catalog to be added to the cart.");
+            errorProperty.set("Please select a product from the catalog to be added to the cart.");
             return;
         }
-        String selectedCatalogProductId = selectedCatalogProductViewModel.getIdProperty().getValue();
-//        if (basketMap.get(selectedCatalogProductId) == null) {
-//            basketMap.put(selectedCatalogProductId, new ProductViewModel(new Product(
-//                    selectedCatalogProductId,
-//                    1,
-//                    selectedCatalogProductViewModel.getNameProperty().getValue(),
-//                    selectedCatalogProductViewModel.getDescriptionProperty().getValue(),
-//                    selectedCatalogProductViewModel.getPriceProperty().getValue()
-//            )));
-//        } else {
-//            errorProperty.set("!Product is already in the cart.");
-//        }
+        try {
+            model.addProductToBasket(new Product(
+                    selectedCatalogProductViewModel.getIdProperty().getValue(),
+                    1,
+                    selectedCatalogProductViewModel.getNameProperty().getValue(),
+                    selectedCatalogProductViewModel.getDescriptionProperty().getValue(),
+                    selectedCatalogProductViewModel.getPriceProperty().getValue()
+            ));
+            basketButtonTitleProperty.set("Basket (" + model.getAllProductsInBasket().size() + ")");
+        } catch (Exception e) {
+            errorProperty.set(e.getMessage());
+        }
     }
 
     public boolean deauthenticate() {
