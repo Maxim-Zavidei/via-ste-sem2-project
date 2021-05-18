@@ -22,4 +22,9 @@ public interface Model {
     void updateProduct(Product product) throws Exception;
     void removeProduct(Product product) throws Exception;
 
+    ArrayList<Product> getAllProductsInBasket();
+    void clearBasket();
+    void addProductToBasket(Product product) throws IllegalStateException;
+    void replaceProductInBasket(Product product) throws IllegalStateException;
+    void removeProductFromBasket(Product product) throws IllegalStateException;
 }

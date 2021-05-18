@@ -1,5 +1,6 @@
 package model;
 
+import common.model.ProductList;
 import common.model.Product;
 import common.model.User;
 import common.model.UserList;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 public class ModelManager implements Model {
 
     private ClientTarget client;
+    private ProductList basket;
 
     public ModelManager() throws Exception {
         try {
@@ -18,6 +20,7 @@ public class ModelManager implements Model {
         } catch (Exception e) {
             throw new Exception("Could not reach the server.");
         }
+        basket = new ProductList();
     }
 
     @Override
@@ -32,7 +35,9 @@ public class ModelManager implements Model {
 
     @Override
     public boolean deauthenticate() {
-        return client.deauthenticate();
+        boolean toReturn = client.deauthenticate();
+        if (toReturn) basket.clear();
+        return toReturn;
     }
 
     @Override
@@ -88,5 +93,30 @@ public class ModelManager implements Model {
     @Override
     public void removeProduct(Product product) throws Exception {
         client.removeProduct(product);
+    }
+
+    @Override
+    public ArrayList<Product> getAllProductsInBasket() {
+        return basket.getAllProducts();
+    }
+
+    @Override
+    public void clearBasket() {
+        basket.clear();
+    }
+
+    @Override
+    public void addProductToBasket(Product product) throws IllegalStateException {
+        basket.addProduct(product);
+    }
+
+    @Override
+    public void replaceProductInBasket(Product product) throws IllegalStateException {
+        basket.replaceProduct(product);
+    }
+
+    @Override
+    public void removeProductFromBasket(Product product) throws IllegalStateException {
+        basket.removeProduct(product);
     }
 }
