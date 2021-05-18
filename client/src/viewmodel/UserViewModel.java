@@ -3,14 +3,13 @@ package viewmodel;
 import common.model.Customer;
 import common.model.Employee;
 import common.model.User;
-import common.model.UserList;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Model;
-import view.ViewState;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class UserViewModel
@@ -18,12 +17,13 @@ public class UserViewModel
   /**Instance variables for list, selected item, management model*/
   private Model model;
   private ObservableList<UserView> list;
+
   private boolean wasAuthenticatedUserQueried;
 
   /**Instance variable for other ui elements*/
   private StringProperty errorProperty;
 
-  public UserViewModel(Model model){
+  public UserViewModel(Model model, ViewState viewState){
     // Initialize variables for list, selected item, management model
     this.model = model;
     this.list = FXCollections.observableArrayList();
@@ -42,16 +42,16 @@ public class UserViewModel
 
   public void reset(){
     errorProperty.set("");
-//    if (!wasAuthenticatedUserQueried) {
-//      try {
-//        User authenticatedUser = model.getAuthenticatedUser();
-//
-//      } catch (Exception e) {
-//
-//        errorProperty.set(e.getMessage());
-//      }
-//      wasAuthenticatedUserQueried = true;
-//    }
+    if (!wasAuthenticatedUserQueried) {
+      try {
+        User authenticatedUser = model.getAuthenticatedUser();
+
+      } catch (Exception e) {
+
+        errorProperty.set(e.getMessage());
+      }
+      wasAuthenticatedUserQueried = true;
+    }
     try
     {
       updateUsers();
@@ -68,17 +68,26 @@ public class UserViewModel
 
   public void makeEmployee(String selectedUser)
   {
-    //Totally bad approach, need ideas! (Maybe some extra variables in User or its subclasses?
-    try
-    {
-      Employee newEmp = (Employee) model.getAllRegisteredUsers().getUser(selectedUser);
-      model.getAllRegisteredUsers().removeUser(selectedUser);
-      model.getAllRegisteredUsers().addUser(newEmp);
-    }
-    catch (Exception e)
-    {
-      errorProperty.set("Error in promoting customer");
-    }
+
+
+      try
+      {
+        if(!model.getAllRegisteredUsers().getUser(selectedUser).isEmployee())
+        {
+          Customer newEmp = (Customer) model.getAllRegisteredUsers().getUser(selectedUser);
+          model.updateUser(selectedUser, newEmp.getEmail(), newEmp.getPassword(),
+              newEmp.getFirstName(), newEmp.getLastName(),LocalDate.of(newEmp.getBirthday().getYear(), newEmp.getBirthday().getMonth(),
+                  newEmp.getBirthday().getDay()),
+              newEmp.getGender(), true);
+          updateUsers();
+        }
+        else throw new IllegalStateException("User is already employee! ");
+      }
+      catch (Exception e)
+      {
+        errorProperty.set(e.getMessage());
+        System.out.println(e.getMessage());
+      }
   }
 
   public void deleteUser(String selectedUser)
@@ -89,11 +98,12 @@ public class UserViewModel
         list.remove(i);
         try
         {
-          model.getAllRegisteredUsers().removeUser(selectedUser);
+          model.removeUser(selectedUser);
+          updateUsers();
         }
         catch (Exception e)
         {
-          errorProperty.set("Error in fetching user data");
+          errorProperty.set("Error in deleting user data");
         }
       }
     }
@@ -101,16 +111,23 @@ public class UserViewModel
 
   public void fireEmployee(String selectedUser)
   {
-    //Totally bad approach, need ideas! (Maybe some extra variables in User or its subclasses?
     try
     {
-      Customer newCust = (Customer) model.getAllRegisteredUsers().getUser(selectedUser);
-      model.getAllRegisteredUsers().removeUser(selectedUser);
-      model.getAllRegisteredUsers().addUser(newCust);
+      if (model.getAllRegisteredUsers().getUser(selectedUser).isEmployee())
+      {
+        Employee newCust = (Employee) model.getAllRegisteredUsers().getUser(selectedUser);
+        model.updateUser(selectedUser, newCust.getEmail(), newCust.getPassword(),
+            newCust.getFirstName(), newCust.getLastName(), LocalDate
+                .of(newCust.getBirthday().getYear(), newCust.getBirthday().getMonth(),
+                    newCust.getBirthday().getDay()), newCust.getGender(), false);
+        updateUsers();
+      }
+      else throw new IllegalStateException("User is not an employee! Why firing customers?");
     }
     catch (Exception e)
     {
-      errorProperty.set("Error in resigning employee");
+      errorProperty.set(e.getMessage());
+      System.out.println(e.getMessage());
     }
   }
 
@@ -118,7 +135,6 @@ public class UserViewModel
   {
     list.clear();
     ArrayList<User> users = model.getAllRegisteredUsers().getAllUsers();
-    System.out.println(users);
     for (int i = 0; i < users.size(); i++)
     {
       list.add(new UserView(users.get(i)));
@@ -129,11 +145,8 @@ public class UserViewModel
     return model.deauthenticate();
   }
 
-  public void backToUsers()
-  {
-  }
-
   public void addEdit(String selectedUser)
   {
+    //how to pass data to another window?
   }
 }

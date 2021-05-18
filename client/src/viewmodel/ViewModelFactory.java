@@ -1,7 +1,6 @@
 package viewmodel;
 
 import model.Model;
-import view.ViewState;
 
 public class ViewModelFactory {
 
@@ -23,7 +22,7 @@ public class ViewModelFactory {
         this.catalogViewModel = new CatalogViewModel(model);
         this.basketViewModel = new BasketViewModel(model);
         this.catalogBasketViewState = new CatalogBasketViewState();
-        this.userViewModel = new UserViewModel(model);
+        this.userViewModel = new UserViewModel(model, viewState);
         this.manageProductsViewModel = new ManageProductsViewModel(model);
         this.addProductPopUpViewModel = new AddProductPopUpViewModel(model);
         this.userManageViewModel = new UserManageViewModel(model, viewState);
@@ -65,7 +64,6 @@ public class ViewModelFactory {
     {
         return userManageViewModel;
     }
-
     public ViewState getViewState()
     {
         return viewState;

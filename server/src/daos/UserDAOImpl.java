@@ -78,7 +78,7 @@ public class UserDAOImpl implements UserDAO {
     public void delete(String email) throws SQLException {
         try (Connection connection = getConnection()) {
             PreparedStatement statement = connection.prepareStatement("DELETE FROM \"user\" WHERE email = ?");
-            statement.setInt(1, Integer.parseInt(email));
+            statement.setString(1, email);
             statement.executeUpdate();
         }
     }

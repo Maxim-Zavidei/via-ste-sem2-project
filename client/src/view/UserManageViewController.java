@@ -11,7 +11,6 @@ public class UserManageViewController extends ViewController
 
   private ViewHandler viewHandler;
   private UserManageViewModel viewModel;
-  private ViewState viewState;
 
   // FXML instance variables of the view.
   @FXML private Label addEditLabel;
@@ -30,9 +29,8 @@ public class UserManageViewController extends ViewController
   {
     viewHandler = getViewHandler();
     viewModel = getViewModelFactory().getUserManageViewModel();
-    viewState = getViewState();
 
-    if(viewState.getSelectedUser().equals(""))
+   /* if(viewState.getSelectedUser().equals(""))
     {
       safeAddButton.setText("Add");
       addEditLabel.setText("Add");
@@ -40,7 +38,7 @@ public class UserManageViewController extends ViewController
     else{
       safeAddButton.setText("Save");
       addEditLabel.setText("Edit");
-    }
+    }*/
     // Bindings for the user interface elements.
     usernameLabel.textProperty().bind(Bindings.createStringBinding(
         () -> firstNameField.textProperty().getValue() + " " + lastNameField

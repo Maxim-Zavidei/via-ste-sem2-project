@@ -9,14 +9,12 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import model.Model;
-import view.ViewState;
 
 import java.time.LocalDate;
 
 public class UserManageViewModel {
 
   private Model model;
-  private ViewState viewState;
 
   // Instance variables for linking and storing elements of the user interface.
   private StringProperty errorProperty;
@@ -27,13 +25,14 @@ public class UserManageViewModel {
   private ObjectProperty<LocalDate> birthdayPickerProperty;
   private ObjectProperty<Boolean> maleGenderButtonProperty;
   private ObjectProperty<Boolean> femaleGenderButtonProperty;
+  private ViewState viewState;
 
   public UserManageViewModel(Model model, ViewState viewState)
   {
     this.model = model;
     this.viewState = viewState;
     // Initialize the instance variables responsible for storing data of the ui elements.
-    if (!viewState.getSelectedUser().equals(""))
+    /*if (!viewState.getSelectedUser().equals(""))
     {
       try
       {
@@ -62,7 +61,7 @@ public class UserManageViewModel {
         errorProperty.set("Something went wrong fetching the user list data");
       }
     }
-    else{
+    else{*/
       errorProperty = new SimpleStringProperty("");
       emailProperty = new SimpleStringProperty("");
       passwordProperty = new SimpleStringProperty("");
@@ -71,7 +70,7 @@ public class UserManageViewModel {
       birthdayPickerProperty = new SimpleObjectProperty<>();
       maleGenderButtonProperty = new SimpleObjectProperty<>();
       femaleGenderButtonProperty = new SimpleObjectProperty<>();
-    }
+    //}
   }
   public void reset() {
     // Clear the fields and any errors whenever the window reopens.
@@ -124,7 +123,7 @@ public class UserManageViewModel {
   public void modify()
   {
     
-    if(viewState.getSelectedUser().equals(""))
+    /*if(viewState.getSelectedUser().equals(""))
     {
       char gender;
       DateTime newCustBirthday = new DateTime(birthdayPickerProperty.get());
@@ -164,7 +163,7 @@ public class UserManageViewModel {
       {
         errorProperty.set("Error in editing the existing customer");
       }
-    }
+    }*/
     //Insert the data into the right places for name, birthday, etc.
     //Needs user list from model or something to pick up the user with that email (String selectedUser)
   }

@@ -38,7 +38,7 @@ public class UserView {
     }
 
     public StringProperty getStatus() {
-        return firstName;
+        return status;
     }
 
     public StringProperty getGender() {

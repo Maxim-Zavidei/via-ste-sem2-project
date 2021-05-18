@@ -24,7 +24,6 @@ public class UserViewController extends ViewController
   /***/
   private ViewHandler viewHandler;
   private UserViewModel viewModel;
-  private ViewState viewState;
 
   /** Constructor */
   public UserViewController()
@@ -36,7 +35,6 @@ public class UserViewController extends ViewController
   {
     viewHandler = getViewHandler();
     viewModel = getViewModelFactory().getUserViewModel();
-    viewState = getViewState();
     this.usersTable.setItems(viewModel.getList());
     this.firstNameColumn
         .setCellValueFactory(cellData -> cellData.getValue().getFirstName());
@@ -61,7 +59,6 @@ public class UserViewController extends ViewController
   @Override protected void reset()
   {
     usersTable.getSelectionModel().clearSelection();
-    //viewState.setSelectedUser("");
     viewModel.reset();
   }
 
@@ -70,8 +67,8 @@ public class UserViewController extends ViewController
   {
     try
     {
-      viewState.setSelectedUser(usersTable.getSelectionModel().getSelectedItem().getEmail().get());
-      viewModel.makeEmployee(viewState.getSelectedUser());
+      if(usersTable.getSelectionModel().getSelectedItem().getEmail().get()!=null)
+      viewModel.makeEmployee(usersTable.getSelectionModel().getSelectedItem().getEmail().get());
     }
     catch (Exception e)
     {
@@ -83,8 +80,8 @@ public class UserViewController extends ViewController
   {
     try
     {
-      viewState.setSelectedUser(usersTable.getSelectionModel().getSelectedItem().getEmail().get());
-      viewModel.deleteUser(viewState.getSelectedUser());
+      if(usersTable.getSelectionModel().getSelectedItem().getEmail().get()!=null)
+        viewModel.deleteUser(usersTable.getSelectionModel().getSelectedItem().getEmail().get());
     }
     catch (Exception e)
     {
@@ -96,8 +93,8 @@ public class UserViewController extends ViewController
   {
     try
     {
-      viewState.setSelectedUser(usersTable.getSelectionModel().getSelectedItem().getEmail().get());
-      viewModel.fireEmployee(viewState.getSelectedUser());
+      if(usersTable.getSelectionModel().getSelectedItem().getEmail().get()!=null)
+        viewModel.fireEmployee(usersTable.getSelectionModel().getSelectedItem().getEmail().get());
     }
     catch (Exception e)
     {
@@ -110,18 +107,13 @@ public class UserViewController extends ViewController
     try
     {
       if(usersTable.getSelectionModel().getSelectedItem().getEmail().get()!=null)
-      viewState.setSelectedUser(usersTable.getSelectionModel().getSelectedItem().getEmail().get());
-      viewModel.addEdit(viewState.getSelectedUser());
+        viewModel.addEdit(usersTable.getSelectionModel().getSelectedItem().getEmail().get());
+      else viewModel.addEdit("");
     }
     catch (Exception e)
     {
       errorLabel.setText("Something went wrong with modifying of user.");
     }
-  }
-
-  @FXML private void backToUsers()
-  {
-    viewModel.backToUsers();
   }
 
   @FXML private void deauthenticate()

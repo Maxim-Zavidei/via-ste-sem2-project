@@ -73,14 +73,17 @@ public class ModelManager implements Model {
             User old = userDAO.readByEmail(oldEmail);
             // Checks if an user with this old email exists.
             if (old == null) throw new IllegalStateException("No registered user with such email could be found.");
+
             // Check if the new email is not already taken.
-            if (userDAO.readByEmail(newEmail) != null) throw new IllegalStateException("The given new email is already taken.");
+            if (userDAO.readByEmail(newEmail) != null && !newEmail
+                .equals(oldEmail)) throw new IllegalStateException("The given new email is already taken.");
             // Validate first the arguments through creating an object of type user.
             User current = isEmployee ? new Employee(newEmail, password, firstName, lastName, birthday, gender) : new Customer(newEmail, password, firstName, lastName, birthday, gender);
             // Update the newly registered user in the database and remove the old one.
             userDAO.delete(oldEmail);
-            userDAO.update(current);
-        } catch (Exception e) {
+            userDAO.create(current);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
             throw new IllegalStateException("Server is unavailable at the moment. Try Later.");
         }
     }
