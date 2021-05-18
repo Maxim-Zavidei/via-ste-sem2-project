@@ -56,4 +56,13 @@ public class Order {
         products.remove(product);
         //return products;
     }
+
+    @Override
+    public String toString() {
+        String output = "Order " + id + " by " + customer.getEmail() + " made on " + date.toString() +"\n";
+        for (HashMap.Entry<Product,Integer> entry : products.entrySet()) {
+            output += entry.getKey().getName() + " -> " + entry.getValue() + "\n";
+        }
+        return output;
+    }
 }
