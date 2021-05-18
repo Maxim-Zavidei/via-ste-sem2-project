@@ -37,7 +37,7 @@ public class UserManageViewModel {
     {
       try
       {
-        UserList list = model.getUsers();
+        UserList list = model.getAllRegisteredUsers();
         User user = list.getUser(viewState.getSelectedUser());
         emailProperty.set(user.getEmail());
         firstNameProperty.set(user.getFirstName());
@@ -134,7 +134,7 @@ public class UserManageViewModel {
           lastNameProperty.get(), newCustBirthday, gender);
       try
       {
-        model.getUsers().addUser(newCust);
+        model.getAllRegisteredUsers().addUser(newCust);
       }
       catch (Exception e)
       {
@@ -149,14 +149,14 @@ public class UserManageViewModel {
         DateTime custBirthday = new DateTime(birthdayPickerProperty.get());
         if(maleGenderButtonProperty.get())gender = 'M';
         else gender = 'F';
-        User user = model.getUsers().getUser(viewState.getSelectedUser());
+        User user = model.getAllRegisteredUsers().getUser(viewState.getSelectedUser());
         User backUp = user;
         //Creating backUp and changing everything possible on this backUp and last statement updating the user
         if(!firstNameProperty.get().equals(""))backUp.setFirstName(firstNameProperty.get());
         if(!lastNameProperty.get().equals(""))backUp.setLastName(lastNameProperty.get());
         if(!passwordProperty.get().equals(""))backUp.setPassword(passwordProperty.get());
         if(backUp.getGender()!=gender)backUp.setGender(gender);
-        if(backUp.getBirthday()!=custBirthday)backUp.setBirthday(custBirthday);
+        if(backUp.getBirthday()!=custBirthday)backUp.setBirthday(LocalDate.of(custBirthday.getYear(), custBirthday.getMonth(), custBirthday.getDay()));
         //Would that work to change values? Would see
         user = backUp;
       }

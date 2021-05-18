@@ -10,17 +10,38 @@ public class Product implements Serializable {
     private String description;
     private double price;
 
-    public Product(String id, int quantity, String name, String description, double price) {
-        if (id.equals("")) throw new IllegalArgumentException("Id cannot be empty");
-        if (name.equals("")) throw new IllegalArgumentException("Name cannot be empty");
-        if (description.equals("")) throw new IllegalArgumentException("Description cannot be empty");
-        if (price < 1) throw new IllegalArgumentException("Price cannot be less than 1");
-        if (quantity < 1) throw new IllegalArgumentException("Quantity cannot be less than 1");
+    public Product(String id, int quantity, String name, String description, double price) throws IllegalArgumentException {
+        setId(id);
+        setQuantity(quantity);
+        setName(name);
+        setDescription(description);
+        setPrice(price);
+    }
 
+    public void setId(String id) throws IllegalArgumentException {
+        if (id == null || id.isEmpty()) throw new IllegalArgumentException("Product id can't be empty.");
         this.id = id;
+    }
+
+    public void setQuantity(int quantity) throws IllegalArgumentException {
+        if (quantity < 1) throw new IllegalArgumentException("Product quantity can't be less then 1.");
         this.quantity = quantity;
+    }
+
+    public void setName(String name) throws IllegalArgumentException {
+        if (name == null || name.isEmpty()) throw new IllegalArgumentException("Product name can't be empty.");
+        if (name.length() > 100) throw new IllegalArgumentException("Product name can't be longer then 100 chars.");
         this.name = name;
+    }
+
+    public void setDescription(String description) throws IllegalArgumentException {
+        if (description == null) description = "";
+        if (description.length() > 10000) throw new IllegalArgumentException("Product description can't be longer then 10 000 chars.");
         this.description = description;
+    }
+
+    public void setPrice(double price) throws IllegalArgumentException {
+        if (price < 0) throw new IllegalArgumentException("Product price can't be negative.");
         this.price = price;
     }
 

@@ -74,7 +74,7 @@ public abstract class GenericAccessType implements RemoteServerInterface {
 
     @Override
     public User getAuthenticatedUser() throws RemoteException {
-        return model.getAuthenticatedUser(email);
+        return model.getUser(email);
     }
 
     @Override

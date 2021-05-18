@@ -97,9 +97,9 @@ public class ProductsViewController extends ViewController {
     @FXML
     private void openUserManagementView() {
         try {
-            //viewHandler.openView(View.);
+            viewHandler.openView(View.USERS);
         } catch (Exception e) {
-            viewModel.getErrorProperty().set("Could not manage products at this time. Try later.");
+            viewModel.getErrorProperty().set("Could not open manage users at this time. Try later.");
         }
     }
 
