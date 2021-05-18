@@ -13,7 +13,7 @@ public interface ClientTarget {
     void register(String email, String password, String firstName, String lastName, LocalDate birthday, char gender) throws Exception;
     User getAuthenticatedUser() throws Exception;
     UserList getAllRegisteredUsers() throws Exception;
-    void updateUser(String oldEmail, String newEmail, String password, String firstName, String lastName, LocalDate birthday, char gender) throws Exception;
+    void updateUser(String oldEmail, String newEmail, String password, String firstName, String lastName, LocalDate birthday, char gender, boolean isEmployee) throws Exception;
     void removeUser(String email) throws Exception;
     ArrayList<Product> getCatalogOfProducts() throws Exception;
     void addProduct(Product product) throws Exception;

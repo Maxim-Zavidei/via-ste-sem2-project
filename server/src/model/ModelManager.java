@@ -68,7 +68,7 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void updateUser(String oldEmail, String newEmail, String password, String firstName, String lastName, LocalDate birthday, char gender) throws IllegalArgumentException, IllegalStateException {
+    public void updateUser(String oldEmail, String newEmail, String password, String firstName, String lastName, LocalDate birthday, char gender, boolean isEmployee) throws IllegalArgumentException, IllegalStateException {
         try {
             User old = userDAO.readByEmail(oldEmail);
             // Checks if an user with this old email exists.
@@ -76,7 +76,7 @@ public class ModelManager implements Model {
             // Check if the new email is not already taken.
             if (userDAO.readByEmail(newEmail) != null) throw new IllegalStateException("The given new email is already taken.");
             // Validate first the arguments through creating an object of type user.
-            User current = old.isEmployee() ? new Employee(newEmail, password, firstName, lastName, birthday, gender) : new Customer(newEmail, password, firstName, lastName, birthday, gender);
+            User current = isEmployee ? new Employee(newEmail, password, firstName, lastName, birthday, gender) : new Customer(newEmail, password, firstName, lastName, birthday, gender);
             // Update the newly registered user in the database and remove the old one.
             userDAO.delete(oldEmail);
             userDAO.update(current);

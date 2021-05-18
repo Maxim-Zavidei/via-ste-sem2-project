@@ -18,8 +18,8 @@ public class EmployeeAuthenticated extends GenericAccessType {
     }
 
     @Override
-    public void updateUser(String oldEmail, String newEmail, String password, String firstName, String lastName, LocalDate birthday, char gender) throws RemoteException {
-        getModel().updateUser(oldEmail, newEmail, password, firstName, lastName, birthday, gender);
+    public void updateUser(String oldEmail, String newEmail, String password, String firstName, String lastName, LocalDate birthday, char gender, boolean isEmployee) throws RemoteException {
+        getModel().updateUser(oldEmail, newEmail, password, firstName, lastName, birthday, gender, isEmployee);
     }
 
     @Override

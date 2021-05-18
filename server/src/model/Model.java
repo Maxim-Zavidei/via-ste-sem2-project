@@ -10,7 +10,7 @@ public interface Model {
     UserList getAllRegisteredUsers() throws IllegalStateException;
     void register(String email, String password, String firstName, String lastName, LocalDate birthday, char gender) throws IllegalArgumentException, IllegalStateException;
     User getUser(String email) throws IllegalArgumentException, IllegalStateException;
-    void updateUser(String oldEmail, String newEmail, String password, String firstName, String lastName, LocalDate birthday, char gender) throws IllegalArgumentException, IllegalStateException;
+    void updateUser(String oldEmail, String newEmail, String password, String firstName, String lastName, LocalDate birthday, char gender, boolean isEmployee) throws IllegalArgumentException, IllegalStateException;
     void removeUser(String email) throws IllegalArgumentException, IllegalStateException;
     ArrayList<Product> getCatalogOfProducts() throws IllegalStateException;
     void addProduct(Product product) throws IllegalStateException;

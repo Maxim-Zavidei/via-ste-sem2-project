@@ -74,7 +74,7 @@ public class AuthenticationProxy implements RemoteServerInterface {
     }
 
     @Override
-    public void updateUser(String oldEmail, String newEmail, String password, String firstName, String lastName, LocalDate birthday, char gender) throws RemoteException {
+    public void updateUser(String oldEmail, String newEmail, String password, String firstName, String lastName, LocalDate birthday, char gender, boolean isEmployee) throws RemoteException {
         throw new IllegalStateException("Authenticate in order to perform this request.");
     }
 

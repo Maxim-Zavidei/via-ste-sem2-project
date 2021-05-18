@@ -14,7 +14,7 @@ public interface RemoteServerInterface extends Remote {
     void register(String email, String password, String firstName, String lastName, LocalDate birthday, char gender) throws RemoteException;
     User getAuthenticatedUser() throws RemoteException;
     UserList getAllRegisteredUsers() throws RemoteException;
-    void updateUser(String oldEmail, String newEmail, String password, String firstName, String lastName, LocalDate birthday, char gender) throws RemoteException;
+    void updateUser(String oldEmail, String newEmail, String password, String firstName, String lastName, LocalDate birthday, char gender, boolean isEmployee) throws RemoteException;
     void removeUser(String email) throws RemoteException;
     ArrayList<Product> getCatalogOfProducts() throws RemoteException;
     void addProduct(Product product) throws RemoteException;

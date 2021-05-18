@@ -18,9 +18,9 @@ public class CustomerAuthenticated extends GenericAccessType {
     }
 
     @Override
-    public void updateUser(String oldEmail, String newEmail, String password, String firstName, String lastName, LocalDate birthday, char gender) throws RemoteException {
+    public void updateUser(String oldEmail, String newEmail, String password, String firstName, String lastName, LocalDate birthday, char gender, boolean isEmployee) throws RemoteException {
         if (oldEmail != null && oldEmail.equals(getEmail())) {
-            getModel().updateUser(oldEmail, newEmail, password, firstName, lastName, birthday, gender);
+            getModel().updateUser(oldEmail, newEmail, password, firstName, lastName, birthday, gender, isEmployee);
         }
         throw new IllegalArgumentException("A customer can only change his account settings.");
     }
