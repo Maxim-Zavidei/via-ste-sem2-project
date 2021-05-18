@@ -51,13 +51,17 @@ public class UserViewController extends ViewController
     this.statusColumn
         .setCellValueFactory(cellData -> cellData.getValue().getStatus());
     this.errorLabel.textProperty().bind(viewModel.getErrorProperty());
+    try {
+      viewModel.updateUsers();
+    } catch (Exception e) {
+      // Do nothing.
+    }
   }
 
   @Override protected void reset()
   {
     usersTable.getSelectionModel().clearSelection();
-    errorLabel.setStyle("-fx-text-fill:#000000");
-    viewState.setSelectedUser("");
+    //viewState.setSelectedUser("");
     viewModel.reset();
   }
 
