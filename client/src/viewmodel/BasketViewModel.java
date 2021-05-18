@@ -143,7 +143,6 @@ public class BasketViewModel {
     }
 
     public void placeOrder() {
-        // TODO: Needs further development of the system.
         clearBasket();
     }
 

@@ -1,6 +1,6 @@
 package daos;
 
-import common.model.Product;
+import common.model.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -82,14 +82,17 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     @Override
-    public void createDummyData(int quantity, String name, String description, double price) throws SQLException {
-        try (Connection connection = getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO product(quantity, name, description, price) VALUES(?, ?, ?, ?) ON CONFLICT(name) DO NOTHING;", PreparedStatement.RETURN_GENERATED_KEYS);
-            statement.setInt(1, quantity);
-            statement.setString(2, name);
-            statement.setString(3, description);
-            statement.setDouble(4, price);
-            statement.executeUpdate();
+    public Product getById(String id) throws SQLException {
+        try (PreparedStatement statement = getConnection().prepareStatement("SELECT * FROM \"product\" WHERE id = ?")) {
+            statement.setString(1, id);
+            ResultSet productSet = statement.executeQuery();
+            return productSet.next() ? new Product(
+                    String.valueOf(productSet.getInt("id")),
+                    productSet.getInt("quantity"),
+                    productSet.getString("name"),
+                    productSet.getString("description"),
+                    productSet.getDouble("price")
+            ) : null;
         }
     }
 }

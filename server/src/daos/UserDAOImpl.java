@@ -23,19 +23,18 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public User create(String email, String password, String firstName, String lastName, DateTime birthday, char sex, boolean isEmployee) throws SQLException {
+    public void create(User user) throws SQLException {
         try (Connection connection = getConnection()) {
             PreparedStatement statement = connection.prepareStatement("INSERT INTO \"user\"(email, password, f_name, l_name, birthday, age, gender, isemployee) VALUES(?, ?, ?, ?, ?, ?, ?, ?);");
-            statement.setString(1, email);
-            statement.setString(2, password);
-            statement.setString(3, firstName);
-            statement.setString(4, lastName);
-            statement.setObject(5, birthday.getSortableDate(), Types.DATE);
-            statement.setInt(6, DateTime.yearsBetween(birthday));
-            statement.setObject(7, sex, Types.CHAR);
-            statement.setBoolean(8, isEmployee);
+            statement.setString(1, user.getEmail());
+            statement.setString(2, user.getPassword());
+            statement.setString(3, user.getFirstName());
+            statement.setString(4, user.getLastName());
+            statement.setObject(5, user.getBirthday().getSortableDate(), Types.DATE);
+            statement.setInt(6, DateTime.yearsBetween(user.getBirthday()));
+            statement.setObject(7, user.getGender(), Types.CHAR);
+            statement.setBoolean(8, user.isEmployee());
             statement.executeUpdate();
-            return isEmployee ? new Employee(email, password, firstName, lastName, birthday, sex) : new Customer(email, password, firstName, lastName, birthday, sex);
         }
     }
 
@@ -173,22 +172,6 @@ public class UserDAOImpl implements UserDAO {
                 return userSet.getBoolean("isemployee") ? new Employee(email, pass, fname, lname, bday, gender) : new Customer(email, pass, fname, lname, bday, gender);
             }
             return null;
-        }
-    }
-
-    @Override
-    public void createDummyData(String email, String password, String firstName, String lastName, DateTime birthday, char sex, boolean isEmployee) throws SQLException {
-        try (Connection connection = getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO \"user\"(email, password, f_name, l_name, birthday, age, gender, isemployee) VALUES( ?, ?, ?, ?, ?, ?, ?, ?) ON CONFLICT (email) DO NOTHING;");
-            statement.setString(1, email);
-            statement.setString(2, password);
-            statement.setString(3, firstName);
-            statement.setString(4, lastName);
-            statement.setObject(5, birthday.getSortableDate(), Types.DATE);
-            statement.setInt(6, DateTime.yearsBetween(birthday));
-            statement.setObject(7, sex, Types.CHAR);
-            statement.setBoolean(8, isEmployee);
-            statement.executeUpdate();
         }
     }
 }

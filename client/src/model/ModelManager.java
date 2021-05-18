@@ -46,17 +46,37 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public ArrayList<Product> getCatalogOfProducts() throws Exception {
-        return client.getCatalogOfProducts();
+    public UserList getAllRegisteredUsers() throws Exception {
+        return client.getAllRegisteredUsers();
     }
 
-    @Override public UserList getUsers() throws Exception
-    {
-        return client.getUsers();
+    @Override
+    public void updateUser(String oldEmail, String newEmail, String password, String firstName, String lastName, LocalDate birthday, char gender) throws Exception {
+        client.updateUser(oldEmail, newEmail, password, firstName, lastName, birthday, gender);
+    }
+
+    @Override
+    public void removeUser(String email) throws Exception {
+        client.removeUser(email);
+    }
+
+    @Override
+    public ArrayList<Product> getCatalogOfProducts() throws Exception {
+        return client.getCatalogOfProducts();
     }
 
     @Override
     public void addProduct(Product product) throws Exception {
         client.addProduct(product);
+    }
+
+    @Override
+    public void updateProduct(Product product) throws Exception {
+        client.updateProduct(product);
+    }
+
+    @Override
+    public void removeProduct(Product product) throws Exception {
+        client.removeProduct(product);
     }
 }

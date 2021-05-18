@@ -28,6 +28,7 @@ public class DateTime implements Serializable {
         this.month = month;
         this.year = year;
     }
+
     public DateTime(LocalDate date){
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         this.time = formatter.format(date);

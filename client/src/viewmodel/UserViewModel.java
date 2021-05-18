@@ -79,9 +79,9 @@ public class UserViewModel
     //Totally bad approach, need ideas! (Maybe some extra variables in User or its subclasses?
     try
     {
-      Employee newEmp = (Employee) model.getUsers().getUser(selectedUser);
-      model.getUsers().removeUser(selectedUser);
-      model.getUsers().addUser(newEmp);
+      Employee newEmp = (Employee) model.getAllRegisteredUsers().getUser(selectedUser);
+      model.getAllRegisteredUsers().removeUser(selectedUser);
+      model.getAllRegisteredUsers().addUser(newEmp);
     }
     catch (Exception e)
     {
@@ -97,7 +97,7 @@ public class UserViewModel
         list.remove(i);
         try
         {
-          model.getUsers().removeUser(selectedUser);
+          model.getAllRegisteredUsers().removeUser(selectedUser);
         }
         catch (Exception e)
         {
@@ -112,9 +112,9 @@ public class UserViewModel
     //Totally bad approach, need ideas! (Maybe some extra variables in User or its subclasses?
     try
     {
-      Customer newCust = (Customer) model.getUsers().getUser(selectedUser);
-      model.getUsers().removeUser(selectedUser);
-      model.getUsers().addUser(newCust);
+      Customer newCust = (Customer) model.getAllRegisteredUsers().getUser(selectedUser);
+      model.getAllRegisteredUsers().removeUser(selectedUser);
+      model.getAllRegisteredUsers().addUser(newCust);
     }
     catch (Exception e)
     {
@@ -125,8 +125,8 @@ public class UserViewModel
   public void updateUsers() throws Exception
   {
     list.clear();
-    ArrayList<User> users = model.getUsers().getAllUsers();
-    for (int i = 0; i < model.getUsers().getSize(); i++)
+    ArrayList<User> users = model.getAllRegisteredUsers().getAllUsers();
+    for (int i = 0; i < model.getAllRegisteredUsers().getSize(); i++)
     {
       list.add(new UserView(users.get(i)));
     }

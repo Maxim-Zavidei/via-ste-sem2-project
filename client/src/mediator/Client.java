@@ -61,6 +61,21 @@ public class Client implements ClientTarget, RemoteClientInterface {
     }
 
     @Override
+    public UserList getAllRegisteredUsers() throws Exception {
+        return server.getAllRegisteredUsers();
+    }
+
+    @Override
+    public void updateUser(String oldEmail, String newEmail, String password, String firstName, String lastName, LocalDate birthday, char gender) throws Exception {
+        server.updateUser(oldEmail, newEmail, password, firstName, lastName, birthday, gender);
+    }
+
+    @Override
+    public void removeUser(String email) throws Exception {
+        server.removeUser(email);
+    }
+
+    @Override
     public ArrayList<Product> getCatalogOfProducts() throws Exception {
         return server.getCatalogOfProducts();
     }
@@ -70,9 +85,13 @@ public class Client implements ClientTarget, RemoteClientInterface {
         server.addProduct(product);
     }
 
-    @Override public UserList getUsers() throws Exception
-    {
-        return server.getUsers();
+    @Override
+    public void updateProduct(Product product) throws Exception {
+        server.updateProduct(product);
     }
 
+    @Override
+    public void removeProduct(Product product) throws Exception {
+        server.removeProduct(product);
+    }
 }

@@ -1,10 +1,11 @@
 package common.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class UserList {
+public class UserList implements Serializable {
 
     private Map<String, User> userList;
 

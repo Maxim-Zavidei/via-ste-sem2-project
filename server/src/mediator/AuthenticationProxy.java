@@ -69,6 +69,21 @@ public class AuthenticationProxy implements RemoteServerInterface {
     }
 
     @Override
+    public UserList getAllRegisteredUsers() throws RemoteException {
+        throw new IllegalStateException("Authenticate in order to perform this request.");
+    }
+
+    @Override
+    public void updateUser(String oldEmail, String newEmail, String password, String firstName, String lastName, LocalDate birthday, char gender) throws RemoteException {
+        throw new IllegalStateException("Authenticate in order to perform this request.");
+    }
+
+    @Override
+    public void removeUser(String email) throws RemoteException {
+        throw new IllegalStateException("Authenticate in order to perform this request.");
+    }
+
+    @Override
     public ArrayList<Product> getCatalogOfProducts() throws RemoteException {
         throw new IllegalStateException("Authenticate in order to perform this request.");
     }
@@ -78,8 +93,13 @@ public class AuthenticationProxy implements RemoteServerInterface {
         throw new IllegalStateException("Authenticate in order to perform this request.");
     }
 
-    @Override public UserList getUsers() throws RemoteException
-    {
+    @Override
+    public void updateProduct(Product product) throws RemoteException {
+        throw new IllegalStateException("Authenticate in order to perform this request.");
+    }
+
+    @Override
+    public void removeProduct(Product product) throws RemoteException {
         throw new IllegalStateException("Authenticate in order to perform this request.");
     }
 }

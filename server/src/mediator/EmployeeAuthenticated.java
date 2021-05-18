@@ -1,26 +1,44 @@
 package mediator;
 
 import common.model.Product;
-import common.model.User;
 import common.model.UserList;
 import model.Model;
-
 import java.rmi.RemoteException;
-import java.util.ArrayList;
+import java.time.LocalDate;
 
 public class EmployeeAuthenticated extends GenericAccessType {
+
     public EmployeeAuthenticated(Model model, String email, String password) throws Exception {
         super(model, email, password);
     }
 
+    @Override
+    public UserList getAllRegisteredUsers() throws RemoteException {
+        return getModel().getAllRegisteredUsers();
+    }
+
+    @Override
+    public void updateUser(String oldEmail, String newEmail, String password, String firstName, String lastName, LocalDate birthday, char gender) throws RemoteException {
+        getModel().updateUser(oldEmail, newEmail, password, firstName, lastName, birthday, gender);
+    }
+
+    @Override
+    public void removeUser(String email) throws RemoteException {
+        getModel().removeUser(email);
+    }
 
     @Override
     public void addProduct(Product product) throws RemoteException {
         getModel().addProduct(product);
     }
 
-    @Override public UserList getUsers() throws RemoteException
-    {
-        return getModel().getAllRegisteredUsers();
+    @Override
+    public void updateProduct(Product product) throws RemoteException {
+        getModel().updateProduct(product);
+    }
+
+    @Override
+    public void removeProduct(Product product) throws RemoteException {
+        getModel().removeProduct(product);
     }
 }
