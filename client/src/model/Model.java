@@ -14,9 +14,12 @@ public interface Model {
     User getAuthenticatedUser() throws Exception;
     UserList getAllRegisteredUsers() throws Exception;
     void updateUser(String oldEmail, String newEmail, String password, String firstName, String lastName, LocalDate birthday, char gender, boolean isEmployee) throws Exception;
+    void updateUser(String email, User user) throws Exception;
     void removeUser(String email) throws Exception;
+    void addUser(User user) throws Exception;
     ArrayList<Product> getCatalogOfProducts() throws Exception;
     void addProduct(int quantity, String name, String description, double price) throws Exception;
     void updateProduct(Product product) throws Exception;
     void removeProduct(Product product) throws Exception;
+
 }

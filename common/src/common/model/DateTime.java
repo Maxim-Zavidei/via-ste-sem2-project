@@ -30,8 +30,9 @@ public class DateTime implements Serializable {
     }
 
     public DateTime(LocalDate date){
+        Date date1 = java.sql.Date.valueOf(date);
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        this.time = formatter.format(date);
+        this.time = formatter.format(date1);
         String help = this.time.substring(0,10);
         String[] helps = help.split("/");
         this.day = Integer.parseInt(helps[0]);

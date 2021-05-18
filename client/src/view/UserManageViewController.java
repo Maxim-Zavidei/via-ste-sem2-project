@@ -23,28 +23,20 @@ public class UserManageViewController extends ViewController
   @FXML private RadioButton maleRadioButton;
   @FXML private RadioButton femaleRadioButton;
   @FXML private Label errorLabel;
-  @FXML private Button safeAddButton;
+  @FXML private Button saveAddButton;
 
   @Override protected void init()
   {
     viewHandler = getViewHandler();
     viewModel = getViewModelFactory().getUserManageViewModel();
-
-   /* if(viewState.getSelectedUser().equals(""))
-    {
-      safeAddButton.setText("Add");
-      addEditLabel.setText("Add");
-    }
-    else{
-      safeAddButton.setText("Save");
-      addEditLabel.setText("Edit");
-    }*/
     // Bindings for the user interface elements.
     usernameLabel.textProperty().bind(Bindings.createStringBinding(
         () -> firstNameField.textProperty().getValue() + " " + lastNameField
             .textProperty().getValue(), firstNameField.textProperty(),
         lastNameField.textProperty()));
     errorLabel.textProperty().bind(viewModel.getErrorProperty());
+    addEditLabel.textProperty().bind(viewModel.getAddEditProperty());
+    saveAddButton.textProperty().bind(viewModel.getSaveAddButtonProperty());
     Bindings.bindBidirectional(emailField.textProperty(),
         viewModel.getEmailProperty());
     Bindings.bindBidirectional(passwordField.textProperty(),
@@ -76,6 +68,7 @@ public class UserManageViewController extends ViewController
     {
       viewModel.getErrorProperty()
           .set("Could not modify at this time. Try later.");
+      System.out.println(e.getMessage());
     }
   }
 

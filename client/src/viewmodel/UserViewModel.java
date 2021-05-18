@@ -17,7 +17,7 @@ public class UserViewModel
   /**Instance variables for list, selected item, management model*/
   private Model model;
   private ObservableList<UserView> list;
-
+  private ViewState viewState;
   private boolean wasAuthenticatedUserQueried;
 
   /**Instance variable for other ui elements*/
@@ -27,6 +27,7 @@ public class UserViewModel
     // Initialize variables for list, selected item, management model
     this.model = model;
     this.list = FXCollections.observableArrayList();
+    this.viewState = viewState;
 
     this.wasAuthenticatedUserQueried = false;
 
@@ -147,6 +148,7 @@ public class UserViewModel
 
   public void addEdit(String selectedUser)
   {
-    //how to pass data to another window?
+    viewState.setSelectedUser(selectedUser);
+
   }
 }

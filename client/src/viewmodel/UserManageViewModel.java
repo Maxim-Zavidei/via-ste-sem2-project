@@ -1,9 +1,6 @@
 package viewmodel;
 
-import common.model.Customer;
-import common.model.DateTime;
-import common.model.User;
-import common.model.UserList;
+import common.model.*;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -25,6 +22,8 @@ public class UserManageViewModel {
   private ObjectProperty<LocalDate> birthdayPickerProperty;
   private ObjectProperty<Boolean> maleGenderButtonProperty;
   private ObjectProperty<Boolean> femaleGenderButtonProperty;
+  private StringProperty addEditProperty;
+  private StringProperty saveAddButtonProperty;
   private ViewState viewState;
 
   public UserManageViewModel(Model model, ViewState viewState)
@@ -32,12 +31,28 @@ public class UserManageViewModel {
     this.model = model;
     this.viewState = viewState;
     // Initialize the instance variables responsible for storing data of the ui elements.
-    /*if (!viewState.getSelectedUser().equals(""))
+    addEditProperty = new SimpleStringProperty("Add");
+    saveAddButtonProperty = new SimpleStringProperty("Add");
+    errorProperty = new SimpleStringProperty("");
+    emailProperty = new SimpleStringProperty("");
+    passwordProperty = new SimpleStringProperty("");
+    firstNameProperty = new SimpleStringProperty("");
+    lastNameProperty = new SimpleStringProperty("");
+    birthdayPickerProperty = new SimpleObjectProperty<>();
+    maleGenderButtonProperty = new SimpleObjectProperty<>();
+    femaleGenderButtonProperty = new SimpleObjectProperty<>();
+    loadFromSelected();
+  }
+
+  private void loadFromSelected(){
+    if (!viewState.getSelectedUser().equals(""))
     {
       try
       {
-        UserList list = model.getAllRegisteredUsers();
-        User user = list.getUser(viewState.getSelectedUser());
+        User user = model.getAllRegisteredUsers().getUser(
+            viewState.getSelectedUser());
+        addEditProperty.set("Edit");
+        saveAddButtonProperty.set("Save");
         emailProperty.set(user.getEmail());
         firstNameProperty.set(user.getFirstName());
         lastNameProperty.set(user.getLastName());
@@ -58,34 +73,31 @@ public class UserManageViewModel {
       }
       catch (Exception e)
       {
-        errorProperty.set("Something went wrong fetching the user list data");
+        errorProperty.set("Something went wrong getting the selected user data");
       }
     }
-    else{*/
-      errorProperty = new SimpleStringProperty("");
-      emailProperty = new SimpleStringProperty("");
-      passwordProperty = new SimpleStringProperty("");
-      firstNameProperty = new SimpleStringProperty("");
-      lastNameProperty = new SimpleStringProperty("");
-      birthdayPickerProperty = new SimpleObjectProperty<>();
-      maleGenderButtonProperty = new SimpleObjectProperty<>();
-      femaleGenderButtonProperty = new SimpleObjectProperty<>();
-    //}
-  }
-  public void reset() {
-    // Clear the fields and any errors whenever the window reopens.
+    else {
+      // Clear the fields and any errors whenever the window reopens.
+      errorProperty.set("");
+      emailProperty.set("");
+      passwordProperty.set("");
+      firstNameProperty.set("");
+      lastNameProperty.set("");
+      addEditProperty = new SimpleStringProperty("Add");
+      saveAddButtonProperty = new SimpleStringProperty("Add");
+
+      // Default selection of date picker is the present day.
+      birthdayPickerProperty.set(LocalDate.now());
+
+      // Default selection for radio buttons.
+      maleGenderButtonProperty.set(true);
+      femaleGenderButtonProperty.set(false);
+    }
     errorProperty.set("");
-    emailProperty.set("");
-    passwordProperty.set("");
-    firstNameProperty.set("");
-    lastNameProperty.set("");
+  }
 
-    // Default selection of date picker is the present day.
-    birthdayPickerProperty.set(LocalDate.now());
-
-    // Default selection for radio buttons.
-    maleGenderButtonProperty.set(true);
-    femaleGenderButtonProperty.set(false);
+  public void reset() {
+    loadFromSelected();
   }
 
   public StringProperty getErrorProperty() {
@@ -108,6 +120,9 @@ public class UserManageViewModel {
     return lastNameProperty;
   }
 
+  public StringProperty getAddEditProperty() {return addEditProperty;}
+  public StringProperty getSaveAddButtonProperty() { return saveAddButtonProperty;}
+
   public ObjectProperty<LocalDate> getBirthdayPickerProperty() {
     return birthdayPickerProperty;
   }
@@ -122,8 +137,7 @@ public class UserManageViewModel {
 
   public void modify()
   {
-    
-    /*if(viewState.getSelectedUser().equals(""))
+    if(viewState.getSelectedUser().equals(""))
     {
       char gender;
       DateTime newCustBirthday = new DateTime(birthdayPickerProperty.get());
@@ -133,38 +147,49 @@ public class UserManageViewModel {
           lastNameProperty.get(), newCustBirthday, gender);
       try
       {
-        model.getAllRegisteredUsers().addUser(newCust);
+        model.addUser(newCust);
+        errorProperty.set("New customer has been created! :)");
       }
       catch (Exception e)
       {
+        System.out.println(e.getMessage());
         errorProperty.set("Error creating the new customer");
       }
     }
     else{
-      
       try
       {
         char gender;
-        DateTime custBirthday = new DateTime(birthdayPickerProperty.get());
-        if(maleGenderButtonProperty.get())gender = 'M';
+        DateTime custBirthday = new DateTime();
+        String firstName="";
+        String lastName=""; 
+        String password=""; 
+        String email="";
+        String oldEmail="";
+        if(!emailProperty.get().equals("") || emailProperty.get()!=null) oldEmail = viewState.getSelectedUser();
+        if(!firstNameProperty.get().equals("") || firstNameProperty.get()!=null)firstName=firstNameProperty.get();
+        if(!lastNameProperty.get().equals("") || lastNameProperty.get()!=null)lastName=lastNameProperty.get();
+        if(!passwordProperty.get().equals("") || passwordProperty.get()!=null)password=passwordProperty.get();
+        if(!emailProperty.get().equals("") || emailProperty.get()!=null)email=emailProperty.get();
+        if(maleGenderButtonProperty.get() && maleGenderButtonProperty.get()!=null)gender = 'M';
         else gender = 'F';
-        User user = model.getAllRegisteredUsers().getUser(viewState.getSelectedUser());
-        User backUp = user;
-        //Creating backUp and changing everything possible on this backUp and last statement updating the user
-        if(!firstNameProperty.get().equals(""))backUp.setFirstName(firstNameProperty.get());
-        if(!lastNameProperty.get().equals(""))backUp.setLastName(lastNameProperty.get());
-        if(!passwordProperty.get().equals(""))backUp.setPassword(passwordProperty.get());
-        if(backUp.getGender()!=gender)backUp.setGender(gender);
-        if(backUp.getBirthday()!=custBirthday)backUp.setBirthday(LocalDate.of(custBirthday.getYear(), custBirthday.getMonth(), custBirthday.getDay()));
-        //Would that work to change values? Would see
-        user = backUp;
+        if(birthdayPickerProperty.get()!=null)custBirthday = new DateTime(birthdayPickerProperty.get());
+        User user;
+        if(model.getAllRegisteredUsers().getUser(oldEmail).isEmployee())
+        {
+          user = new Employee(email, password, firstName, lastName, custBirthday, gender);
+        }
+        else {
+          user = new Customer(email, password, firstName, lastName, custBirthday, gender);
+        }
+        model.updateUser(oldEmail, user);
+        errorProperty.set("User has been modified!");
       }
       catch (Exception e)
       {
+        System.out.println(e.getMessage());
         errorProperty.set("Error in editing the existing customer");
       }
-    }*/
-    //Insert the data into the right places for name, birthday, etc.
-    //Needs user list from model or something to pick up the user with that email (String selectedUser)
+    }
   }
 }
