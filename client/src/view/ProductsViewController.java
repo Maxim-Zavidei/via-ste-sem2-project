@@ -76,7 +76,44 @@ public class ProductsViewController extends ViewController {
     }
 
     @FXML
-    public void cancelManagement() {
-        // TODO: Needs further development of the system.
+    private void openBasketView() {
+        try {
+            viewHandler.openView(View.BASKET);
+        } catch (Exception e) {
+            viewModel.getErrorProperty().set("Could not manage basket at this time. Try later.");
+        }
+    }
+
+    @FXML
+    private void openCatalogView() {
+        try {
+            viewHandler.openView(View.CATALOG);
+        } catch (Exception e) {
+            viewModel.getErrorProperty().set("Could not manage basket at this time. Try later.");
+        }
+    }
+
+
+    @FXML
+    private void openUserManagementView() {
+        try {
+            //viewHandler.openView(View.);
+        } catch (Exception e) {
+            viewModel.getErrorProperty().set("Could not manage products at this time. Try later.");
+        }
+    }
+
+    @FXML
+    private void deauthenticate() {
+        //model.clear basket
+        if (!viewModel.deauthenticate()) {
+            viewModel.getErrorProperty().set("!Could not deauthenticate the user.");
+            return;
+        }
+        try {
+            viewHandler.openView(View.AUTHENTICATION);
+        } catch (Exception e) {
+            viewModel.getErrorProperty().set("!Could not logout at this time. Try later.");
+        }
     }
 }
