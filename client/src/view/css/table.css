@@ -26,7 +26,7 @@
 }
 .table-row-cell: hover {
     -fx-background-color: #461d5e;
-    -fx-text-background-color: #ffb1b1;
+    -fx-text-background-color: #458B7F;
     -fx-background-insets: 0, 0 0 1 0;
     -fx-padding: 0.0em;
 }

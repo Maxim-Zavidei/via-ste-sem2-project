@@ -11,6 +11,7 @@ public class ViewModelFactory {
     private CatalogBasketViewState catalogBasketViewState;
     private ManageProductsViewModel manageProductsViewModel;
     private AddProductPopUpViewModel addProductPopUpViewModel;
+    private EditProductPopUpViewModel editProductPopUpViewModel;
     private UserViewModel userViewModel;
     private UserManageViewModel userManageViewModel;
     private ViewState viewState;
@@ -25,6 +26,7 @@ public class ViewModelFactory {
         this.userViewModel = new UserViewModel(model, viewState);
         this.manageProductsViewModel = new ManageProductsViewModel(model);
         this.addProductPopUpViewModel = new AddProductPopUpViewModel(model);
+        this.editProductPopUpViewModel = new EditProductPopUpViewModel(model);
         this.userManageViewModel = new UserManageViewModel(model, viewState);
     }
 
@@ -54,6 +56,10 @@ public class ViewModelFactory {
 
     public AddProductPopUpViewModel getAddProductPopUpViewModel() {
         return addProductPopUpViewModel;
+    }
+
+    public EditProductPopUpViewModel getEditProductPopUpViewModel() {
+        return editProductPopUpViewModel;
     }
 
     public UserViewModel getUserViewModel() {

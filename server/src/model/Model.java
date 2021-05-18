@@ -15,7 +15,7 @@ public interface Model {
     void removeUser(String email) throws IllegalArgumentException, IllegalStateException;
     void addUser(User user) throws IllegalArgumentException, IllegalStateException;
     ArrayList<Product> getCatalogOfProducts() throws IllegalStateException;
-    void addProduct(Product product) throws IllegalStateException;
+    void addProduct(int quantity, String name, String description, double price) throws IllegalStateException;
     void updateProduct(Product product) throws IllegalStateException;
     void removeProduct(Product product) throws IllegalStateException;
 
