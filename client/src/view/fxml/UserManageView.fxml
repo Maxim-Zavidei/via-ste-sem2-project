@@ -143,7 +143,7 @@
             </DropShadow>
          </effect>
       </Label>
-      <Button fx:id="safeAddButton" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="1.0" layoutX="50.0" layoutY="676.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#modify" prefHeight="60.0" prefWidth="227.0" text="SAVE/ADD" textAlignment="CENTER" textFill="#522246">
+      <Button fx:id="saveAddButton" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="1.0" layoutX="50.0" layoutY="676.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#modify" prefHeight="60.0" prefWidth="227.0" text="SAVE/ADD" textAlignment="CENTER" textFill="#522246">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>

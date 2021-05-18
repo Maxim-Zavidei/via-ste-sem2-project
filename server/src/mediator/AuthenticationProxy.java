@@ -102,4 +102,15 @@ public class AuthenticationProxy implements RemoteServerInterface {
     public void removeProduct(Product product) throws RemoteException {
         throw new IllegalStateException("Authenticate in order to perform this request.");
     }
+
+    @Override public void addUser(User user) throws RemoteException
+    {
+        throw new IllegalStateException("Authenticate in order to perform this request.");
+    }
+
+    @Override public void updateUser(String email, User user)
+        throws RemoteException
+    {
+        throw new IllegalStateException("Authenticate in order to add a user.");
+    }
 }

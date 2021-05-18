@@ -1,6 +1,7 @@
 package mediator;
 
 import common.model.Product;
+import common.model.User;
 import common.model.UserList;
 import model.Model;
 import java.rmi.RemoteException;
@@ -43,5 +44,16 @@ public class CustomerAuthenticated extends GenericAccessType {
     @Override
     public void removeProduct(Product product) throws RemoteException {
         throw new IllegalStateException("Only an employee is allowed to perform this request.");
+    }
+
+    @Override public void addUser(User user) throws RemoteException
+    {
+        throw new IllegalStateException("Only an employee is allowed to perform this request.");
+    }
+
+    @Override public void updateUser(String email, User user)
+        throws RemoteException
+    {
+        throw new IllegalStateException("Only an employee is allowed to add new customers");
     }
 }

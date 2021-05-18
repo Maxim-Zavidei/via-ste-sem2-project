@@ -55,9 +55,19 @@ public class ModelManager implements Model {
         client.updateUser(oldEmail, newEmail, password, firstName, lastName, birthday, gender, isEmployee);
     }
 
+    @Override public void updateUser(String email, User user) throws Exception
+    {
+        client.updateUser(email, user);
+    }
+
     @Override
     public void removeUser(String email) throws Exception {
         client.removeUser(email);
+    }
+
+    @Override public void addUser(User user) throws Exception
+    {
+        client.addUser(user);
     }
 
     @Override

@@ -106,13 +106,23 @@ public class UserViewController extends ViewController
   {
     try
     {
-      if(usersTable.getSelectionModel().getSelectedItem().getEmail().get()!=null)
-        viewModel.addEdit(usersTable.getSelectionModel().getSelectedItem().getEmail().get());
-      else viewModel.addEdit("");
+      String email = usersTable.getSelectionModel().getSelectedItem().getEmail().get();
+      viewModel.addEdit(email);
     }
     catch (Exception e)
     {
-      errorLabel.setText("Something went wrong with modifying of user.");
+      viewModel.addEdit("");
+    }
+    finally
+    {
+      try
+      {
+        viewHandler.openView(View.MANAGEUSERS);
+      }
+      catch (Exception e)
+      {
+        viewModel.getErrorProperty().set("Something went wrong with modifying user");
+      }
     }
   }
 

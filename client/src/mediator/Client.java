@@ -70,9 +70,19 @@ public class Client implements ClientTarget, RemoteClientInterface {
         server.updateUser(oldEmail, newEmail, password, firstName, lastName, birthday, gender, isEmployee);
     }
 
+    @Override public void updateUser(String email, User user) throws Exception
+    {
+        server.updateUser(email, user);
+    }
+
     @Override
     public void removeUser(String email) throws Exception {
         server.removeUser(email);
+    }
+
+    @Override public void addUser(User user) throws Exception
+    {
+        server.addUser(user);
     }
 
     @Override

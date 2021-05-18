@@ -20,4 +20,6 @@ public interface RemoteServerInterface extends Remote {
     void addProduct(Product product) throws RemoteException;
     void updateProduct(Product product) throws RemoteException;
     void removeProduct(Product product) throws RemoteException;
+    void addUser(User user) throws RemoteException;
+    void updateUser(String email, User user) throws RemoteException;
 }

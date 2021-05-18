@@ -82,8 +82,28 @@ public class ModelManager implements Model {
             // Update the newly registered user in the database and remove the old one.
             userDAO.delete(oldEmail);
             userDAO.create(current);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            }
+        catch (SQLException e) {
+            throw new IllegalStateException("Server is unavailable at the moment. Try Later.");
+        }
+    }
+
+    @Override public void updateUser(String email, User user)
+        throws IllegalStateException, IllegalArgumentException {
+        try {
+            User old = userDAO.readByEmail(email);
+            // Checks if an user with this old email exists.
+            if (old == null) throw new IllegalStateException("No registered user with such email could be found.");
+            // Check if the new email is not already taken.
+            if (userDAO.readByEmail(user.getEmail()) != null && !user.getEmail()
+                .equals(email)) throw new IllegalStateException("The given new email is already taken.");
+            // Validate first the arguments through creating an object of type user.
+            User newUser = user;
+            // Update the newly registered user in the database and remove the old one.
+            userDAO.delete(email);
+            userDAO.create(newUser);
+        }
+        catch (SQLException e) {
             throw new IllegalStateException("Server is unavailable at the moment. Try Later.");
         }
     }
@@ -95,6 +115,19 @@ public class ModelManager implements Model {
             if (userDAO.readByEmail(email) == null) throw new IllegalStateException("No registered user with such email could be found.");
             userDAO.delete(email);
         } catch (Exception e) {
+            throw new IllegalStateException("Server is unavailable at the moment. Try Later.");
+        }
+    }
+
+    @Override public void addUser(User user)
+        throws IllegalArgumentException, IllegalStateException
+    {
+        if (user == null || user.getEmail().isEmpty()) throw new IllegalArgumentException("Email can not be empty.");
+        try {
+            if (userDAO.readByEmail(user.getEmail()) != null) throw new IllegalStateException("Registered user with such email could be found.");
+            userDAO.create(user);
+        } catch (Exception e) {
+
             throw new IllegalStateException("Server is unavailable at the moment. Try Later.");
         }
     }
