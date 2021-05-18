@@ -107,6 +107,7 @@ public class ModelManager implements Model {
     @Override
     public void addProduct(Product product) throws IllegalStateException {
         try {
+            if (!productDAO.readByName(product.getName()).isEmpty()) throw new IllegalStateException("A product with this name already exists.");
             productDAO.create(product.getQuantity(), product.getName(), product.getDescription(), product.getPrice());
         } catch (SQLException e) {
             throw new IllegalStateException("Server is unavailable at the moment. Try Later.");
@@ -117,6 +118,9 @@ public class ModelManager implements Model {
     public void updateProduct(Product product) throws IllegalStateException {
         try {
             if (productDAO.getById(product.getId()) == null) throw new IllegalStateException("No such product could be found.");
+            // Check if the new name of the product conflicts with another product's name.
+            Product tmp = productDAO.readByName(product.getName()).isEmpty() ? null : productDAO.readByName(product.getName()).get(0);
+            if (tmp != null && !tmp.getId().equals(product.getId())) throw new IllegalStateException("This product name is already taken.");
             productDAO.update(product);
         } catch (SQLException e) {
             throw new IllegalStateException("Server is unavailable at the moment. Try Later.");
