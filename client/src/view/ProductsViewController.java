@@ -70,6 +70,15 @@ public class ProductsViewController extends ViewController {
     }
 
     @FXML
+    public void editProduct() {
+        try {
+            viewHandler.openView(View.EDITPRODUCTS);
+        } catch (Exception e) {
+            errorLabel.textProperty().setValue(e.getMessage());
+        }
+    }
+
+    @FXML
     public void deleteProduct() {
         if (viewModel.deleteProduct()) catalogTable.getSelectionModel().clearSelection();
 

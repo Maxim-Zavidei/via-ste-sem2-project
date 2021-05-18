@@ -1,13 +1,12 @@
 package viewmodel;
 
-import common.model.Product;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import model.Model;
 
-public class AddProductPopUpViewModel {
+public class EditProductPopUpViewModel {
 
     private Model model;
 
@@ -18,7 +17,7 @@ public class AddProductPopUpViewModel {
     private ObjectProperty<Double> price;
     private StringProperty errorProperty;
 
-    public AddProductPopUpViewModel(Model model) {
+    public EditProductPopUpViewModel(Model model) {
         this.model = model;
 
         //id = new SimpleStringProperty();
@@ -26,7 +25,7 @@ public class AddProductPopUpViewModel {
         name = new SimpleStringProperty();
         description = new SimpleStringProperty();
         price = new SimpleObjectProperty<>();
-        errorProperty = new SimpleStringProperty("Add Product");
+        errorProperty = new SimpleStringProperty("Edit Product");
     }
 
     public ObjectProperty<Integer> getQuantityProperty() {
@@ -53,13 +52,13 @@ public class AddProductPopUpViewModel {
         quantity.set(null);
         name.set("");
         description.set("");
-        errorProperty.set("Add Product");
+        errorProperty.set("Edit Product");
         price.set(null);
     }
 
-    public void addProduct() {
+    public void editProduct() {
         try {
-             model.addProduct(getQuantityProperty().get(), getNameProperty().get(), getDescriptionProperty().get(), getPriceProperty().get());
+             //model.updateProduct(getQuantityProperty().get(), getNameProperty().get(), getDescriptionProperty().get(), getPriceProperty().get());
         } catch (Exception e) {
             errorProperty.set(e.getMessage());
         }

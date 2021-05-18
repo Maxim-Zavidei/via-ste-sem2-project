@@ -9,6 +9,7 @@ public enum View {
     SHOPPING("fxml/ShoppingView.fxml"),
     MANAGEPRODUCTS("fxml/ProductsView.fxml"),
     POPUPPRODUCTS("fxml/AddProductPopUpView.fxml"),
+    EDITPRODUCTS("fxml/EditProductPopUpView.fxml"),
     USERS("fxml/UserView.fxml"),
     MANAGEUSERS("fxml/UserManageView.fxml");
 
