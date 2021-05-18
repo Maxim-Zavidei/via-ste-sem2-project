@@ -42,23 +42,23 @@ public class UserViewModel
 
   public void reset(){
     errorProperty.set("");
-    if (!wasAuthenticatedUserQueried) {
-      try {
-        User authenticatedUser = model.getAuthenticatedUser();
-
-      } catch (Exception e) {
-
-        errorProperty.set(e.getMessage());
-      }
-      wasAuthenticatedUserQueried = true;
-    }
+//    if (!wasAuthenticatedUserQueried) {
+//      try {
+//        User authenticatedUser = model.getAuthenticatedUser();
+//
+//      } catch (Exception e) {
+//
+//        errorProperty.set(e.getMessage());
+//      }
+//      wasAuthenticatedUserQueried = true;
+//    }
     try
     {
       updateUsers();
     }
     catch (Exception e)
     {
-      errorProperty.set("Error in updating users");
+      System.out.println(e.getMessage());
     }
   }
 
