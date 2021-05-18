@@ -85,12 +85,41 @@ public class ModelManager implements Model {
         }
     }
 
+    @Override public void updateUser(String email, User user)
+        throws IllegalStateException, IllegalArgumentException
+    {
+        try {
+            User old = userDAO.readByEmail(email);
+            // Checks if an user with this old email exists.
+            if (old == null) throw new IllegalStateException("No registered user with such email could be found.");
+            // Check if the new email is not already taken.
+            if (userDAO.readByEmail(email) != null && !user.getEmail().equals(email)) throw new IllegalStateException("The given new email is already taken.");
+            // Update the newly registered user in the database and remove the old one.
+            userDAO.delete(email);
+            userDAO.create(user);
+        } catch (SQLException e) {
+            throw new IllegalStateException("Server is unavailable at the moment. Try Later.");
+        }
+    }
+
     @Override
     public void removeUser(String email) throws IllegalArgumentException, IllegalStateException {
         if (email == null || email.isEmpty()) throw new IllegalArgumentException("Email can not be empty.");
         try {
             if (userDAO.readByEmail(email) == null) throw new IllegalStateException("No registered user with such email could be found.");
             userDAO.delete(email);
+        } catch (SQLException e) {
+            throw new IllegalStateException("Server is unavailable at the moment. Try Later.");
+        }
+    }
+
+    @Override public void addUser(User user)
+        throws IllegalArgumentException, IllegalStateException
+    {
+        if (user.getEmail() == null || user.getEmail().isEmpty()) throw new IllegalArgumentException("Email can not be empty.");
+        try {
+            if (userDAO.readByEmail(user.getEmail()) != null) throw new IllegalStateException("Registered user with such email could be found.");
+            userDAO.create(user);
         } catch (SQLException e) {
             throw new IllegalStateException("Server is unavailable at the moment. Try Later.");
         }
