@@ -32,14 +32,6 @@ public class UserViewModel
 
     // Initialize variable for other ui elements
     this.errorProperty = new SimpleStringProperty();
-    try
-    {
-      updateUsers();
-    }
-    catch (Exception e)
-    {
-      errorProperty.set("Error in updating users");
-    }
   }
 
   /**Methods, methods, methods*/
@@ -126,7 +118,8 @@ public class UserViewModel
   {
     list.clear();
     ArrayList<User> users = model.getAllRegisteredUsers().getAllUsers();
-    for (int i = 0; i < model.getAllRegisteredUsers().getSize(); i++)
+    System.out.println(users);
+    for (int i = 0; i < users.size(); i++)
     {
       list.add(new UserView(users.get(i)));
     }

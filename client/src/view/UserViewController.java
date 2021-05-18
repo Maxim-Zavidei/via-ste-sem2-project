@@ -1,6 +1,7 @@
 package view;
 
 import common.model.DateTime;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -135,6 +136,29 @@ public class UserViewController extends ViewController
     {
       viewModel.getErrorProperty()
           .set("!Could not logout at this time. Try later.");
+    }
+  }
+
+  @FXML private void openBasketView()
+  {
+    try {
+      viewHandler.openView(View.BASKET);
+    } catch (Exception e) {
+      viewModel.getErrorProperty().set("Could not open basket at this time. Try later.");
+    }
+  }
+  @FXML private void openCatalogView(){
+    try {
+      viewHandler.openView(View.CATALOG);
+    } catch (Exception e) {
+      viewModel.getErrorProperty().set("Could not open catalog at this time. Try later.");
+    }
+  }
+  @FXML private void openProductManagementView(){
+    try {
+      viewHandler.openView(View.MANAGEPRODUCTS);
+    } catch (Exception e) {
+      viewModel.getErrorProperty().set("Could not open manage products at this time. Try later.");
     }
   }
 }
