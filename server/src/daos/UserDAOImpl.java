@@ -53,7 +53,7 @@ public class UserDAOImpl implements UserDAO {
             statement.setString(1, user.getPassword());
             statement.setString(2, user.getFirstName());
             statement.setString(3, user.getLastName());
-            statement.setObject(4, user.getBirthday(), Types.DATE);
+            statement.setObject(4, user.getBirthday().getSortableDate(), Types.DATE);
             statement.setInt(5, user.getAge());
             statement.setObject(6, user.getGender(), Types.CHAR);
             statement.setBoolean(7, user instanceof Employee);
