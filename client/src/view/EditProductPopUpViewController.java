@@ -6,6 +6,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.util.StringConverter;
 import viewmodel.AddProductPopUpViewModel;
+import viewmodel.EditProductPopUpViewModel;
 
 public class EditProductPopUpViewController extends ViewController {
     @FXML
@@ -21,13 +22,13 @@ public class EditProductPopUpViewController extends ViewController {
 
 
     private ViewHandler viewHandler;
-    private AddProductPopUpViewModel viewModel;
+    private EditProductPopUpViewModel viewModel;
 
 
     @Override
     protected void init() {
         this.viewHandler = getViewHandler();
-        this.viewModel = getViewModelFactory().getAddProductPopUpViewModel();
+        this.viewModel = getViewModelFactory().getEditProductPopUpViewModel();
 
         errorLabel.textProperty().bind(viewModel.getErrorProperty());
         quantityField.textProperty().bindBidirectional(viewModel.getQuantityProperty(), new StringConverter<Integer>() {
@@ -65,7 +66,7 @@ public class EditProductPopUpViewController extends ViewController {
 
     public void editProduct() {
         try{
-            //viewModel();
+            viewModel.editProduct();
             viewHandler.openView(View.MANAGEPRODUCTS);
         }catch (Exception e)
         {
