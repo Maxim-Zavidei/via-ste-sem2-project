@@ -1,6 +1,8 @@
 package daos;
 
 import common.model.DateTime;
+import common.model.Employee;
+import common.model.User;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -37,11 +39,18 @@ class UserDAOImplTest {
     }
 
     @Test
-    void update() {
+    void update() throws SQLException {
+        userDAO.update(new Employee("bob@gmail.com", "123456", "Bob", "Bob", new DateTime(2,1,2001),'M'));
     }
 
     @Test
     void updateAge() {
+    }
+
+    @Test
+    void readByEmail() throws SQLException {
+        User user = userDAO.readByEmail("bob@gmail.com");
+        System.out.println(user instanceof Employee);
     }
 
     @Test
