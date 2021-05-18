@@ -28,8 +28,8 @@ public class EmployeeAuthenticated extends GenericAccessType {
     }
 
     @Override
-    public void addProduct(Product product) throws RemoteException {
-        getModel().addProduct(product);
+    public void addProduct(int quantity, String name, String description, double price) throws RemoteException {
+        getModel().addProduct(quantity, name, description, price);
     }
 
     @Override

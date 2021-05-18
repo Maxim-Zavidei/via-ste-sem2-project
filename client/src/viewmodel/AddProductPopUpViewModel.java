@@ -58,11 +58,8 @@ public class AddProductPopUpViewModel {
     }
 
     public void addProduct() {
-        // need to do an automated ID generator or something!
         try {
-            Product product = new Product("123", getQuantityProperty().get(), getNameProperty().get(), getDescriptionProperty().get(), getPriceProperty().get());
-            // TODO: Needs further development of the system.
-            // model.addProduct(product);
+             model.addProduct(getQuantityProperty().get(), getNameProperty().get(), getDescriptionProperty().get(), getPriceProperty().get());
         } catch (Exception e) {
             errorProperty.set(e.getMessage());
         }

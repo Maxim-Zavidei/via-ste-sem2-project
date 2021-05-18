@@ -109,9 +109,9 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void addProduct(Product product) throws IllegalStateException {
+    public void addProduct(int quantity, String name, String description, double price) throws IllegalStateException {
         try {
-            productDAO.create(product.getQuantity(), product.getName(), product.getDescription(), product.getPrice());
+            productDAO.create(quantity, name,description,price);
         } catch (Exception e) {
             throw new IllegalStateException("Server is unavailable at the moment. Try Later.");
         }

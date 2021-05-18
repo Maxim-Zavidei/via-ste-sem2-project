@@ -31,7 +31,7 @@ public class CustomerAuthenticated extends GenericAccessType {
     }
 
     @Override
-    public void addProduct(Product product) throws RemoteException {
+    public void addProduct(int quantity, String name, String description, double price) throws RemoteException {
         throw new IllegalStateException("Only an employee is allowed to perform this request.");
     }
 
