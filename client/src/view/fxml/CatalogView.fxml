@@ -168,7 +168,7 @@
                      <children>
                         <StackPane alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="475.0" prefWidth="900.0">
                            <children>
-                              <TableView fx:id="catalogTable" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="475.0" prefWidth="900.0">
+                              <TableView fx:id="catalogTable" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="475.0" prefWidth="900.0" stylesheets="@../css/table.css">
                                  <columns>
                                     <TableColumn fx:id="catalogAvailabilityColumn" prefWidth="99.0" resizable="false" style="-fx-alignment: CENTER;" text="Available Units" />
                                     <TableColumn fx:id="catalogNameColumn" minWidth="0.0" prefWidth="198.0" text="Name" />
@@ -179,6 +179,9 @@
                            </children>
                         </StackPane>
                      </children>
+                     <effect>
+                        <InnerShadow choke="0.52" color="#461d5e" radius="11.7875" width="28.15" />
+                     </effect>
                   </HBox>
                   <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="135.0" prefWidth="900.0">
                      <children>

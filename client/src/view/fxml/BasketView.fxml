@@ -138,7 +138,7 @@
                <children>
                   <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="90.0" prefWidth="900.0" styleClass="top-panel" stylesheets="@../css/BasketView.css">
                      <effect>
-                        <DropShadow height="35.83" radius="8.4575" width="0.0" />
+                        <DropShadow color="#461d5e" height="17.92" radius="3.9800000000000004" width="0.0" />
                      </effect>
                      <children>
                         <Pane prefHeight="90.0" prefWidth="607.0">
@@ -192,7 +192,7 @@
                      <children>
                         <StackPane alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="475.0" prefWidth="900.0">
                            <children>
-                              <TableView fx:id="basketTable" editable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="475.0" prefWidth="900.0">
+                              <TableView fx:id="basketTable" editable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="475.0" prefWidth="900.0" stylesheets="@../css/table.css">
                                  <columns>
                                     <TableColumn fx:id="basketQuantityColumn" prefWidth="87.0" resizable="false" style="-fx-alignment: CENTER;" text="Quantity" />
                                     <TableColumn fx:id="basketNameColumn" editable="false" minWidth="0.0" prefWidth="533.0" text="Name" />
@@ -200,8 +200,14 @@
                                     <TableColumn fx:id="basketCostColumn" editable="false" minWidth="0.0" prefWidth="139.0" resizable="false" style="-fx-alignment: CENTER;" text="Total Cost" />
                                  </columns>
                               </TableView>
-                           </children></StackPane>
+                           </children>
+                           <effect>
+                              <DropShadow color="#461d5e" height="98.9" offsetX="10.0" offsetY="8.0" radius="33.160000000000004" width="35.74" />
+                           </effect></StackPane>
                      </children>
+                     <effect>
+                        <InnerShadow choke="0.6" color="#461d5e" height="16.23" radius="9.4025" width="23.38" />
+                     </effect>
                   </HBox>
                   <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="135.0" prefWidth="900.0">
                      <effect>
