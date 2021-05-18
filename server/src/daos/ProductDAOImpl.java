@@ -103,7 +103,7 @@ public class ProductDAOImpl implements ProductDAO {
     @Override
     public Product getById(String id) throws SQLException {
         try (PreparedStatement statement = getConnection().prepareStatement("SELECT * FROM \"product\" WHERE id = ?")) {
-            statement.setString(1, id);
+            statement.setInt(1, Integer.parseInt(id));
             ResultSet productSet = statement.executeQuery();
             return productSet.next() ? new Product(
                     String.valueOf(productSet.getInt("id")),

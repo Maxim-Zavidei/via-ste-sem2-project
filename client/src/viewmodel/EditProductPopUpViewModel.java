@@ -1,5 +1,6 @@
 package viewmodel;
 
+import common.model.Product;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -49,16 +50,25 @@ public class EditProductPopUpViewModel {
     }
 
     public void reset() {
-        quantity.set(null);
+       quantity.set(null);
         name.set("");
         description.set("");
         errorProperty.set("Edit Product");
         price.set(null);
     }
 
+    public void set(ProductViewModel productViewModel){
+        this.name = productViewModel.getNameProperty();
+        this.description = productViewModel.getDescriptionProperty();
+        this.price = productViewModel.getPriceProperty();
+        this.quantity = productViewModel.getQuantityProperty();
+        this.id = productViewModel.getIdProperty();
+    }
+
     public void editProduct() {
         try {
-             //model.updateProduct(getQuantityProperty().get(), getNameProperty().get(), getDescriptionProperty().get(), getPriceProperty().get());
+            Product product = new Product(id.get(), getQuantityProperty().get(), getNameProperty().get(), getDescriptionProperty().get(), getPriceProperty().get());
+             model.updateProduct(product);
         } catch (Exception e) {
             errorProperty.set(e.getMessage());
         }

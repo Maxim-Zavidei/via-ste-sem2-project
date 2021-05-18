@@ -34,6 +34,10 @@ class ProductDAOImplTest {
         }
     }
 
+    @Test void getById() throws SQLException {
+        assertEquals("id='1', quantity=3, name='Baklava', description='Baklava is very tasty', price=2.5", productDAO.getById("1").toString());
+    }
+
     @Test
     void update() {
         try {

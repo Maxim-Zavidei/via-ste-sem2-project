@@ -88,6 +88,16 @@ public class ManageProductsViewModel {
         selectedCatalogProductProperty.set(productViewModel);
     }
 
+    public ProductViewModel editProduct(){
+        ProductViewModel selectedCatalogProductViewModel = selectedCatalogProductProperty.get();
+        if (selectedCatalogProductViewModel == null) {
+            errorProperty.set("!Please select a product from the catalog to be edited.");
+            return null;
+        }
+        selectedCatalogProductProperty.set(null);
+        return selectedCatalogProductViewModel;
+    }
+
     public boolean deleteProduct() {
         ProductViewModel selectedCatalogProductViewModel = selectedCatalogProductProperty.get();
         if (selectedCatalogProductViewModel == null) {

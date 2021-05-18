@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import viewmodel.EditProductPopUpViewModel;
 import viewmodel.ManageProductsViewModel;
 import viewmodel.ProductViewModel;
 
@@ -72,7 +73,14 @@ public class ProductsViewController extends ViewController {
     @FXML
     public void editProduct() {
         try {
-            viewHandler.openView(View.EDITPRODUCTS);
+            ProductViewModel pvm = viewModel.editProduct();
+            if(pvm != null)
+            {
+                getViewModelFactory().getEditProductPopUpViewModel().set(pvm);
+                viewHandler.openView(View.EDITPRODUCTS);
+            }
+
+
         } catch (Exception e) {
             errorLabel.textProperty().setValue(e.getMessage());
         }

@@ -60,7 +60,7 @@ public class EditProductPopUpViewController extends ViewController {
 
     @Override
     protected void reset() {
-        viewModel.reset();
+        //viewModel.reset();
 
     }
 
