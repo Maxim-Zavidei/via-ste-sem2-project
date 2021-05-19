@@ -135,6 +135,18 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public Product getProductById(String productId) throws IllegalArgumentException, IllegalStateException {
+        if (productId == null || productId.isEmpty()) throw new IllegalArgumentException("Product id can not be empty.");
+        try {
+            Product toReturn = productDAO.getById(productId);
+            if (toReturn == null) throw new IllegalStateException("No such product could be found.");
+            return toReturn;
+        } catch (SQLException e) {
+            throw new IllegalStateException("Server is unavailable at the moment. Try Later.");
+        }
+    }
+
+    @Override
     public void addProduct(int quantity, String name, String description, double price) throws IllegalStateException {
         if (quantity < 1) throw new IllegalArgumentException("Product quantity can't be less then 1.");
         if (name == null || name.isEmpty()) throw new IllegalArgumentException("Product name can't be empty.");

@@ -81,6 +81,11 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public Product getProductById(String productId) throws Exception {
+        return client.getProductById(productId);
+    }
+
+    @Override
     public void addProduct(int quantity, String name, String description, double price) throws Exception {
         client.addProduct(quantity,name, description, price);
     }
@@ -116,7 +121,7 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void removeProductFromBasket(Product product) throws IllegalStateException {
-        basket.removeProduct(product);
+    public void removeProductFromBasket(String productId) throws IllegalStateException {
+        basket.removeProduct(productId);
     }
 }

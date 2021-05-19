@@ -91,6 +91,11 @@ public class Client implements ClientTarget, RemoteClientInterface {
     }
 
     @Override
+    public Product getProductById(String productId) throws Exception {
+        return server.getProductById(productId);
+    }
+
+    @Override
     public void addProduct(int quantity, String name, String description, double price) throws Exception {
         server.addProduct(quantity, name, description, price);
     }

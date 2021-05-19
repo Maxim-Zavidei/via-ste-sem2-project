@@ -18,6 +18,7 @@ public interface ClientTarget {
     void removeUser(String email) throws Exception;
     void addUser(User user) throws Exception;
     ArrayList<Product> getCatalogOfProducts() throws Exception;
+    Product getProductById(String productId) throws Exception;
     void addProduct(int quantity, String name, String description, double price) throws Exception;
     void updateProduct(Product product) throws Exception;
     void removeProduct(Product product) throws Exception;
