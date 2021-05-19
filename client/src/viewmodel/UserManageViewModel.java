@@ -6,6 +6,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import model.Model;
+import viewmodel.viewstate.UserManagementViewState;
 
 import java.time.LocalDate;
 
@@ -24,12 +25,12 @@ public class UserManageViewModel {
   private ObjectProperty<Boolean> femaleGenderButtonProperty;
   private StringProperty addEditProperty;
   private StringProperty saveAddButtonProperty;
-  private ViewState viewState;
+  private UserManagementViewState userManagementViewState;
 
-  public UserManageViewModel(Model model, ViewState viewState)
+  public UserManageViewModel(Model model, UserManagementViewState viewState)
   {
     this.model = model;
-    this.viewState = viewState;
+    this.userManagementViewState = viewState;
     // Initialize the instance variables responsible for storing data of the ui elements.
     addEditProperty = new SimpleStringProperty("Add");
     saveAddButtonProperty = new SimpleStringProperty("Add");
@@ -45,12 +46,12 @@ public class UserManageViewModel {
   }
 
   private void loadFromSelected(){
-    if (!viewState.getSelectedUser().equals(""))
+    if (!userManagementViewState.getSelectedUser().equals(""))
     {
       try
       {
         User user = model.getAllRegisteredUsers().getUser(
-            viewState.getSelectedUser());
+            userManagementViewState.getSelectedUser());
         addEditProperty.set("Edit");
         saveAddButtonProperty.set("Save");
         emailProperty.set(user.getEmail());
@@ -137,7 +138,7 @@ public class UserManageViewModel {
 
   public void modify()
   {
-    if(viewState.getSelectedUser().equals(""))
+    if(userManagementViewState.getSelectedUser().equals(""))
     {
       char gender;
       DateTime newCustBirthday = new DateTime(birthdayPickerProperty.get());
@@ -166,7 +167,7 @@ public class UserManageViewModel {
         String password=""; 
         String email="";
         String oldEmail="";
-        if(!emailProperty.get().equals("") || emailProperty.get()!=null) oldEmail = viewState.getSelectedUser();
+        if(!emailProperty.get().equals("") || emailProperty.get()!=null) oldEmail = userManagementViewState.getSelectedUser();
         if(!firstNameProperty.get().equals("") || firstNameProperty.get()!=null)firstName=firstNameProperty.get();
         if(!lastNameProperty.get().equals("") || lastNameProperty.get()!=null)lastName=lastNameProperty.get();
         if(!passwordProperty.get().equals("") || passwordProperty.get()!=null)password=passwordProperty.get();

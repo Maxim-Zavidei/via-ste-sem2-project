@@ -8,6 +8,7 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Model;
+import viewmodel.viewstate.UserManagementViewState;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -17,17 +18,17 @@ public class UserViewModel
   /**Instance variables for list, selected item, management model*/
   private Model model;
   private ObservableList<UserView> list;
-  private ViewState viewState;
+  private UserManagementViewState userManagementViewState;
   private boolean wasAuthenticatedUserQueried;
 
   /**Instance variable for other ui elements*/
   private StringProperty errorProperty;
 
-  public UserViewModel(Model model, ViewState viewState){
+  public UserViewModel(Model model, UserManagementViewState userManagementViewState){
     // Initialize variables for list, selected item, management model
     this.model = model;
     this.list = FXCollections.observableArrayList();
-    this.viewState = viewState;
+    this.userManagementViewState = userManagementViewState;
 
     this.wasAuthenticatedUserQueried = false;
 
@@ -148,7 +149,7 @@ public class UserViewModel
 
   public void addEdit(String selectedUser)
   {
-    viewState.setSelectedUser(selectedUser);
+    userManagementViewState.setSelectedUser(selectedUser);
 
   }
 }
