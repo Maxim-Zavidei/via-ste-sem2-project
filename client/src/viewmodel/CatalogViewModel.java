@@ -46,6 +46,9 @@ public class CatalogViewModel {
     public void reset() {
         errorProperty.set("");
 
+        // Deselect any selected items if window reopens.
+        selectedCatalogProductProperty.set(null);
+
         // Refresh the catalog table with all the available products every time the window reopens.
         catalogMap.clear();
         try {
@@ -53,8 +56,6 @@ public class CatalogViewModel {
         } catch (Exception e) {
             errorProperty.set(e.getMessage());
         }
-        // Deselect any selected items if window reopens.
-        selectedCatalogProductProperty.set(null);
 
         // Configure properly the product and user management buttons and the username label based if the user is an employee or not.
         if (!wasAuthenticatedUserQueried) {
