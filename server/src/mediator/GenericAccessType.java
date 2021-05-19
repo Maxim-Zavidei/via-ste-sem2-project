@@ -81,4 +81,9 @@ public abstract class GenericAccessType implements RemoteServerInterface {
     public ArrayList<Product> getCatalogOfProducts() throws RemoteException {
         return model.getCatalogOfProducts();
     }
+
+    @Override
+    public Product getProductById(String productId) throws RemoteException {
+        return model.getProductById(productId);
+    }
 }
