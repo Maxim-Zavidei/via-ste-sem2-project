@@ -95,7 +95,7 @@ public class BasketViewController extends ViewController {
         try {
             viewHandler.openView(View.CATALOG);
         } catch (Exception e) {
-            viewModel.getErrorProperty().set("Could not manage basket at this time. Try later.");
+            viewModel.getErrorProperty().set("Can not view the catalog at this time. Try later.");
         }
     }
 
@@ -104,7 +104,7 @@ public class BasketViewController extends ViewController {
         try {
             viewHandler.openView(View.MANAGEPRODUCTS);
         } catch (Exception e) {
-            viewModel.getErrorProperty().set("Could not manage products at this time. Try later.");
+            viewModel.getErrorProperty().set("Can not manage products at this time. Try later.");
         }
     }
 
@@ -113,19 +113,19 @@ public class BasketViewController extends ViewController {
         try {
             viewHandler.openView(View.USERS);
         } catch (Exception e) {
-            viewModel.getErrorProperty().set("Could not open manage users at this time. Try later.");
+            viewModel.getErrorProperty().set("Can not manage users at this time. Try later.");
         }
-    }
-
-    @FXML
-    private void dropFromBasket() {
-        if (viewModel.dropFromBasket()) basketTable.getSelectionModel().clearSelection();
     }
 
     @FXML
     private void clearBasket() {
         basketTable.getSelectionModel().clearSelection();
         viewModel.clearBasket();
+    }
+
+    @FXML
+    private void dropFromBasket() {
+        if (viewModel.dropFromBasket()) basketTable.getSelectionModel().clearSelection();
     }
 
     @FXML
@@ -140,15 +140,14 @@ public class BasketViewController extends ViewController {
 
     @FXML
     private void deauthenticate() {
-        //model.clear basket
         if (!viewModel.deauthenticate()) {
-            viewModel.getErrorProperty().set("!Could not deauthenticate the user.");
+            viewModel.getErrorProperty().set("Could not deauthenticate the user.");
             return;
         }
         try {
             viewHandler.openView(View.AUTHENTICATION);
         } catch (Exception e) {
-            viewModel.getErrorProperty().set("!Could not logout at this time. Try later.");
+            viewModel.getErrorProperty().set("Could not logout at this time. Try later.");
         }
     }
 }

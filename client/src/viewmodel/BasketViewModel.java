@@ -1,5 +1,6 @@
 package viewmodel;
 
+import common.model.Product;
 import common.model.User;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
@@ -50,8 +51,13 @@ public class BasketViewModel {
 
     public void reset() {
         errorProperty.set("");
+
         // Deselect any selected items if window reopens.
         selectedBasketProductProperty.set(null);
+
+        // Refresh, every time the window reopens, the basket table with all the products the user added to the basket in his current logged session.
+        basketMap.clear();
+        model.getAllProductsInBasket().forEach((product) -> basketMap.put(product.getId(), new ProductViewModel(product)));
 
         // Configure properly the product and user management and the username label based if the user is an employee or not.
         if (!wasAuthenticatedUserQueried) {
@@ -69,6 +75,7 @@ public class BasketViewModel {
             wasAuthenticatedUserQueried = true;
         }
 
+        // Update all the price labels in the footer.
         updatePrices();
     }
 
@@ -112,28 +119,31 @@ public class BasketViewModel {
         selectedBasketProductProperty.set(productViewModel);
     }
 
+    public void clearBasket() {
+        selectedBasketProductProperty.set(null);
+        model.clearBasket();
+        basketMap.clear();
+        updatePrices();
+    }
+
     public boolean dropFromBasket() {
         ProductViewModel selectedBasketProductViewModel = selectedBasketProductProperty.get();
         if (selectedBasketProductViewModel == null) {
-            errorProperty.set("!Please select a product from the basket to be removed.");
+            errorProperty.set("Please select a product from the basket to be removed.");
             return false;
         }
         selectedBasketProductProperty.set(null);
-        basketMap.remove(selectedBasketProductViewModel.getIdProperty().getValue());
+        String tmp = selectedBasketProductViewModel.getIdProperty().getValue();
+        basketMap.remove(tmp);
+        model.removeProductFromBasket(tmp);
         updatePrices();
         return true;
-    }
-
-    public void clearBasket() {
-        selectedBasketProductProperty.set(null);
-        basketMap.clear();
-        updatePrices();
     }
 
     public void applyCoupon() {
         String couponCode = inputCouponProperty.get();
         if (couponCode == null || couponCode.isEmpty()) {
-            errorProperty.set("!Please enter a valid coupon code.");
+            errorProperty.set("Please enter a valid coupon code.");
             return;
         }
         // TODO: Needs further development of the system.
@@ -143,6 +153,10 @@ public class BasketViewModel {
     }
 
     public void placeOrder() {
+        // TODO: Needs further development of the system.
+        // Here we are going to create an order object based on the products
+        // based on the products that are stored in model's basket.
+        // The created order object we are gonna send to the server for validation.
         clearBasket();
     }
 
@@ -156,13 +170,25 @@ public class BasketViewModel {
         try {
             int toReturn = Integer.parseInt(newQuantity);
             if (toReturn < 1) throw new NumberFormatException();
-            //int availableQuantity = catalogMap.get(selectedBasketProduct.getIdProperty().getValue()).getQuantityProperty().getValue();
-           // if (toReturn > availableQuantity) throw new IllegalArgumentException("!Unavailable stock. The quantity must be within " + availableQuantity + " units.");
+            int availableQuantity;
+            try {
+                availableQuantity = model.getProductById(selectedBasketProduct.getIdProperty().getValue()).getQuantity();
+            } catch (Exception e) {
+                throw new IllegalArgumentException(e.getMessage());
+            }
+           if (toReturn > availableQuantity) throw new IllegalArgumentException("Unavailable stock. The quantity must be within " + availableQuantity + " units.");
+           model.replaceProductInBasket(new Product(
+                   selectedBasketProduct.getIdProperty().getValue(),
+                   toReturn,
+                   selectedBasketProduct.getNameProperty().getValue(),
+                   selectedBasketProduct.getDescriptionProperty().getValue(),
+                   selectedBasketProduct.getPriceProperty().getValue()
+           ));
             basketMap.get(selectedBasketProduct.getIdProperty().getValue()).setQuantity(toReturn);
             updatePrices();
             return toReturn;
         } catch (NumberFormatException e) {
-            errorProperty.set("!Input a valid positive number.");
+            errorProperty.set("Input a valid positive number.");
         } catch (IllegalArgumentException e) {
             errorProperty.set(e.getMessage());
         }
@@ -171,7 +197,7 @@ public class BasketViewModel {
 
     private void updatePrices() {
         final double[] preliminaryPrice = {0.0};
-        basketMap.forEach((key, value) -> preliminaryPrice[0] += value.getPriceProperty().getValue() * value.getQuantityProperty().getValue());
+        model.getAllProductsInBasket().forEach(product -> preliminaryPrice[0] += product.getPrice() * product.getQuantity());
         priceProperty.set(String.format("%.2f", preliminaryPrice[0]));
         int discount = discountProperty.getValue();
         finalPriceProperty.set(String.format("%.2f", discount == 0 ? preliminaryPrice[0] : preliminaryPrice[0] * discount / 100));
