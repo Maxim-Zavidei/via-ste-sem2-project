@@ -19,13 +19,12 @@ public class Product implements Serializable {
     }
 
     public void setId(String id) throws IllegalArgumentException {
-        if (id == null || id.isEmpty()) throw new IllegalArgumentException("Product id can't be empty.");
-       /* try {
-            Integer.parseInt(id);
+        if (id == null || id.isEmpty() || id.trim().isEmpty()) throw new IllegalArgumentException("Product id can't be empty.");
+        try {
+            if (Integer.parseInt(id) < 1) throw new IllegalArgumentException("Product id can't be less than 1.");
         } catch (NumberFormatException e) {
-            e.printStackTrace();
-        }*/
-        //if(Integer.parseInt(id) < 1) throw new IllegalArgumentException("Product id can't be less than 1.");
+            throw new IllegalArgumentException("Product id must be a whole number greater then 1.");
+        }
         this.id = id;
     }
 
@@ -35,7 +34,7 @@ public class Product implements Serializable {
     }
 
     public void setName(String name) throws IllegalArgumentException {
-        if (name == null || name.isEmpty()) throw new IllegalArgumentException("Product name can't be empty.");
+        if (name == null || name.isEmpty() || name.trim().isEmpty()) throw new IllegalArgumentException("Product name can't be empty.");
         if (name.length() > 100) throw new IllegalArgumentException("Product name can't be longer then 100 chars.");
         this.name = name;
     }
@@ -47,7 +46,7 @@ public class Product implements Serializable {
     }
 
     public void setPrice(double price) throws IllegalArgumentException {
-        if (price < 0) throw new IllegalArgumentException("Product price can't be negative.");
+        if (price <= 0) throw new IllegalArgumentException("Product should be greater then 0.");
         this.price = price;
     }
 
