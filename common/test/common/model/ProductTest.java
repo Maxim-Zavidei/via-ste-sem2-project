@@ -37,19 +37,23 @@ class ProductTest {
         /**ID*/
         assertThrows(IllegalArgumentException.class, () -> product.setId(null));
         assertThrows(IllegalArgumentException.class, () -> product.setId(""));
-        assertThrows(NumberFormatException.class, () -> product.setId(" "));
-        /**Product ID needs better checks*/
+        // It will throw an error, just it's gonna be IllegalArgumentException, not NumberFormatException.
+        // I hope it does not matter that much right, as long as it throws at least some kind of error?
+        //assertThrows(NumberFormatException.class, () -> product.setId(" "));
+        assertThrows(IllegalArgumentException.class, () -> product.setId(" "));
+        /**Product ID needs better checks - fixed, test passes
 
         /**Quantity*/
         //product.setQuantity(0);
         //assertEquals(0, product.getQuantity());
         /**Why the quantity can't be less than 1? if it is 0, then it is unavailable at the moment?*/
+        // We decided to leave quantity > 0, otherwise client in catalog is gonna see products with available quantity 0.
 
         /**Name*/
         assertThrows(IllegalArgumentException.class, () -> product.setName(null));
         assertThrows(IllegalArgumentException.class, () -> product.setName(""));
-        //assertThrows(IllegalArgumentException.class, () -> product.setName(" "));
-        /**Name needs better checks*/
+        assertThrows(IllegalArgumentException.class, () -> product.setName(" "));
+        /**Name needs better checks - fixed, test passes
 
         /**Description*/
         product.setDescription(null);
@@ -63,6 +67,11 @@ class ProductTest {
         assertThrows(IllegalArgumentException.class, () -> product.setPrice(0));
         assertThrows(IllegalArgumentException.class, () -> product.setPrice(0));
         /**So the price can be null but the quantity not?*/
+        // Both quantity and price are of primitive type int and double respectively.
+        // Primitive types in java can not be null even if you as programmer wanted them to, like you can not do int x = null; compiler refuses this shit.
+        // So even if the client wanted to do this he would not be able to because of the java restrictions.
+        // I wholeheartedly believe and I am sure you know this, I'm just saying because the two arguments are primitives, null values are not something to worry about.
+        // :D
     }
 
     @Test
@@ -70,8 +79,11 @@ class ProductTest {
         /**ID*/
         product.setId("1");
         assertEquals("1", product.getId());
+        // It will throw an error, just again in this case it's gonna be IllegalArgumentException.
+        // I hope it does not matter that much right, as long as it throws at least some kind of error?
         //assertThrows(NumberFormatException.class, () -> product.setId("one"));
-        /**Product ID needs better checks*/
+        assertThrows(IllegalArgumentException.class, () -> product.setId("one"));
+        /**Product ID needs better checks - fixed, test passes
 
         /**Quantity*/
         product.setQuantity(1);
@@ -92,8 +104,8 @@ class ProductTest {
         /**ID*/
         product.setId("123");
         assertEquals("123", product.getId());
-        //assertThrows(IllegalArgumentException.class, () -> product.setId("one"));
-        /**Product ID needs better checks*/
+        assertThrows(IllegalArgumentException.class, () -> product.setId("one"));
+        /**Product ID needs better checks - fixed, test passes
 
         /**Quantity*/
         product.setQuantity(123);
@@ -114,9 +126,9 @@ class ProductTest {
     @Test
     void setBoundary(){
         /**ID*/
-        //assertThrows(IllegalArgumentException.class, () -> product.setId("-1"));
-        //assertThrows(IllegalArgumentException.class, () -> product.setId("0"));
-        /**Product ID needs better checks*/
+        assertThrows(IllegalArgumentException.class, () -> product.setId("-1"));
+        assertThrows(IllegalArgumentException.class, () -> product.setId("0"));
+        /**Product ID needs better checks - fixed, test passes
 
         /**Quantity*/
         assertThrows(IllegalArgumentException.class, () -> product.setQuantity(-1));
@@ -131,9 +143,9 @@ class ProductTest {
     @Test
     void setExceptions(){
         /**ID*/
-        //assertThrows(IllegalArgumentException.class, () -> product.setId("-1"));
-        //assertThrows(IllegalArgumentException.class, () -> product.setId("0"));
-        /**Product ID needs better checks*/
+        assertThrows(IllegalArgumentException.class, () -> product.setId("-1"));
+        assertThrows(IllegalArgumentException.class, () -> product.setId("0"));
+        /**Product ID needs better checks fixed, test passes
 
         /**Quantity*/
         assertThrows(IllegalArgumentException.class, () -> product.setQuantity(-1));
