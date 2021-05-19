@@ -37,7 +37,7 @@ class ProductTest {
         /**ID*/
         assertThrows(IllegalArgumentException.class, () -> product.setId(null));
         assertThrows(IllegalArgumentException.class, () -> product.setId(""));
-        //assertThrows(IllegalArgumentException.class, () -> product.setId(" "));
+        assertThrows(NumberFormatException.class, () -> product.setId(" "));
         /**Product ID needs better checks*/
 
         /**Quantity*/
@@ -70,7 +70,7 @@ class ProductTest {
         /**ID*/
         product.setId("1");
         assertEquals("1", product.getId());
-        //assertThrows(IllegalArgumentException.class, () -> product.setId("one"));
+        //assertThrows(NumberFormatException.class, () -> product.setId("one"));
         /**Product ID needs better checks*/
 
         /**Quantity*/

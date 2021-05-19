@@ -20,6 +20,12 @@ public class Product implements Serializable {
 
     public void setId(String id) throws IllegalArgumentException {
         if (id == null || id.isEmpty()) throw new IllegalArgumentException("Product id can't be empty.");
+       /* try {
+            Integer.parseInt(id);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }*/
+        //if(Integer.parseInt(id) < 1) throw new IllegalArgumentException("Product id can't be less than 1.");
         this.id = id;
     }
 
