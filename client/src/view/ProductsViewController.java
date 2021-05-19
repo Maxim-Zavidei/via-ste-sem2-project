@@ -73,12 +73,17 @@ public class ProductsViewController extends ViewController {
     @FXML
     public void editProduct() {
         try {
-            ProductViewModel pvm = viewModel.editProduct();
-            if(pvm != null)
-            {
-                getViewModelFactory().getEditProductPopUpViewModel().set(pvm);
+            // I don't want to judge anything.
+            // Please don't do this.
+            // Don't throw view models from here to there like that, that's the highway to spaghetti code.
+            // Use the view state to transfer the selected product to another window.
+            // Also because Steffan might have a hearth attack xDDD
+//            ProductViewModel pvm = viewModel.editProduct();
+//            if(pvm != null)
+//            {
+//                getViewModelFactory().getEditProductPopUpViewModel().set(pvm);
                 viewHandler.openView(View.EDITPRODUCTS);
-            }
+//            }
 
 
         } catch (Exception e) {

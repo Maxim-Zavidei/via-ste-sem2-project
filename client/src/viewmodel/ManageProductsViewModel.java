@@ -8,15 +8,15 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableMap;
 import model.Model;
+import viewmodel.viewstate.ProductManagementViewState;
 
 public class ManageProductsViewModel {
 
     private Model model;
+    private ProductManagementViewState viewState;
 
     // Instance variables for storing the products of the catalog table.
     private ObservableMap<String, ProductViewModel> catalogMap;
-    private ObjectProperty<ProductViewModel> selectedCatalogProductProperty;
-
 
     // Instance variables for linking and storing the other elements of the user interface.
     private StringProperty usernameProperty;
@@ -26,12 +26,12 @@ public class ManageProductsViewModel {
     // Other helper instance variables.
     private boolean wasAuthenticatedUserQueried;
 
-    public ManageProductsViewModel(Model model) {
+    public ManageProductsViewModel(Model model, ProductManagementViewState viewState) {
         this.model = model;
+        this.viewState = viewState;
 
         // Initialize the view model instance variables responsible for storing the data of the tables.
         catalogMap = FXCollections.observableHashMap();
-        selectedCatalogProductProperty = new SimpleObjectProperty<>();
 
         errorProperty = new SimpleStringProperty("");
 
@@ -42,7 +42,6 @@ public class ManageProductsViewModel {
 
         // Initialize the rest of the instance variables.
         wasAuthenticatedUserQueried = false;
-
     }
 
     public void reset() {
@@ -56,7 +55,7 @@ public class ManageProductsViewModel {
         }
 
         // Deselect any selected items if window reopens.
-        selectedCatalogProductProperty.set(null);
+        viewState.setSelectedProduct(null);
         // Configure properly the product and user management and the username label based if the user is an employee or not.
         if (!wasAuthenticatedUserQueried) {
             boolean isEmployee = false;
@@ -74,8 +73,6 @@ public class ManageProductsViewModel {
 
     }
 
-
-
     public ObservableMap<String, ProductViewModel> getCatalogMap() {
         return catalogMap;
     }
@@ -85,26 +82,26 @@ public class ManageProductsViewModel {
     }
 
     public void setSelectedCatalogProductProperty(ProductViewModel productViewModel) {
-        selectedCatalogProductProperty.set(productViewModel);
+        viewState.setSelectedProduct(productViewModel);
     }
 
     public ProductViewModel editProduct(){
-        ProductViewModel selectedCatalogProductViewModel = selectedCatalogProductProperty.get();
+        ProductViewModel selectedCatalogProductViewModel = viewState.getSelectedProduct();
         if (selectedCatalogProductViewModel == null) {
             errorProperty.set("!Please select a product from the catalog to be edited.");
             return null;
         }
-        selectedCatalogProductProperty.set(null);
+        viewState.setSelectedProduct(null);
         return selectedCatalogProductViewModel;
     }
 
     public boolean deleteProduct() {
-        ProductViewModel selectedCatalogProductViewModel = selectedCatalogProductProperty.get();
+        ProductViewModel selectedCatalogProductViewModel = viewState.getSelectedProduct();
         if (selectedCatalogProductViewModel == null) {
             errorProperty.set("!Please select a product from the catalog to be removed.");
             return false;
         }
-        selectedCatalogProductProperty.set(null);
+        viewState.setSelectedProduct(null);
         catalogMap.remove(selectedCatalogProductViewModel.getIdProperty().getValue());
         return true;
     }
@@ -113,18 +110,4 @@ public class ManageProductsViewModel {
         wasAuthenticatedUserQueried = false;
         return model.deauthenticate();
     }
-
-//    @Override
-//    public void propertyChange(PropertyChangeEvent evt) {
-//        System.out.println("Add triggered!!!");
-//
-//        Platform.runLater(() -> {
-//            Product product = (Product) evt.getNewValue();
-//            if ("Add".equals(evt.getPropertyName())) {
-//                catalogMap.put(product.getId(), new ProductViewModel(product));
-//                // for testing
-//                System.out.println("Add triggered!!!");
-//            }
-//        });
-//    }
 }

@@ -9,21 +9,15 @@ import viewmodel.AddProductPopUpViewModel;
 import viewmodel.EditProductPopUpViewModel;
 
 public class EditProductPopUpViewController extends ViewController {
-    @FXML
-    public Label errorLabel;
-    @FXML
-    public TextField quantityField;
-    @FXML
-    public TextField nameField;
-    @FXML
-    public TextArea descriptionField;
-    @FXML
-    public TextField priceField;
-
 
     private ViewHandler viewHandler;
     private EditProductPopUpViewModel viewModel;
 
+    @FXML public Label errorLabel;
+    @FXML public TextField quantityField;
+    @FXML public TextField nameField;
+    @FXML public TextArea descriptionField;
+    @FXML public TextField priceField;
 
     @Override
     protected void init() {
@@ -31,7 +25,7 @@ public class EditProductPopUpViewController extends ViewController {
         this.viewModel = getViewModelFactory().getEditProductPopUpViewModel();
 
         errorLabel.textProperty().bind(viewModel.getErrorProperty());
-        quantityField.textProperty().bindBidirectional(viewModel.getQuantityProperty(), new StringConverter<Integer>() {
+        quantityField.textProperty().bindBidirectional(viewModel.getQuantityProperty(), new StringConverter<>() {
             @Override
             public String toString(Integer integer) {
                 return integer == null ? "" : integer.toString();
@@ -44,10 +38,10 @@ public class EditProductPopUpViewController extends ViewController {
         });
         nameField.textProperty().bindBidirectional(viewModel.getNameProperty());
         descriptionField.textProperty().bindBidirectional(viewModel.getDescriptionProperty());
-        priceField.textProperty().bindBidirectional(viewModel.getPriceProperty(), new StringConverter<Double>() {
+        priceField.textProperty().bindBidirectional(viewModel.getPriceProperty(), new StringConverter<>() {
             @Override
             public String toString(Double aDouble) {
-                 return aDouble == null ? "" : aDouble.toString();
+                return aDouble == null ? "" : aDouble.toString();
             }
 
             @Override
@@ -60,25 +54,22 @@ public class EditProductPopUpViewController extends ViewController {
 
     @Override
     protected void reset() {
-        //viewModel.reset();
-
+        viewModel.reset();
     }
 
     public void editProduct() {
-        try{
-            viewModel.editProduct();
-            viewHandler.openView(View.MANAGEPRODUCTS);
-        }catch (Exception e)
-        {
+        try {
+            if (viewModel.editProduct()) viewHandler.openView(View.MANAGEPRODUCTS);
+        } catch (Exception e) {
             errorLabel.textProperty().set(e.getMessage());
         }
     }
 
     public void cancelAddProduct() {
-        try{
+        try {
             viewHandler.openView(View.MANAGEPRODUCTS);
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
             errorLabel.textProperty().set(e.getMessage());
-        }    }
+        }
+    }
 }
