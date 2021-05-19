@@ -10,11 +10,12 @@ class ProductTest {
 
     @BeforeEach
     void setUp() {
+        product = new Product("1", 5, "Baklava", "Baklava is Balkan", 20);
     }
     @Test
     public void createProduct(){
         /**Regular value*/
-        product = new Product("1", 5, "Baklava", "Baklava is Balkan", 20);
+        //product = new Product("1", 5, "Baklava", "Baklava is Balkan", 20);
         assertEquals("id='1', quantity=5, name='Baklava', description='Baklava is Balkan', price=20.0", product.toString());
         /**Null value*/
         /**Empty value*/
@@ -28,5 +29,15 @@ class ProductTest {
         assertEquals("Baklava", product.getName());
         assertEquals("Baklava is Balkan", product.getDescription());
         assertEquals(20.0, product.getPrice());
+    }
+
+    /**Test setters*/
+    @Test
+    void setNull(){
+        /**Quantity*/
+
+        /**Name*/
+        /**Description*/
+        /**Price*/
     }
 }
