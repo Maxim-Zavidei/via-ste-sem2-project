@@ -50,8 +50,6 @@ public class ProductsViewController extends ViewController {
         // Bindings for the rest of the user interface elements.
         errorLabel.textProperty().bind(viewModel.getErrorProperty());
 
-        // Small snippet of code to change the color of the error label only when errors are displayed.
-        viewModel.getErrorProperty().addListener((obs, oldVal, newVal) -> errorLabel.setStyle("-fx-text-fill:" + (newVal.charAt(0) == '!' ? "#FF0000" : "#000000")));
     }
 
     @Override

@@ -6,6 +6,9 @@ import common.model.User;
 import common.model.UserList;
 import common.network.RemoteClientInterface;
 import common.network.RemoteServerInterface;
+import common.utility.observer.event.ObserverEvent;
+import common.utility.observer.listener.GeneralListener;
+import common.utility.observer.subject.PropertyChangeHandler;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -14,11 +17,23 @@ import java.util.ArrayList;
 
 public class Client implements ClientTarget, RemoteClientInterface {
 
+    private PropertyChangeHandler<String, Object> property;
     private RemoteServerInterface server;
 
     public Client() throws Exception {
         server = (RemoteServerInterface) Naming.lookup("rmi://127.0.0.1:1099/access");
+        property = new PropertyChangeHandler<>(this);
         UnicastRemoteObject.exportObject(this, 0);
+    }
+
+    @Override
+    public boolean addListener(GeneralListener<String, Object> listener, String... propertyNames) {
+        return property.addListener(listener, propertyNames);
+    }
+
+    @Override
+    public boolean removeListener(GeneralListener<String, Object> listener, String... propertyNames) {
+        return property.removeListener(listener, propertyNames);
     }
 
     @Override
@@ -114,5 +129,10 @@ public class Client implements ClientTarget, RemoteClientInterface {
     @Override
     public void placeOrder(Order order) throws Exception{
         server.placeOrder(order);
+    }
+
+    @Override
+    public void propertyChange(ObserverEvent<String, Object> event) throws RemoteException {
+        property.firePropertyChange(event.getPropertyName(), event.getValue1(), event.getValue2());
     }
 }

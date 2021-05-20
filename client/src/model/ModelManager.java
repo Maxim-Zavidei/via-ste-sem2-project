@@ -1,6 +1,9 @@
 package model;
 
 import common.model.*;
+import common.utility.observer.event.ObserverEvent;
+import common.utility.observer.listener.GeneralListener;
+import common.utility.observer.subject.PropertyChangeHandler;
 import mediator.Client;
 import mediator.ClientTarget;
 import java.time.LocalDate;
@@ -8,6 +11,7 @@ import java.util.ArrayList;
 
 public class ModelManager implements Model {
 
+    private PropertyChangeHandler<String, Object> property;
     private ClientTarget client;
     private ProductList basket;
 
@@ -18,6 +22,18 @@ public class ModelManager implements Model {
             throw new Exception("Could not reach the server.");
         }
         basket = new ProductList();
+        property = new PropertyChangeHandler<>(this);
+        client.addListener(this);
+    }
+
+    @Override
+    public boolean addListener(GeneralListener<String, Object> listener, String... propertyNames) {
+        return property.addListener(listener, propertyNames);
+    }
+
+    @Override
+    public boolean removeListener(GeneralListener<String, Object> listener, String... propertyNames) {
+        return property.removeListener(listener, propertyNames);
     }
 
     @Override
@@ -124,6 +140,11 @@ public class ModelManager implements Model {
 
     @Override
     public void placeOrder(Order order) throws Exception {
-client.placeOrder(order);
+        client.placeOrder(order);
+    }
+
+    @Override
+    public void propertyChange(ObserverEvent<String, Object> event) {
+        property.firePropertyChange(event.getPropertyName(), event.getValue1(), event.getValue2());
     }
 }

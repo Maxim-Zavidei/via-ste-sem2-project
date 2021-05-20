@@ -4,10 +4,11 @@ import common.model.Order;
 import common.model.Product;
 import common.model.User;
 import common.model.UserList;
+import common.utility.observer.subject.LocalSubject;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public interface ClientTarget {
+public interface ClientTarget extends LocalSubject<String, Object> {
     void stop();
     void authenticate(String email, String password) throws Exception;
     boolean deauthenticate();

@@ -2,12 +2,15 @@ package viewmodel;
 
 import common.model.Product;
 import common.model.User;
+import common.utility.observer.event.ObserverEvent;
+import common.utility.observer.listener.LocalListener;
+import javafx.application.Platform;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableMap;
 import model.Model;
 
-public class CatalogViewModel {
+public class CatalogViewModel implements LocalListener<String, Object> {
 
     private Model model;
 
@@ -24,6 +27,8 @@ public class CatalogViewModel {
 
     // Other helper instance variables.
     private boolean wasAuthenticatedUserQueried;
+    private ProductViewModel newNotificationProduct;
+    private ObjectProperty<Boolean> showNotificationProperty;
 
     public CatalogViewModel(Model model) {
         this.model = model;
@@ -41,6 +46,10 @@ public class CatalogViewModel {
 
         // Initialize the rest of the instance variables.
         wasAuthenticatedUserQueried = false;
+        newNotificationProduct = null;
+        showNotificationProperty = new SimpleObjectProperty<>(false);
+
+        model.addListener(this);
     }
 
     public void reset() {
@@ -102,6 +111,14 @@ public class CatalogViewModel {
         return errorProperty;
     }
 
+    public ProductViewModel getNewNotificationProduct() {
+        return newNotificationProduct;
+    }
+
+    public ObjectProperty<Boolean> getShowNotificationProperty() {
+        return showNotificationProperty;
+    }
+
     public void setSelectedCatalogProductProperty(ProductViewModel productViewModel) {
         selectedCatalogProductProperty.set(productViewModel);
     }
@@ -129,5 +146,18 @@ public class CatalogViewModel {
     public boolean deauthenticate() {
         wasAuthenticatedUserQueried = false;
         return model.deauthenticate();
+    }
+
+    @Override
+    public void propertyChange(ObserverEvent<String, Object> event) {
+        Platform.runLater(() -> {
+            switch (event.getPropertyName()) {
+                case "newProduct" : {
+                    newNotificationProduct = new ProductViewModel((Product) event.getValue2());
+                    showNotificationProperty.set(true);
+                    break;
+                }
+            }
+        });
     }
 }
