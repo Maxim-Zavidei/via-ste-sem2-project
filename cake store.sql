@@ -18,7 +18,9 @@ CREATE TABLE cake_store.user(
 CREATE TABLE cake_store.order(
 	id SERIAL PRIMARY KEY,
 	date DATE,
-	email VARCHAR(100) REFERENCES cake_store.user(email)
+	email VARCHAR(100) REFERENCES cake_store.user(email),
+	status VARCHAR(100),
+	coment VARCHAR(2000)
 );
 
 CREATE TABLE cake_store.product(
@@ -29,7 +31,7 @@ CREATE TABLE cake_store.product(
     price DECIMAL(5,2)
 );
 
-CREATE TABLE cake_store.producrOrder(
+CREATE TABLE cake_store.productorder(
 	orderId INT REFERENCES cake_store.order(id),
 	productId INT REFERENCES cake_store.product(id),
 	quantity INT,

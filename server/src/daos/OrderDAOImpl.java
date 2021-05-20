@@ -26,16 +26,18 @@ public class OrderDAOImpl implements OrderDAO{
     }
 
     @Override
-    public Order create(HashMap<Product, Integer> products, DateTime date, Customer customer) throws SQLException{
+    public Order create(HashMap<Product, Integer> products, DateTime date, Customer customer, String status, String comment) throws SQLException{
         try(Connection connection = getConnection()){
             PreparedStatement statement =
-                    connection.prepareStatement("INSERT INTO \"order\"(date, email) VALUES(?, ?);", PreparedStatement.RETURN_GENERATED_KEYS);
+                    connection.prepareStatement("INSERT INTO \"order\"(date, email, status, coment) VALUES(?, ?, ?, ?);", PreparedStatement.RETURN_GENERATED_KEYS);
             statement.setObject(1, date.getSortableDate(), Types.DATE);
             statement.setString(2, customer.getEmail());
+            statement.setString(3, status);
+            statement.setString(4, comment);
             statement.executeUpdate();
             ResultSet keys =  statement.getGeneratedKeys();
             if(keys.next()){
-                Order order = new Order(String.valueOf(keys.getInt(1)),products, customer);
+                Order order = new Order(String.valueOf(keys.getInt(1)),products, customer, status, comment);
                 order.setDate(date);
                 addToProductOrder(products, order.getId());
                 return order;
@@ -48,10 +50,12 @@ public class OrderDAOImpl implements OrderDAO{
     public void update(Order order) throws SQLException{
         try(Connection connection = getConnection()){
             PreparedStatement statement =
-                    connection.prepareStatement("UPDATE order SET date = ?, email = ? WHERE id = ?");
+                    connection.prepareStatement("UPDATE order SET date = ?, email = ?, status =?, coment = ? WHERE id = ?");
             statement.setObject(1, order.getDate(), Types.DATE);
             statement.setString(2, order.getCustomer().getEmail());
-            statement.setInt(3, Integer.parseInt(order.getId()));
+            statement.setString(3, order.getStatus());
+            statement.setString(4, order.getComment());
+            statement.setInt(5, Integer.parseInt(order.getId()));
             statement.executeUpdate();
             updateProductOrder(order);
         }
@@ -62,7 +66,7 @@ public class OrderDAOImpl implements OrderDAO{
         try(Connection connection = getConnection()) {
             for (HashMap.Entry<Product,Integer> entry : order.getProducts().entrySet()) {
                 PreparedStatement statement =
-                        connection.prepareStatement("UPDATE producrorder SET quantity = ?) WHERE orderid = ? AND productid = ?;");
+                        connection.prepareStatement("UPDATE productorder SET quantity = ?) WHERE orderid = ? AND productid = ?;");
                 statement.setInt(1, entry.getValue());
                 statement.setInt(2, Integer.parseInt(order.getId()));
                 statement.setInt(3, Integer.parseInt(entry.getKey().getId()));
@@ -86,7 +90,7 @@ public class OrderDAOImpl implements OrderDAO{
         try(Connection connection = getConnection()){
             for (HashMap.Entry<Product,Integer> entry : products.entrySet()) {
                 PreparedStatement statement =
-                        connection.prepareStatement("INSERT INTO producrorder(orderid, productid, quantity) VALUES(?, ?, ?);");
+                        connection.prepareStatement("INSERT INTO productorder(orderid, productid, quantity) VALUES(?, ?, ?);");
                 statement.setInt(1, Integer.parseInt(orderId));
                 statement.setInt(2, Integer.parseInt(entry.getKey().getId()));
                 statement.setInt(3, entry.getValue());
