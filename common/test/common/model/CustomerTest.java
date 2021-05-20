@@ -98,7 +98,7 @@ class CustomerTest {
         //first character
         //it seems that it does not care about the first character,
         assertThrows(IllegalArgumentException.class, () -> {
-            customer2.setEmail("=@vz.kY");
+            customer2.setEmail("g@=vz.kY");
         });
     }
 
