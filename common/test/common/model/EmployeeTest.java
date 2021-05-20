@@ -165,6 +165,6 @@ class EmployeeTest {
 
     @Test
     void isEmployee() {
-        assertEquals(true, user instanceof Employee);
+        assertTrue(user instanceof Employee);
     }
 }
