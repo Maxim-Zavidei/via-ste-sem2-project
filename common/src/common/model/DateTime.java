@@ -24,9 +24,11 @@ public class DateTime implements Serializable {
     }
 
     public DateTime(int day, int month, int year){
-        this.day = day;
-        this.month = month;
-        this.year = year;
+        if(check(day,month,year)){
+            this.day = day;
+            this.month = month;
+            this.year = year;
+        } else throw new IllegalStateException("Illegal date argument");
     }
 
     public DateTime(LocalDate date){
@@ -88,5 +90,23 @@ public class DateTime implements Serializable {
 
     public int getYear() {
         return year;
+    }
+
+    private boolean check(int day, int month, int year){
+        if(day<0 || day> 31 || month<1 || month>12 || year<1900) return false;
+        switch (month){
+            case 4:
+            case 6:
+            case 9:
+            case 11: if(day >30) return false; break;
+            case 2:
+                if(((year % 4 == 0) && ((year % 100 != 0) || (year % 40  == 0)))){
+                    if(day<=29)
+                        return true;
+                }
+                else if (day > 28) return false;
+
+        }
+        return true;
     }
 }
