@@ -3,11 +3,11 @@ package view;
 import common.model.DateTime;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import viewmodel.UserView;
 import viewmodel.UserViewModel;
+
+import java.util.Optional;
 
 public class UserViewController extends ViewController
 {
@@ -81,7 +81,12 @@ public class UserViewController extends ViewController
     try
     {
       if(usersTable.getSelectionModel().getSelectedItem().getEmail().get()!=null)
+        if(confirmation(false))
         viewModel.deleteUser(usersTable.getSelectionModel().getSelectedItem().getEmail().get());
+        else {
+          usersTable.getSelectionModel().clearSelection();
+          viewModel.getUserManagementViewState().setSelectedUser("");
+        }
     }
     catch (Exception e)
     {
@@ -108,18 +113,21 @@ public class UserViewController extends ViewController
     {
       String email = usersTable.getSelectionModel().getSelectedItem().getEmail().get();
       viewModel.addEdit(email);
+      if(confirmation(true))
+        viewHandler.openView(View.MANAGEUSERS);
+      else {
+        usersTable.getSelectionModel().clearSelection();
+        viewModel.getUserManagementViewState().setSelectedUser("");
+      }
     }
     catch (Exception e)
     {
       viewModel.addEdit("");
-    }
-    finally
-    {
       try
       {
         viewHandler.openView(View.MANAGEUSERS);
       }
-      catch (Exception e)
+      catch (Exception exception)
       {
         viewModel.getErrorProperty().set("Something went wrong with modifying user");
       }
@@ -166,5 +174,18 @@ public class UserViewController extends ViewController
     } catch (Exception e) {
       viewModel.getErrorProperty().set("Could not open manage products at this time. Try later.");
     }
+  }
+  private boolean confirmation(boolean action){
+    int index = usersTable.getSelectionModel().getSelectedIndex();
+    if (index < 0 || index >= usersTable.getItems().size()){
+      return false;
+    }
+    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+    alert.setTitle("Confirmation");
+    if(action)
+    alert.setHeaderText("Are you sure you want to edit this user?");
+    else alert.setHeaderText("Are you sure you want to delete this user?");
+    Optional<ButtonType> result = alert.showAndWait();
+    return (result.isPresent())&&(result.get()==ButtonType.OK);
   }
 }
