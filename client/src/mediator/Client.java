@@ -1,5 +1,6 @@
 package mediator;
 
+import common.model.Order;
 import common.model.Product;
 import common.model.User;
 import common.model.UserList;
@@ -108,5 +109,10 @@ public class Client implements ClientTarget, RemoteClientInterface {
     @Override
     public void removeProduct(Product product) throws Exception {
         server.removeProduct(product);
+    }
+
+    @Override
+    public void placeOrder(Order order) throws Exception{
+        server.placeOrder(order);
     }
 }

@@ -184,4 +184,13 @@ public class ModelManager implements Model {
             throw new IllegalStateException("Server is unavailable at the moment. Try Later.");
         }
     }
+
+    @Override
+    public void placeOrder(Order order) throws IllegalStateException{
+        try{
+            orderDAO.create(order.getProducts(), order.getDate(), order.getCustomer());
+        }catch (SQLException e) {
+            throw new IllegalStateException("Server is unavailable at the moment. Try Later.");
+        }
+    }
 }

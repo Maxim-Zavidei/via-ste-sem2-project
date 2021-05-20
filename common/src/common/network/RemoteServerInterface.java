@@ -1,5 +1,6 @@
 package common.network;
 
+import common.model.Order;
 import common.model.Product;
 import common.model.User;
 import common.model.UserList;
@@ -23,4 +24,5 @@ public interface RemoteServerInterface extends Remote {
     void removeProduct(Product product) throws RemoteException;
     void addUser(User user) throws RemoteException;
     void updateUser(String email, User user) throws RemoteException;
+    void placeOrder(Order order) throws RemoteException;
 }

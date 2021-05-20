@@ -1,5 +1,6 @@
 package mediator;
 
+import common.model.Order;
 import common.model.Product;
 import common.model.User;
 import common.network.RemoteClientInterface;
@@ -85,5 +86,10 @@ public abstract class GenericAccessType implements RemoteServerInterface {
     @Override
     public Product getProductById(String productId) throws RemoteException {
         return model.getProductById(productId);
+    }
+
+    @Override
+    public void placeOrder(Order order){
+        model.placeOrder(order);
     }
 }

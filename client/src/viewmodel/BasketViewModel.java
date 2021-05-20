@@ -1,11 +1,16 @@
 package viewmodel;
 
+import common.model.Customer;
+import common.model.Order;
 import common.model.Product;
 import common.model.User;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableMap;
 import model.Model;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class BasketViewModel {
 
@@ -157,6 +162,14 @@ public class BasketViewModel {
         // Here we are going to create an order object based on the products
         // based on the products that are stored in model's basket.
         // The created order object we are gonna send to the server for validation.
+        HashMap<Product, Integer> products = new HashMap<>();
+        for (HashMap.Entry<String,ProductViewModel> entry : basketMap.entrySet())
+            products.put(new Product(entry.getValue().getIdProperty().get(),entry.getValue().getQuantityProperty().get(), entry.getValue().getNameProperty().get(), entry.getValue().getDescriptionProperty().get(), entry.getValue().getPriceProperty().get()), entry.getValue().getQuantityProperty().get());
+        try {
+            model.placeOrder(new Order(products, (Customer) model.getAuthenticatedUser()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         clearBasket();
     }
 

@@ -1,5 +1,6 @@
 package mediator;
 
+import common.model.Order;
 import common.model.Product;
 import common.model.User;
 import common.model.UserList;
@@ -22,4 +23,5 @@ public interface ClientTarget {
     void addProduct(int quantity, String name, String description, double price) throws Exception;
     void updateProduct(Product product) throws Exception;
     void removeProduct(Product product) throws Exception;
+    void placeOrder(Order order) throws Exception;
 }

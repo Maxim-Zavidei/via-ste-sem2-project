@@ -1,9 +1,6 @@
 package model;
 
-import common.model.ProductList;
-import common.model.Product;
-import common.model.User;
-import common.model.UserList;
+import common.model.*;
 import mediator.Client;
 import mediator.ClientTarget;
 import java.time.LocalDate;
@@ -123,5 +120,10 @@ public class ModelManager implements Model {
     @Override
     public void removeProductFromBasket(String productId) throws IllegalStateException {
         basket.removeProduct(productId);
+    }
+
+    @Override
+    public void placeOrder(Order order) throws Exception {
+client.placeOrder(order);
     }
 }

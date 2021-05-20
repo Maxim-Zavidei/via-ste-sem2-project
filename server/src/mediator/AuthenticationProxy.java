@@ -1,5 +1,6 @@
 package mediator;
 
+import common.model.Order;
 import common.model.Product;
 import common.model.User;
 import common.model.UserList;
@@ -117,5 +118,10 @@ public class AuthenticationProxy implements RemoteServerInterface {
         throws RemoteException
     {
         throw new IllegalStateException("Authenticate in order to add a user.");
+    }
+
+    @Override
+    public void placeOrder(Order order) throws RemoteException {
+        throw new IllegalStateException("Authenticate in order to place an order.");
     }
 }

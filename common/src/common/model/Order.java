@@ -1,8 +1,9 @@
 package common.model;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
-public class Order {
+public class Order implements Serializable {
 
     private String id;
     private HashMap<Product, Integer> products = new HashMap<>();
@@ -15,6 +16,10 @@ public class Order {
         this.products = products;
         this.customer = customer;
         this.date = new DateTime();
+    }
+
+    public Order(HashMap<Product, Integer> products, Customer customer){
+        this("",products,customer);
     }
 
     public void setDate(DateTime date) {
@@ -46,15 +51,12 @@ public class Order {
     /**Edit order
      * editing product's quantity*/
     public void editProductQuantity(Product product, int quantity) {
-        //TODO decide what to return
         products.put(product, quantity);
-        //return products;
     }
 
     /**Remove product from order*/
     public void removeProduct(Product product) {
         products.remove(product);
-        //return products;
     }
 
     @Override

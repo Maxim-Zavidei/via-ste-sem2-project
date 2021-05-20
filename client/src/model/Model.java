@@ -1,5 +1,6 @@
 package model;
 
+import common.model.Order;
 import common.model.Product;
 import common.model.User;
 import common.model.UserList;
@@ -27,4 +28,5 @@ public interface Model {
     void addProductToBasket(Product product) throws IllegalStateException;
     void replaceProductInBasket(Product product) throws IllegalStateException;
     void removeProductFromBasket(String productId) throws IllegalStateException;
+    void placeOrder(Order order) throws Exception;
 }
