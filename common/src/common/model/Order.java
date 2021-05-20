@@ -9,17 +9,26 @@ public class Order implements Serializable {
     private HashMap<Product, Integer> products = new HashMap<>();
     private DateTime date;
     private Customer customer;
+    private String status;
+    private String comment;
 
-    /**Constructor*/
-    public Order(String id, HashMap<Product, Integer> products, Customer customer) {
+    /**Constructors*/
+    public Order(String id, HashMap<Product, Integer> products, Customer customer, String status, String comment) {
         this.id = id;
         this.products = products;
         this.customer = customer;
         this.date = new DateTime();
+        this.status = status;
+        this.comment = comment;
     }
-
-    public Order(HashMap<Product, Integer> products, Customer customer){
-        this("",products,customer);
+    public Order(String id, HashMap<Product, Integer> products, Customer customer) {
+        this(id, products, customer, "pending", "");
+    }
+    public Order(HashMap<Product, Integer> products, Customer customer) {
+        this("", products, customer, "pending", "");
+    }
+    public Order(HashMap<Product, Integer> products, Customer customer, String comment) {
+        this("", products, customer, "pending", comment);
     }
 
     public void setDate(DateTime date) {
@@ -28,6 +37,14 @@ public class Order implements Serializable {
 
     public String getId() {
         return id;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public String getStatus() {
+        return status;
     }
 
     public Customer getCustomer() {
@@ -61,10 +78,11 @@ public class Order implements Serializable {
 
     @Override
     public String toString() {
-        String output = "Order " + id + " by " + customer.getEmail() + " made on " + date.toString() +"\n";
+        String output = "Order " + id + " by " + customer.getEmail() + " made on " + date.toString() + " is " + status +"\n";
         for (HashMap.Entry<Product,Integer> entry : products.entrySet()) {
             output += entry.getKey().getName() + " -> " + entry.getValue() + "\n";
         }
+        output += "comment: " + comment;
         return output;
     }
 }
