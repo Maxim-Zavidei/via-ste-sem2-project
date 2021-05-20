@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.Group?>
@@ -49,6 +49,17 @@
                         <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="300.0">
                      <children>
                         <Button mnemonicParsing="false" onAction="#openBasketView" opacity="0.75" prefHeight="50.0" prefWidth="261.0" styleClass="menu-button" text="Basket" textAlignment="CENTER">
+                           <font>
+                              <Font name="Forte" size="31.0" />
+                           </font>
+                           <effect>
+                              <InnerShadow choke="0.01" color="#471d5f" height="91.68" radius="45.545" width="92.5" />
+                           </effect>
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#openOrdersView" opacity="0.75" prefHeight="50.0" prefWidth="261.0" styleClass="menu-button" text="Orders" textAlignment="CENTER">
                            <font>
                               <Font name="Forte" size="31.0" />
                            </font>

@@ -59,6 +59,17 @@
                               <InnerShadow choke="0.01" color="#471d5f" height="91.68" radius="45.545" width="92.5" />
                            </effect>
                         </Button>
+                        <Button mnemonicParsing="false" onAction="#openOrdersView" opacity="0.75" prefHeight="50.0" prefWidth="261.0" styleClass="menu-button" text="Orders" textAlignment="CENTER">
+                           <font>
+                              <Font name="Forte" size="31.0" />
+                           </font>
+                           <effect>
+                              <InnerShadow choke="0.01" color="#471d5f" height="91.68" radius="45.545" width="92.5" />
+                           </effect>
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </Button>
                         <Button fx:id="manageProductsButton" mnemonicParsing="false" onAction="#openProductManagementView" opacity="0.75" prefHeight="50.0" prefWidth="261.0" styleClass="menu-button" text="Manage Products" textAlignment="CENTER">
                            <font>
                               <Font name="Forte" size="31.0" />

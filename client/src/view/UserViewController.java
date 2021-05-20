@@ -1,7 +1,6 @@
 package view;
 
 import common.model.DateTime;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -165,6 +164,14 @@ public class UserViewController extends ViewController
       viewHandler.openView(View.MANAGEPRODUCTS);
     } catch (Exception e) {
       viewModel.getErrorProperty().set("Could not open manage products at this time. Try later.");
+    }
+  }
+
+  @FXML public void openOrdersView() {
+    try {
+      viewHandler.openView(View.ORDERS);
+    } catch (Exception e) {
+      viewModel.getErrorProperty().set("Could not open orders at this time. Try later.");
     }
   }
 }
