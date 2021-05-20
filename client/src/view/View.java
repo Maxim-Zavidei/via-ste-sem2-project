@@ -6,12 +6,13 @@ public enum View {
     REGISTRATION("fxml/RegistrationView.fxml"),
     CATALOG("fxml/CatalogView.fxml"),
     BASKET("fxml/BasketView.fxml"),
-    SHOPPING("fxml/ShoppingView.fxml"),
     MANAGEPRODUCTS("fxml/ProductsView.fxml"),
     POPUPPRODUCTS("fxml/AddProductPopUpView.fxml"),
     EDITPRODUCTS("fxml/EditProductPopUpView.fxml"),
     USERS("fxml/UserView.fxml"),
-    MANAGEUSERS("fxml/UserManageView.fxml");
+    MANAGEUSERS("fxml/UserManageView.fxml"),
+    ORDERS("fxml/OrdersView.fxml");
+
 
     private String fxmlFile;
     private ViewController viewController;

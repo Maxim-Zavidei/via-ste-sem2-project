@@ -138,6 +138,14 @@ public class CatalogViewController extends ViewController {
         }
     }
 
+    @FXML public void openOrdersView() {
+        try {
+            viewHandler.openView(View.ORDERS);
+        } catch (Exception e) {
+            viewModel.getErrorProperty().set("Could not open orders at this time. Try later.");
+        }
+    }
+
     @FXML
     private void addToBasket() {
         viewModel.addToBasket();

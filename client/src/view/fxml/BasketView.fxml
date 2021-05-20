@@ -1,34 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.Group?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.BoxBlur?>
-<?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.effect.Glow?>
-<?import javafx.scene.effect.InnerShadow?>
-<?import javafx.scene.effect.Light.Distant?>
-<?import javafx.scene.effect.Lighting?>
-<?import javafx.scene.effect.Shadow?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.paint.LinearGradient?>
-<?import javafx.scene.paint.RadialGradient?>
-<?import javafx.scene.paint.Stop?>
-<?import javafx.scene.shape.Circle?>
-<?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.shape.SVGPath?>
-<?import javafx.scene.text.Font?>
-
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.BasketViewController">
    <children>
       <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -79,6 +58,17 @@
                            <effect>
                               <InnerShadow choke="0.01" color="#471d5f" height="91.68" radius="45.545" width="92.5" />
                            </effect>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#openOrdersView" opacity="0.75" prefHeight="50.0" prefWidth="261.0" styleClass="menu-button" text="Orders" textAlignment="CENTER">
+                           <font>
+                              <Font name="Forte" size="31.0" />
+                           </font>
+                           <effect>
+                              <InnerShadow choke="0.01" color="#471d5f" height="91.68" radius="45.545" width="92.5" />
+                           </effect>
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
                         </Button>
                         <Button fx:id="manageProductsButton" mnemonicParsing="false" onAction="#openProductManagementView" opacity="0.75" prefHeight="50.0" prefWidth="261.0" styleClass="menu-button" text="Manage Products" textAlignment="CENTER">
                            <font>
@@ -209,11 +199,11 @@
                         </Label>
                      </children>
                   </HBox>
-                  <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="475.0" prefWidth="900.0" styleClass="basket-panel" stylesheets="@../css/BasketView.css">
+                  <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="900.0" styleClass="basket-panel" stylesheets="@../css/BasketView.css">
                      <children>
-                        <StackPane alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="475.0" prefWidth="900.0">
+                        <StackPane alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="900.0">
                            <children>
-                              <TableView fx:id="basketTable" editable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="475.0" prefWidth="900.0" stylesheets="@../css/table.css">
+                              <TableView fx:id="basketTable" editable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="900.0" stylesheets="@../css/table.css">
                                  <columns>
                                     <TableColumn fx:id="basketQuantityColumn" prefWidth="87.0" resizable="false" style="-fx-alignment: CENTER;" text="Quantity" />
                                     <TableColumn fx:id="basketNameColumn" editable="false" minWidth="0.0" prefWidth="533.0" text="Name" />
@@ -235,31 +225,34 @@
                         <InnerShadow blurType="TWO_PASS_BOX" height="65.23" radius="15.807500000000001" width="0.0" />
                      </effect>
                      <children>
-                        <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.88" prefHeight="135.0" prefWidth="900.0">
+                        <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.88" prefHeight="210.0" prefWidth="900.0">
                            <children>
-                              <Rectangle arcHeight="1.0" arcWidth="1.0" height="135.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="0.0" width="900.0">
+                              <Rectangle arcHeight="1.0" arcWidth="1.0" height="213.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="0.0" width="900.0">
                                  <fill>
-                                    <LinearGradient endX="1.0" endY="1.0" startY="1.0">
+                                    <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
                                        <stops>
                                           <Stop color="#592a56" />
                                           <Stop color="#461d5e" offset="1.0" />
                                        </stops>
-                                    </LinearGradient>
+                                    </RadialGradient>
                                  </fill>
                               </Rectangle>
-                              <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="135.0" prefWidth="900.0">
+                              <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="207.0" prefWidth="900.0">
                                  <children>
-                                    <Separator layoutX="11.0" layoutY="14.0" prefHeight="8.0" prefWidth="878.0" />
-                                    <Label fx:id="errorLabel" alignment="CENTER" layoutX="145.0" layoutY="96.0" prefHeight="27.0" prefWidth="611.0" textFill="WHITE">
+                                    <Separator layoutY="-10.0" prefHeight="49.0" prefWidth="878.0" />
+                                    <Label fx:id="errorLabel" alignment="CENTER" layoutX="145.0" layoutY="165.0" prefHeight="27.0" prefWidth="611.0" textFill="WHITE">
                                        <font>
                                           <Font name="Bodoni MT" size="14.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="inputCouponField" layoutX="460.0" layoutY="53.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="39.0" prefWidth="221.0" promptText="Coupon">
+                                    <TextField fx:id="inputCouponField" layoutX="525.0" layoutY="55.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="39.0" prefWidth="148.0" promptText="Coupon">
                                        <font>
                                           <Font size="16.0" />
-                                       </font></TextField>
-                                    <Button layoutX="279.0" layoutY="54.0" mnemonicParsing="false" onAction="#applyCoupon" prefHeight="17.0" prefWidth="149.0" text="APPLY COUPON" textAlignment="CENTER">
+                                       </font>
+                                       <effect>
+                                          <InnerShadow choke="0.62" color="#461d5e" />
+                                       </effect></TextField>
+                                    <Button layoutX="525.0" layoutY="106.0" mnemonicParsing="false" onAction="#applyCoupon" prefHeight="17.0" prefWidth="149.0" text="APPLY COUPON" textAlignment="CENTER">
                                        <font>
                                           <Font name="System Bold" size="16.0" />
                                        </font>
@@ -274,7 +267,7 @@
                                           </Lighting>
                                        </effect>
                                     </Button>
-                                    <Button layoutX="91.0" layoutY="54.0" mnemonicParsing="false" onAction="#placeOrder" prefHeight="30.0" prefWidth="87.0" text="ORDER" textAlignment="CENTER">
+                                    <Button layoutX="34.0" layoutY="64.0" mnemonicParsing="false" onAction="#placeOrder" prefHeight="73.0" prefWidth="111.0" text="ORDER" textAlignment="CENTER">
                                        <font>
                                           <Font name="System Bold" size="16.0" />
                                        </font>
@@ -289,7 +282,7 @@
                                           </Lighting>
                                        </effect>
                                     </Button>
-                                    <VBox layoutX="695.0" prefHeight="143.0" prefWidth="208.0">
+                                    <VBox layoutX="706.0" layoutY="32.0" prefHeight="146.0" prefWidth="180.0">
                                        <children>
                                           <Label fx:id="priceLabel" text="0" textFill="WHITE">
                                              <font>
@@ -347,6 +340,14 @@
                                           <Insets bottom="20.0" top="20.0" />
                                        </padding>
                                     </VBox>
+                                    <TextArea fx:id="inputCommentField" layoutX="190.0" layoutY="55.0" prefHeight="91.0" prefWidth="300.0" promptText="Type here the prefferences...">
+                                       <effect>
+                                          <InnerShadow choke="0.62" color="#461d5e" />
+                                       </effect>
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </TextArea>
                                  </children></Pane>
                            </children>
                         </StackPane>

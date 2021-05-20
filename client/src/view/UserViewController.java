@@ -188,4 +188,12 @@ public class UserViewController extends ViewController
     Optional<ButtonType> result = alert.showAndWait();
     return (result.isPresent())&&(result.get()==ButtonType.OK);
   }
+
+  @FXML public void openOrdersView() {
+    try {
+      viewHandler.openView(View.ORDERS);
+    } catch (Exception e) {
+      viewModel.getErrorProperty().set("Could not open orders at this time. Try later.");
+    }
+  }
 }

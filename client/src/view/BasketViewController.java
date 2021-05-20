@@ -117,6 +117,14 @@ public class BasketViewController extends ViewController {
         }
     }
 
+    @FXML public void openOrdersView() {
+        try {
+            viewHandler.openView(View.ORDERS);
+        } catch (Exception e) {
+            viewModel.getErrorProperty().set("Could not open orders at this time. Try later.");
+        }
+    }
+
     @FXML
     private void clearBasket() {
         basketTable.getSelectionModel().clearSelection();

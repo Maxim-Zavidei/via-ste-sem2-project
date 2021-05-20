@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.Group?>
@@ -60,17 +60,6 @@
                                  <effect>
                                     <InnerShadow choke="0.01" color="#471d5f" height="91.68" radius="45.545" width="92.5" />
                                  </effect>
-                              </Button>
-                              <Button mnemonicParsing="false" onAction="#openOrdersView" opacity="0.75" prefHeight="50.0" prefWidth="261.0" styleClass="menu-button" text="Orders" textAlignment="CENTER">
-                                 <font>
-                                    <Font name="Forte" size="31.0" />
-                                 </font>
-                                 <effect>
-                                    <InnerShadow choke="0.01" color="#471d5f" height="91.68" radius="45.545" width="92.5" />
-                                 </effect>
-                                 <VBox.margin>
-                                    <Insets top="10.0" />
-                                 </VBox.margin>
                               </Button>
                               <Button fx:id="manageProductsButton" mnemonicParsing="false" onAction="#openProductManagementView" opacity="0.75" prefHeight="50.0" prefWidth="261.0" styleClass="menu-button" text="Manage Products" textAlignment="CENTER">
                                  <font>
@@ -161,32 +150,61 @@
                      <children>
                         <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="90.0" prefWidth="900.0" styleClass="top-panel" stylesheets="@../css/CatalogView.css">
                            <children>
-                              <Label fx:id="usernameLabel" alignment="CENTER_RIGHT" prefHeight="40.0" prefWidth="350.0" textFill="WHITE">
-                                 <font>
-                                    <Font name="Bodoni MT Italic" size="31.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets right="30.0" />
-                                 </HBox.margin>
-                                 <effect>
-                                    <Glow level="0.48" />
-                                 </effect>
-                              </Label>
+                              <Pane prefHeight="90.0" prefWidth="900.0">
+                                 <children>
+                                    <Label fx:id="usernameLabel" alignment="CENTER_RIGHT" layoutX="526.0" layoutY="25.0" prefHeight="40.0" prefWidth="350.0" textFill="WHITE">
+                                       <font>
+                                          <Font name="Bodoni MT Italic" size="31.0" />
+                                       </font>
+                                       <effect>
+                                          <Glow level="0.48" />
+                                       </effect>
+                                    </Label>
+                                    <Button layoutX="24.0" layoutY="27.0" mnemonicParsing="false" onAction="#markAsDone" text="MARK AS COMPLETED" textAlignment="CENTER">
+                                       <font>
+                                          <Font name="System Bold" size="16.0" />
+                                       </font>
+                                       <effect>
+                                          <Lighting diffuseConstant="1.66" specularConstant="0.32" specularExponent="24.86" surfaceScale="1.96">
+                                             <bumpInput>
+                                                <Shadow blurType="GAUSSIAN" color="#24ff03" height="255.0" radius="118.66" width="221.64" />
+                                             </bumpInput>
+                                             <light>
+                                                <Light.Distant color="#ffb1b1" />
+                                             </light>
+                                          </Lighting>
+                                       </effect>
+                                    </Button>
+                                    <ToggleButton layoutX="286.0" layoutY="27.0" mnemonicParsing="false" text="ONLY PENDIND ORDERS">
+                                       <font>
+                                          <Font name="System Bold" size="16.0" />
+                                       </font>
+                                       <effect>
+                                          <Blend opacity="0.63">
+                                             <topInput>
+                                                <InnerShadow choke="0.38" color="#d045da" />
+                                             </topInput>
+                                          </Blend>
+                                       </effect>
+                                    </ToggleButton>
+                                 </children>
+                              </Pane>
                            </children>
                            <effect>
                               <DropShadow height="8.96" radius="1.7400000000000002" width="0.0" />
                            </effect>
                         </HBox>
-                        <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="475.0" prefWidth="900.0" styleClass="catalog-panel" stylesheets="@../css/CatalogView.css">
+                        <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="362.0" prefWidth="900.0" styleClass="catalog-panel" stylesheets="@../css/CatalogView.css">
                            <children>
-                              <StackPane alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="475.0" prefWidth="900.0">
+                              <StackPane alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="366.0" prefWidth="900.0">
                                  <children>
-                                    <TableView fx:id="catalogTable" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="475.0" prefWidth="900.0" stylesheets="@../css/table.css">
+                                    <TableView fx:id="catalogTable" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="362.0" prefWidth="900.0" stylesheets="@../css/table.css">
                                        <columns>
-                                          <TableColumn fx:id="catalogAvailabilityColumn" prefWidth="99.0" resizable="false" style="-fx-alignment: CENTER;" text="Available Units" />
-                                          <TableColumn fx:id="catalogNameColumn" minWidth="0.0" prefWidth="198.0" text="Name" />
-                                          <TableColumn fx:id="catalogDescriptionColumn" minWidth="0.0" prefWidth="476.0" text="Description" />
-                                          <TableColumn fx:id="catalogPriceColumn" minWidth="0.0" prefWidth="126.0" resizable="false" style="-fx-alignment: CENTER;" text="Price for Unit" />
+                                          <TableColumn fx:id="catalogAvailabilityColumn" prefWidth="99.0" resizable="false" style="-fx-alignment: CENTER;" text="ID" />
+                                          <TableColumn fx:id="catalogNameColumn" minWidth="0.0" prefWidth="136.0001220703125" text="Date" />
+                                          <TableColumn fx:id="catalogDescriptionColumn" minWidth="0.0" prefWidth="264.800048828125" text="Email" />
+                                          <TableColumn fx:id="catalogPriceColumn" maxWidth="200.0" minWidth="0.0" prefWidth="200.0" resizable="false" style="-fx-alignment: CENTER;" text="Comment" />
+                                          <TableColumn fx:id="catalogPriceColumn1" maxWidth="200.0" minWidth="0.0" prefWidth="200.0" resizable="false" style="-fx-alignment: CENTER;" text="Status" />
                                        </columns>
                                     </TableView>
                                  </children>
@@ -198,9 +216,9 @@
                         </HBox>
                         <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="135.0" prefWidth="900.0">
                            <children>
-                              <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.88" prefHeight="135.0" prefWidth="900.0">
+                              <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.88" prefHeight="244.0" prefWidth="900.0">
                                  <children>
-                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="135.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="0.0" width="900.0">
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="250.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="0.0" width="900.0">
                                        <fill>
                                           <LinearGradient endX="1.0" endY="1.0" startY="1.0">
                                              <stops>
@@ -210,60 +228,25 @@
                                           </LinearGradient>
                                        </fill>
                                     </Rectangle>
-                                    <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="135.0" prefWidth="900.0">
+                                    <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="254.0" prefWidth="900.0">
                                        <children>
                                           <Separator layoutX="11.0" layoutY="14.0" prefHeight="8.0" prefWidth="878.0" />
-                                          <Label fx:id="errorLabel" alignment="CENTER" layoutX="145.0" layoutY="96.0" prefHeight="27.0" prefWidth="611.0" textFill="WHITE">
+                                          <TableView fx:id="catalogTable1" layoutY="35.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="167.0" prefWidth="900.0" stylesheets="@../css/table.css">
+                                             <columns>
+                                                <TableColumn fx:id="catalogAvailabilityColumn1" prefWidth="99.0" resizable="false" style="-fx-alignment: CENTER;" text="Quantity" />
+                                                <TableColumn fx:id="catalogNameColumn1" minWidth="0.0" prefWidth="796.800048828125" text="Name" />
+                                             </columns>
+                                          </TableView>
+                                          <Label fx:id="errorLabel" alignment="CENTER" layoutX="145.0" layoutY="213.0" prefHeight="27.0" prefWidth="611.0" textFill="WHITE">
                                              <font>
                                                 <Font name="Bodoni MT" size="14.0" />
                                              </font>
                                           </Label>
-                                          <Button layoutX="70.0" layoutY="49.0" mnemonicParsing="false" onAction="#addToBasket" text="ADD TO CART" textAlignment="CENTER">
-                                             <font>
-                                                <Font name="System Bold" size="16.0" />
-                                             </font>
-                                             <effect>
-                                                <Lighting diffuseConstant="1.66" specularConstant="0.32" specularExponent="24.86" surfaceScale="1.96">
-                                                   <bumpInput>
-                                                      <Shadow blurType="GAUSSIAN" color="#24ff03" height="255.0" radius="118.66" width="221.64" />
-                                                   </bumpInput>
-                                                   <light>
-                                                      <Light.Distant color="#ffb1b1" />
-                                                   </light>
-                                                </Lighting>
-                                             </effect>
-                                          </Button>
-                                          <TextArea fx:id="inputCommentField" layoutX="506.0" layoutY="32.0" prefHeight="71.0" prefWidth="369.0" promptText="Type here the message...">
-                                             <effect>
-                                                <InnerShadow choke="0.62" color="#461d5e" />
-                                             </effect>
-                                             <font>
-                                                <Font size="16.0" />
-                                             </font>
-                                          </TextArea>
-                                          <Button layoutX="275.0" layoutY="49.0" mnemonicParsing="false" onAction="#sendNotification" text="SEND NOTIFICATION" textAlignment="CENTER">
-                                             <font>
-                                                <Font name="System Bold" size="16.0" />
-                                             </font>
-                                             <effect>
-                                                <Lighting diffuseConstant="1.66" specularConstant="0.32" specularExponent="24.86" surfaceScale="1.96">
-                                                   <bumpInput>
-                                                      <Shadow blurType="GAUSSIAN" color="#24ff03" height="255.0" radius="118.66" width="221.64" />
-                                                   </bumpInput>
-                                                   <light>
-                                                      <Light.Distant color="#ffb1b1" />
-                                                   </light>
-                                                </Lighting>
-                                             </effect>
-                                          </Button>
                                        </children>
                                     </Pane>
                                  </children>
                               </StackPane>
                            </children>
-                           <effect>
-                              <InnerShadow blurType="TWO_PASS_BOX" height="32.615" radius="7.6537500000000005" width="0.0" />
-                           </effect>
                         </HBox>
                      </children>
                   </VBox>
