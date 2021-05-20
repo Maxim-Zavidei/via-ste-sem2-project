@@ -4,12 +4,12 @@ import common.model.Order;
 import common.model.Product;
 import common.model.User;
 import common.model.UserList;
-import java.rmi.Remote;
+import common.utility.observer.subject.RemoteSubject;
 import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public interface RemoteServerInterface extends Remote {
+public interface RemoteServerInterface extends RemoteSubject<String, Object> {
     RemoteServerInterface authenticate(RemoteClientInterface client, String email, String password) throws RemoteException;
     void deauthenticate(RemoteClientInterface client) throws RemoteException;
     void register(String email, String password, String firstName, String lastName, LocalDate birthday, char gender) throws RemoteException;

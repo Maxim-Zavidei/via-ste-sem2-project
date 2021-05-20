@@ -1,6 +1,6 @@
 package common.network;
 
-import java.rmi.Remote;
+import common.utility.observer.listener.RemoteListener;
 
-public interface RemoteClientInterface extends Remote {
+public interface RemoteClientInterface extends RemoteListener<String, Object> {
 }

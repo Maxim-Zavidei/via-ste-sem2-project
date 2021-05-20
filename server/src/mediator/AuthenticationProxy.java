@@ -7,6 +7,7 @@ import common.model.UserList;
 import common.network.RemoteClientInterface;
 import common.network.RemoteServerInterface;
 import common.utility.collection.BidirectionalHashMap;
+import common.utility.observer.listener.GeneralListener;
 import model.Model;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
@@ -33,6 +34,16 @@ public class AuthenticationProxy implements RemoteServerInterface {
     }
 
     @Override
+    public boolean addListener(GeneralListener<String, Object> listener, String... propertyNames) throws RemoteException {
+        throw new IllegalStateException("Authenticate in order to perform this request.");
+    }
+
+    @Override
+    public boolean removeListener(GeneralListener<String, Object> listener, String... propertyNames) throws RemoteException {
+        throw new IllegalStateException("Authenticate in order to perform this request.");
+    }
+
+    @Override
     public RemoteServerInterface authenticate(RemoteClientInterface client, String email, String password) throws RemoteException {
         // Validate the provided arguments.
         if (email == null || email.isEmpty()) throw new IllegalArgumentException("Email value can't be null or empty.");
@@ -50,6 +61,9 @@ public class AuthenticationProxy implements RemoteServerInterface {
         if (authenticatedInstances.getKey(toReturn) != null) throw new IllegalStateException("This user is already authenticated.");
         // Return the real subject to be replaced instead of the proxy on the client side.
         authenticatedInstances.put(client, toReturn);
+
+        // Upon authentication automatically add the client to be a listener for any changes on the server.
+        toReturn.addListener(client);
         return toReturn;
     }
 
@@ -114,14 +128,13 @@ public class AuthenticationProxy implements RemoteServerInterface {
         throw new IllegalStateException("Authenticate in order to perform this request.");
     }
 
-    @Override public void updateUser(String email, User user)
-        throws RemoteException
+    @Override public void updateUser(String email, User user) throws RemoteException
     {
-        throw new IllegalStateException("Authenticate in order to add a user.");
+        throw new IllegalStateException("Authenticate in order to perform this request.");
     }
 
     @Override
     public void placeOrder(Order order) throws RemoteException {
-        throw new IllegalStateException("Authenticate in order to place an order.");
+        throw new IllegalStateException("Authenticate in order to perform this request.");
     }
 }

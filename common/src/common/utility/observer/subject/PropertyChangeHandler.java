@@ -47,8 +47,7 @@ public final class PropertyChangeHandler<S, T> implements GeneralSubject<S, T>
    * @param removeDeadListeners true if listeners which cannot be contacted 3
    *                            times in a row will be removed
    */
-  public PropertyChangeHandler(GeneralSubject<S, T> source,
-      boolean usingThreads, boolean oldNewCheck, boolean removeDeadListeners)
+  public PropertyChangeHandler(GeneralSubject<S, T> source, boolean usingThreads, boolean oldNewCheck, boolean removeDeadListeners)
   {
     this.removeDeadListeners = removeDeadListeners;
     this.usingThreads = usingThreads;
@@ -65,8 +64,7 @@ public final class PropertyChangeHandler<S, T> implements GeneralSubject<S, T>
    * @param oldNewCheck true if events fired only calls listeners if value1 and
    *                    value2 are different, representing e.g. old and new value
    */
-  public PropertyChangeHandler(GeneralSubject<S, T> source,
-      boolean usingThreads, boolean oldNewCheck)
+  public PropertyChangeHandler(GeneralSubject<S, T> source, boolean usingThreads, boolean oldNewCheck)
   {
     this(source, usingThreads, oldNewCheck, true);
   }
@@ -76,8 +74,7 @@ public final class PropertyChangeHandler<S, T> implements GeneralSubject<S, T>
    * @param source the source representing the concrete subject
    * @param usingThreads true if a separate thread is executing the logic when firing events.
    */
-  public PropertyChangeHandler(GeneralSubject<S, T> source,
-      boolean usingThreads)
+  public PropertyChangeHandler(GeneralSubject<S, T> source, boolean usingThreads)
   {
     this(source, usingThreads, false, true);
   }
@@ -220,8 +217,7 @@ public final class PropertyChangeHandler<S, T> implements GeneralSubject<S, T>
    */
   public void firePropertyChange(String propertyName, S value1, T value2)
   {
-    ObserverEvent<S, T> event = new ObserverEvent<>(source, propertyName,
-        value1, value2);
+    ObserverEvent<S, T> event = new ObserverEvent<>(source, propertyName, value1, value2);
     firePropertyChange(event);
   }
 
@@ -235,15 +231,13 @@ public final class PropertyChangeHandler<S, T> implements GeneralSubject<S, T>
    * listed. If already added to all then it will not be added to a specific
    * event name also.
    */
-  public synchronized boolean addListener(GeneralListener<S, T> listener,
-      String... propertyNames)
+  public synchronized boolean addListener(GeneralListener<S, T> listener, String... propertyNames)
   {
     GeneralListener<S, T> generalListener = listener;
     if (usingThreads)
     {
       generalListener = new GeneralListenerProxy(listener);
-      GeneralListener<S, T> reference = getListenerReference(generalListener,
-          false);
+      GeneralListener<S, T> reference = getListenerReference(generalListener, false);
       if (reference != null)
       {
         generalListener = reference;
@@ -297,8 +291,7 @@ public final class PropertyChangeHandler<S, T> implements GeneralSubject<S, T>
    * @return true if the listener has been removed for all or at least one of the
    * event names given.
    */
-  public boolean removeListener(GeneralListener<S, T> listener,
-      String... propertyNames)
+  public boolean removeListener(GeneralListener<S, T> listener, String... propertyNames)
   {
     boolean removed = false;
     GeneralListener<S, T> generalListener = listener;
@@ -342,8 +335,7 @@ public final class PropertyChangeHandler<S, T> implements GeneralSubject<S, T>
     return removed;
   }
 
-  private GeneralListener<S, T> getListenerReference(
-      GeneralListener<S, T> listener, boolean onlyNullListening)
+  private GeneralListener<S, T> getListenerReference(GeneralListener<S, T> listener, boolean onlyNullListening)
   {
     ArrayDeque<GeneralListener<S, T>> queue;
     synchronized (this)

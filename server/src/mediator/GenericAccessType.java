@@ -5,6 +5,10 @@ import common.model.Product;
 import common.model.User;
 import common.network.RemoteClientInterface;
 import common.network.RemoteServerInterface;
+import common.utility.observer.event.ObserverEvent;
+import common.utility.observer.listener.GeneralListener;
+import common.utility.observer.listener.LocalListener;
+import common.utility.observer.subject.PropertyChangeHandler;
 import model.Model;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
@@ -12,8 +16,9 @@ import java.rmi.server.UnicastRemoteObject;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public abstract class GenericAccessType implements RemoteServerInterface {
+public abstract class GenericAccessType implements RemoteServerInterface, LocalListener<String, Object> {
 
+    private PropertyChangeHandler<String, Object> property;
     private Model model;
     private String email;
     private String password;
@@ -22,8 +27,12 @@ public abstract class GenericAccessType implements RemoteServerInterface {
         this.model = model;
         this.email = email;
         this.password = password;
+        property = new PropertyChangeHandler<>(this);
+        model.addListener(this, getChangesToListenFor());
         UnicastRemoteObject.exportObject(this, 0);
     }
+
+    protected abstract String[] getChangesToListenFor();
 
     public Model getModel() {
         return model;
@@ -54,6 +63,16 @@ public abstract class GenericAccessType implements RemoteServerInterface {
     }
 
     @Override
+    public boolean addListener(GeneralListener<String, Object> listener, String... propertyNames) throws RemoteException {
+        return property.addListener(listener, propertyNames);
+    }
+
+    @Override
+    public boolean removeListener(GeneralListener<String, Object> listener, String... propertyNames) throws RemoteException {
+        return property.removeListener(listener, propertyNames);
+    }
+
+    @Override
     public RemoteServerInterface authenticate(RemoteClientInterface client, String email, String password) throws RemoteException {
         throw new IllegalStateException("Can't perform request, already authenticated.");
     }
@@ -61,6 +80,8 @@ public abstract class GenericAccessType implements RemoteServerInterface {
     @Override
     public void deauthenticate(RemoteClientInterface client) throws RemoteException {
         try {
+            getModel().removeListener(this, getChangesToListenFor());
+            removeListener(client);
             UnicastRemoteObject.unexportObject(this, true);
             ((RemoteServerInterface) Naming.lookup("rmi://127.0.0.1:1099/access")).deauthenticate(client);
         } catch (Exception e) {
@@ -89,7 +110,17 @@ public abstract class GenericAccessType implements RemoteServerInterface {
     }
 
     @Override
-    public void placeOrder(Order order){
+    public void placeOrder(Order order) {
         model.placeOrder(order);
+    }
+
+    @Override
+    public void propertyChange(ObserverEvent<String, Object> event) {
+        switch (event.getPropertyName()) {
+            case "newProduct" : {
+                if (!email.equals(event.getValue1())) property.firePropertyChange("newProduct", "", event.getValue2());
+                break;
+            }
+        }
     }
 }

@@ -14,36 +14,32 @@ import java.rmi.RemoteException;
  * @author Steffen Vissing Andersen
  * @version 1.4 - april 2021
  */
-public interface RemoteSubject<S, T> extends GeneralSubject<S, T>, Remote
-{
-  /**
-   * Adding a listener either to all events or to one or more property names.
-   *
-   * @param listener      the listener to be added
-   * @param propertyNames a var-args list of property names. If empty, then the
-   *                      listener should be added as a lister for all events.
-   * @return true if the listener has been added. It is optional if this return
-   * true if the listener has been added to at least one of the property names
-   * or if it successfully has been added to all listed
-   * @throws RemoteException when something goes wrong e.g. in connection,
-   *                         sending or receiving
-   */
+public interface RemoteSubject<S, T> extends GeneralSubject<S, T>, Remote {
+    /**
+     * Adding a listener either to all events or to one or more property names.
+     *
+     * @param listener      the listener to be added
+     * @param propertyNames a var-args list of property names. If empty, then the
+     *                      listener should be added as a lister for all events.
+     * @return true if the listener has been added. It is optional if this return
+     * true if the listener has been added to at least one of the property names
+     * or if it successfully has been added to all listed
+     * @throws RemoteException when something goes wrong e.g. in connection,
+     *                         sending or receiving
+     */
+    boolean addListener(GeneralListener<S, T> listener, String... propertyNames) throws RemoteException;
 
-  boolean addListener(GeneralListener<S, T> listener, String... propertyNames)
-      throws RemoteException;
-
-  /**
-   * Removing a listener either from all events or from one or more property names.
-   *
-   * @param listener      the listener to be removed
-   * @param propertyNames a var-args list of property names. If empty, then the
-   *                      listener should be removed as a lister for all events.
-   * @return true if the listener has been removed. It is optional if this return
-   * true if the listener has been removed from at least one of the property names
-   * or if it successfully has been removed from all listed
-   * @throws RemoteException when something goes wrong e.g. in connection,
-   *                         sending or receiving
-   */
-  boolean removeListener(GeneralListener<S, T> listener,
-      String... propertyNames) throws RemoteException;
+    /**
+     * Removing a listener either from all events or from one or more property names.
+     *
+     * @param listener      the listener to be removed
+     * @param propertyNames a var-args list of property names. If empty, then the
+     *                      listener should be removed as a lister for all events.
+     * @return true if the listener has been removed. It is optional if this return
+     * true if the listener has been removed from at least one of the property names
+     * or if it successfully has been removed from all listed
+     * @throws RemoteException when something goes wrong e.g. in connection,
+     *                         sending or receiving
+     */
+    boolean removeListener(GeneralListener<S, T> listener, String... propertyNames) throws RemoteException;
 }

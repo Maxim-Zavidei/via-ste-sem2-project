@@ -14,6 +14,13 @@ public class EmployeeAuthenticated extends GenericAccessType {
     }
 
     @Override
+    protected String[] getChangesToListenFor() {
+        return new String[] {
+                "newProduct"
+        };
+    }
+
+    @Override
     public UserList getAllRegisteredUsers() throws RemoteException {
         return getModel().getAllRegisteredUsers();
     }
@@ -30,7 +37,7 @@ public class EmployeeAuthenticated extends GenericAccessType {
 
     @Override
     public void addProduct(int quantity, String name, String description, double price) throws RemoteException {
-        getModel().addProduct(quantity, name, description, price);
+        getModel().addProduct(getEmail(), quantity, name, description, price);
     }
 
     @Override
@@ -46,7 +53,8 @@ public class EmployeeAuthenticated extends GenericAccessType {
     @Override public void addUser(User user) throws RemoteException {
         getModel().addUser(user);
     }
-    @Override public void updateUser(String email, User user) throws RemoteException{
+
+    @Override public void updateUser(String email, User user) throws RemoteException {
         getModel().updateUser(email, user);
     }
 }

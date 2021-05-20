@@ -1,6 +1,8 @@
 package model;
 
 import common.model.*;
+import common.utility.observer.listener.GeneralListener;
+import common.utility.observer.subject.PropertyChangeHandler;
 import daos.*;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -8,6 +10,7 @@ import java.util.ArrayList;
 
 public class ModelManager implements Model {
 
+    private PropertyChangeHandler<String, Object> property;
     private ProductDAO productDAO;
     private UserDAO userDAO;
     private OrderDAO orderDAO;
@@ -16,6 +19,7 @@ public class ModelManager implements Model {
         productDAO = ProductDAOImpl.getInstance();
         userDAO = UserDAOImpl.getInstance();
         orderDAO = OrderDAOImpl.getInstance();
+        property = new PropertyChangeHandler<>(this);
 
         // Dummy data users.
  //       userDAO.create(new Customer("bob@gmail.com", "Aaaa1234", "Bob", "Bob", new DateTime(2, 3, 2001), 'M'));
@@ -29,7 +33,16 @@ public class ModelManager implements Model {
 //        productDAO.create(1, "Golden Apple", "extra nice", 7.41);
 //        productDAO.create(3, "Sugar Bombs", "niche", 3.22);
 //        productDAO.create(7, "2 kg of Sweets", "niche extra", 1);
+    }
 
+    @Override
+    public boolean addListener(GeneralListener<String, Object> listener, String... propertyNames) {
+        return property.addListener(listener, propertyNames);
+    }
+
+    @Override
+    public boolean removeListener(GeneralListener<String, Object> listener, String... propertyNames) {
+        return property.removeListener(listener, propertyNames);
     }
 
     @Override
@@ -147,7 +160,7 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void addProduct(int quantity, String name, String description, double price) throws IllegalStateException {
+    public void addProduct(String emailOfWhoAdded, int quantity, String name, String description, double price) throws IllegalStateException {
         if (quantity < 1) throw new IllegalArgumentException("Product quantity can't be less then 1.");
         if (name == null || name.isEmpty()) throw new IllegalArgumentException("Product name can't be empty.");
         if (name.length() > 100) throw new IllegalArgumentException("Product name can't be longer then 100 chars.");
@@ -156,7 +169,7 @@ public class ModelManager implements Model {
         if (price < 0) throw new IllegalArgumentException("Product price can't be negative.");
         try {
             if (!productDAO.readByName(name).isEmpty()) throw new IllegalStateException("A product with this name already exists.");
-            productDAO.create(quantity, name, description, price);
+            property.firePropertyChange("newProduct", emailOfWhoAdded, productDAO.create(quantity, name, description, price));
         } catch (SQLException e) {
             throw new IllegalStateException("Server is unavailable at the moment. Try Later.");
         }
@@ -186,10 +199,11 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void placeOrder(Order order) throws IllegalStateException{
-        try{
+    public void placeOrder(Order order) throws IllegalStateException {
+        // TODO: Just a couple checks here to prevent some system exploits.
+        try {
             orderDAO.create(order.getProducts(), order.getDate(), order.getCustomer(), order.getStatus(), order.getComment());
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             throw new IllegalStateException("Server is unavailable at the moment. Try Later.");
         }
     }

@@ -14,6 +14,13 @@ public class CustomerAuthenticated extends GenericAccessType {
     }
 
     @Override
+    protected String[] getChangesToListenFor() {
+        return new String[] {
+                "newProduct"
+        };
+    }
+
+    @Override
     public UserList getAllRegisteredUsers() throws RemoteException {
         throw new IllegalStateException("Only an employee is allowed to perform this request.");
     }
