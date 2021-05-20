@@ -16,7 +16,7 @@ class OrderDAOImplTest {
     HashMap<Product, Integer> pr = new HashMap<>();
     DateTime dateTime = new DateTime();
     Customer c = new Customer("bob@gmail.com", "Aaaa1234", "Bob", "Bob", new DateTime(2, 3, 2001), 'M');
-    String str = "Order 1 by bob@gmail.com made on 18/05/2021\nBaklava -> 2\nPain -> 6\n";
+    String str = "Order 1 by bob@gmail.com made on 18/05/2021 is pending\nPain -> 6\naBaklava -> 2comments:";
 
     @BeforeEach
     void setUp() {

@@ -187,10 +187,10 @@ public class ModelManager implements Model {
 
     @Override
     public void placeOrder(Order order) throws IllegalStateException{
-        /*try{
-            orderDAO.create(order.getProducts(), order.getDate(), order.getCustomer());
+        try{
+            orderDAO.create(order.getProducts(), order.getDate(), order.getCustomer(), order.getStatus(), order.getComment());
         }catch (SQLException e) {
             throw new IllegalStateException("Server is unavailable at the moment. Try Later.");
-        }*/
+        }
     }
 }
