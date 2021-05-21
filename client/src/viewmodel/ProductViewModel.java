@@ -45,4 +45,11 @@ public class ProductViewModel {
     public void setQuantity(int quantity) {
         this.quantity.set(quantity);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof ProductViewModel)) return false;
+        ProductViewModel tmp = (ProductViewModel) obj;
+        return id.getValue().equals(tmp.id.getValue());
+    }
 }
