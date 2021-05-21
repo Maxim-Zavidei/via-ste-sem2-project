@@ -183,6 +183,7 @@ public class ModelManager implements Model {
             Product tmp = productDAO.readByName(product.getName()).isEmpty() ? null : productDAO.readByName(product.getName()).get(0);
             if (tmp != null && !tmp.getId().equals(product.getId())) throw new IllegalStateException("This product name is already taken.");
             productDAO.update(product);
+            property.firePropertyChange("replacedProduct", product.getId(), product);
         } catch (SQLException e) {
             throw new IllegalStateException("Server is unavailable at the moment. Try Later.");
         }
@@ -193,6 +194,7 @@ public class ModelManager implements Model {
         try {
             if (productDAO.getById(product.getId()) == null) throw new IllegalStateException("No such product could be found.");
             productDAO.delete(product);
+            property.firePropertyChange("deletedProduct", product.getId(), product);
         } catch (SQLException e) {
             throw new IllegalStateException("Server is unavailable at the moment. Try Later.");
         }
