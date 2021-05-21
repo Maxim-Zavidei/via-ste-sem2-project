@@ -6,10 +6,7 @@ import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.events.JFXDialogEvent;
 import javafx.collections.MapChangeListener;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.effect.ImageInput;
 import javafx.scene.image.Image;
@@ -38,6 +35,7 @@ public class CatalogViewController extends ViewController {
     @FXML private Button basketButton;
     @FXML private Button manageProductsButton;
     @FXML private Button manageUsersButton;
+    @FXML private TextArea inputCommentField;
     @FXML private Label errorLabel;
 
     @Override
@@ -142,13 +140,18 @@ public class CatalogViewController extends ViewController {
         try {
             viewHandler.openView(View.ORDERS);
         } catch (Exception e) {
-            viewModel.getErrorProperty().set("Could not open orders at this time. Try later.");
+            viewModel.getErrorProperty().set("Can not view orders at this time. Try later.");
         }
     }
 
     @FXML
     private void addToBasket() {
         viewModel.addToBasket();
+    }
+
+    @FXML
+    private void sendNotification() {
+        // TODO: For user stories related to event sending.
     }
 
     @FXML
