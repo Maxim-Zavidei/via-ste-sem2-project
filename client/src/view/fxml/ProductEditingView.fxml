@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.EditProductPopUpViewController">
+<AnchorPane prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.ProductEditingViewController">
    <children>
       <Label fx:id="errorLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="11.0" layoutY="21.0" prefHeight="38.0" prefWidth="574.0" text="Edit Product" textAlignment="CENTER" textFill="#ffb1b1">
          <font>
@@ -70,7 +70,7 @@
             <DropShadow color="#ffaeae" />
          </effect>
       </TextField>
-      <Button layoutX="52.0" layoutY="519.0" mnemonicParsing="false" onAction="#editProduct" prefHeight="63.0" prefWidth="227.0" text="EDIT" textAlignment="CENTER">
+      <Button fx:id="manageButton" layoutX="52.0" layoutY="519.0" mnemonicParsing="false" onAction="#manageProduct" prefHeight="63.0" prefWidth="227.0" text="ADD" textAlignment="CENTER">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
@@ -85,7 +85,7 @@
             </Lighting>
          </effect>
       </Button>
-      <Button layoutX="322.0" layoutY="519.0" mnemonicParsing="false" onAction="#cancelAddProduct" prefHeight="63.0" prefWidth="227.0" text="CANCEL" textAlignment="CENTER">
+      <Button layoutX="322.0" layoutY="519.0" mnemonicParsing="false" onAction="#cancel" prefHeight="63.0" prefWidth="227.0" text="CANCEL" textAlignment="CENTER">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
