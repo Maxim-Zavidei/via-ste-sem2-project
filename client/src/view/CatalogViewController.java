@@ -4,7 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.events.JFXDialogEvent;
-import javafx.collections.MapChangeListener;
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.effect.BoxBlur;
@@ -35,7 +35,8 @@ public class CatalogViewController extends ViewController {
     @FXML private Button basketButton;
     @FXML private Button manageProductsButton;
     @FXML private Button manageUsersButton;
-    @FXML private TextArea inputCommentField;
+    @FXML private TextArea notificationCommentField;
+    @FXML private Button notificationButton;
     @FXML private Label errorLabel;
 
     @Override
@@ -48,16 +49,7 @@ public class CatalogViewController extends ViewController {
         catalogNameColumn.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
         catalogDescriptionColumn.setCellValueFactory(cellData -> cellData.getValue().getDescriptionProperty());
         catalogPriceColumn.setCellValueFactory(cellData -> cellData.getValue().getPriceProperty());
-        // Links the catalog hash map of the view model to the displaying observable product list of the catalog table.
-        // On any product additions or removals from the view model hash map the list would behave accordingly by adding or removing the same product.
-        viewModel.getCatalogMap().addListener((MapChangeListener.Change<? extends String, ? extends ProductViewModel> change) -> {
-            // First condition verifies the change was not triggered by a replacement of an already existing product with put() method called on the catalog hash map.
-            if (change.wasRemoved() ^ change.wasAdded()) if (change.wasRemoved()) {
-                catalogTable.getItems().remove(change.getValueRemoved());
-            } else {
-                catalogTable.getItems().add(change.getValueAdded());
-            }
-        });
+        catalogTable.setItems(viewModel.getCatalogTable());
         catalogTable.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> viewModel.setSelectedCatalogProductProperty(newVal));
 
         // Bindings for the rest of the user interface elements.
@@ -65,8 +57,12 @@ public class CatalogViewController extends ViewController {
         basketButton.textProperty().bind(viewModel.getBasketButtonTitleProperty());
         manageProductsButton.visibleProperty().bind(viewModel.getShowProductManagementButtonProperty());
         manageUsersButton.visibleProperty().bind(viewModel.getShowUserManagementButtonProperty());
+        notificationCommentField.visibleProperty().bind(viewModel.getShowEventFieldProperty());
+        Bindings.bindBidirectional(notificationCommentField.textProperty(), viewModel.getEventTextProperty());
+        notificationButton.visibleProperty().bind(viewModel.getShowEventButtonProperty());
         errorLabel.textProperty().bind(viewModel.getErrorProperty());
 
+        // Code for displaying new product notifications.
         viewModel.getShowNotificationProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal) {
                 Image image = new Image("file:assets/cakeArt.png");
@@ -94,11 +90,42 @@ public class CatalogViewController extends ViewController {
                 dialogLayout.setHeading(new Label("Check out this product, NOW!\n" + newProduct.getNameProperty().getValue() + "\n" + newProduct.getDescriptionProperty().getValue()));
                 dialogLayout.setActions(button);
                 dialog.show();
-                dialog.setOnDialogClosed((JFXDialogEvent event) -> {
-                    borderPane.setEffect(null);
-                });
+                dialog.setOnDialogClosed((JFXDialogEvent event) -> borderPane.setEffect(null));
                 borderPane.setEffect(blur);
                 viewModel.getShowNotificationProperty().set(false);
+            }
+        });
+
+        // Code for displaying new event notifications.
+        viewModel.getShowEventProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal) {
+                Image image = new Image("file:assets/cakeArt.png");
+
+                ImageInput imageInput = new ImageInput();
+                imageInput.setX(250);
+                imageInput.setY(100);
+                imageInput.setSource(image);
+
+                //blur.setInput(imageInput);
+
+                BoxBlur blur = new BoxBlur(3, 3, 3);
+
+                JFXDialogLayout dialogLayout = new JFXDialogLayout();
+                JFXButton button = new JFXButton("Okay");
+                JFXDialog dialog = new JFXDialog(rootPane,dialogLayout,JFXDialog.DialogTransition.CENTER);
+                button.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> dialog.close());
+
+                //unprofessional styling, but it works
+                button.setStyle("-fx-background-color: #461d5e; -fx-text-fill: white;");
+                dialog.setStyle("-fx-background-color: #ffb1b1cc;");
+                dialogLayout.setStyle("-fx-background-color: #ffb1b1cc;");
+
+                dialogLayout.setHeading(new Label("New Event!\n" + viewModel.getNewEventText()));
+                dialogLayout.setActions(button);
+                dialog.show();
+                dialog.setOnDialogClosed((JFXDialogEvent event) -> borderPane.setEffect(null));
+                borderPane.setEffect(blur);
+                viewModel.getShowEventProperty().set(false);
             }
         });
     }
@@ -151,7 +178,7 @@ public class CatalogViewController extends ViewController {
 
     @FXML
     private void sendNotification() {
-        // TODO: For user stories related to event sending.
+        viewModel.sendNotification();
     }
 
     @FXML

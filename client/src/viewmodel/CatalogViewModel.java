@@ -7,7 +7,7 @@ import common.utility.observer.listener.LocalListener;
 import javafx.application.Platform;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableMap;
+import javafx.collections.ObservableList;
 import model.Model;
 
 public class CatalogViewModel implements LocalListener<String, Object> {
@@ -15,7 +15,7 @@ public class CatalogViewModel implements LocalListener<String, Object> {
     private Model model;
 
     // Instance variables for storing the products of the catalog table.
-    private ObservableMap<String, ProductViewModel> catalogMap;
+    private ObservableList<ProductViewModel> catalogTable;
     private ObjectProperty<ProductViewModel> selectedCatalogProductProperty;
 
     // Instance variables for linking and storing the other elements of the user interface.
@@ -23,18 +23,22 @@ public class CatalogViewModel implements LocalListener<String, Object> {
     private StringProperty basketButtonTitleProperty;
     private ObjectProperty<Boolean> showProductManagementButtonProperty;
     private ObjectProperty<Boolean> showUserManagementButtonProperty;
+    private ObjectProperty<Boolean> showEventFieldProperty;
+    private ObjectProperty<Boolean> showEventButtonProperty;
+    private StringProperty eventTextProperty;
     private StringProperty errorProperty;
 
     // Other helper instance variables.
-    private boolean wasAuthenticatedUserQueried;
     private ProductViewModel newNotificationProduct;
     private ObjectProperty<Boolean> showNotificationProperty;
+    private ObjectProperty<Boolean> showEventProperty;
+    private String newEventText;
 
     public CatalogViewModel(Model model) {
         this.model = model;
 
         // Initialize the view model instance variables responsible for storing the data of the tables.
-        catalogMap = FXCollections.observableHashMap();
+        catalogTable = FXCollections.observableArrayList();
         selectedCatalogProductProperty = new SimpleObjectProperty<>();
 
         // Initialize the instance variables responsible for storing data of the other ui elements.
@@ -42,12 +46,16 @@ public class CatalogViewModel implements LocalListener<String, Object> {
         basketButtonTitleProperty = new SimpleStringProperty("Basket");
         showProductManagementButtonProperty = new SimpleObjectProperty<>(false);
         showUserManagementButtonProperty = new SimpleObjectProperty<>(false);
+        showEventFieldProperty = new SimpleObjectProperty<>(false);
+        showEventButtonProperty = new SimpleObjectProperty<>(false);
+        eventTextProperty = new SimpleStringProperty();
         errorProperty = new SimpleStringProperty("");
 
         // Initialize the rest of the instance variables.
-        wasAuthenticatedUserQueried = false;
         newNotificationProduct = null;
         showNotificationProperty = new SimpleObjectProperty<>(false);
+        showEventProperty = new SimpleObjectProperty<>(false);
+        newEventText = "";
 
         model.addListener(this);
     }
@@ -58,16 +66,13 @@ public class CatalogViewModel implements LocalListener<String, Object> {
         // Deselect any selected items if window reopens.
         selectedCatalogProductProperty.set(null);
 
-        // Refresh the catalog table with all the available products every time the window reopens.
-        catalogMap.clear();
-        try {
-            model.getCatalogOfProducts().forEach((product) -> catalogMap.put(product.getId(), new ProductViewModel(product)));
-        } catch (Exception e) {
-            errorProperty.set(e.getMessage());
-        }
-
-        // Configure properly the product and user management buttons and the username label based if the user is an employee or not.
-        if (!wasAuthenticatedUserQueried) {
+        if (!model.wasDataQueriedFor("Catalog")) {
+            catalogTable.clear();
+            try {
+                model.getCatalogOfProducts().forEach(product -> catalogTable.add(new ProductViewModel(product)));
+            } catch (Exception e) {
+                errorProperty.set(e.getMessage());
+            }
             boolean isEmployee = false;
             try {
                 User authenticatedUser = model.getAuthenticatedUser();
@@ -79,7 +84,8 @@ public class CatalogViewModel implements LocalListener<String, Object> {
             }
             showProductManagementButtonProperty.set(isEmployee);
             showUserManagementButtonProperty.set(isEmployee);
-            wasAuthenticatedUserQueried = true;
+            showEventFieldProperty.set(isEmployee);
+            showEventButtonProperty.set(isEmployee);
         }
 
         // Updates the number of products indicator in the basket button title.
@@ -87,8 +93,8 @@ public class CatalogViewModel implements LocalListener<String, Object> {
         basketButtonTitleProperty.set(tmp == 0 ? "Basket" : "Basket (" + tmp + ")");
     }
 
-    public ObservableMap<String, ProductViewModel> getCatalogMap() {
-        return catalogMap;
+    public ObservableList<ProductViewModel> getCatalogTable() {
+        return catalogTable;
     }
 
     public StringProperty getUsernameProperty() {
@@ -107,6 +113,18 @@ public class CatalogViewModel implements LocalListener<String, Object> {
         return showUserManagementButtonProperty;
     }
 
+    public ObjectProperty<Boolean> getShowEventFieldProperty() {
+        return showEventFieldProperty;
+    }
+
+    public ObjectProperty<Boolean> getShowEventButtonProperty() {
+        return showEventButtonProperty;
+    }
+
+    public StringProperty getEventTextProperty() {
+        return eventTextProperty;
+    }
+
     public StringProperty getErrorProperty() {
         return errorProperty;
     }
@@ -117,6 +135,14 @@ public class CatalogViewModel implements LocalListener<String, Object> {
 
     public ObjectProperty<Boolean> getShowNotificationProperty() {
         return showNotificationProperty;
+    }
+
+    public ObjectProperty<Boolean> getShowEventProperty() {
+        return showEventProperty;
+    }
+
+    public String getNewEventText() {
+        return newEventText;
     }
 
     public void setSelectedCatalogProductProperty(ProductViewModel productViewModel) {
@@ -143,8 +169,16 @@ public class CatalogViewModel implements LocalListener<String, Object> {
         }
     }
 
+    public void sendNotification() {
+        try {
+            model.sendEventNotification(eventTextProperty.getValue());
+            eventTextProperty.set("");
+        } catch (Exception e) {
+            errorProperty.set("Could not send notification at this time. Try later.");
+        }
+    }
+
     public boolean deauthenticate() {
-        wasAuthenticatedUserQueried = false;
         return model.deauthenticate();
     }
 
@@ -153,8 +187,31 @@ public class CatalogViewModel implements LocalListener<String, Object> {
         Platform.runLater(() -> {
             switch (event.getPropertyName()) {
                 case "newProduct" : {
-                    newNotificationProduct = new ProductViewModel((Product) event.getValue2());
-                    showNotificationProperty.set(true);
+                    if (event.getValue1().isEmpty()) {
+                        newNotificationProduct = new ProductViewModel((Product) event.getValue2());
+                        showNotificationProperty.set(true);
+                    }
+                    catalogTable.add(new ProductViewModel((Product) event.getValue2()));
+                    break;
+                }
+                case "replacedProduct" : {
+                    ProductViewModel replacedProduct = new ProductViewModel((Product) event.getValue2());
+                    for (ProductViewModel product : catalogTable) if (replacedProduct.equals(product)) {
+                        product.getQuantityProperty().set(replacedProduct.getQuantityProperty().getValue());
+                        product.getNameProperty().set(replacedProduct.getNameProperty().getValue());
+                        product.getDescriptionProperty().set(replacedProduct.getDescriptionProperty().getValue());
+                        product.getPriceProperty().set(replacedProduct.getPriceProperty().getValue());
+                        return;
+                    }
+                    break;
+                }
+                case "deletedProduct" : {
+                    catalogTable.remove(new ProductViewModel((Product) event.getValue2()));
+                    break;
+                }
+                case "newEvent" : {
+                    newEventText = event.getValue1();
+                    showEventProperty.set(true);
                     break;
                 }
             }
