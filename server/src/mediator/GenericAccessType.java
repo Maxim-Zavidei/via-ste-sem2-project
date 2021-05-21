@@ -116,11 +116,6 @@ public abstract class GenericAccessType implements RemoteServerInterface, LocalL
 
     @Override
     public void propertyChange(ObserverEvent<String, Object> event) {
-        switch (event.getPropertyName()) {
-            case "newProduct" : {
-                if (!email.equals(event.getValue1())) property.firePropertyChange("newProduct", "", event.getValue2());
-                break;
-            }
-        }
+        property.firePropertyChange(event.getPropertyName(), event.getValue1(), event.getValue2());
     }
 }
