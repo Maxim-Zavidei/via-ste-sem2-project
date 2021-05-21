@@ -15,9 +15,8 @@ public class ViewModelFactory {
     private BasketViewModel basketViewModel;
 
     // Product management view models.
-    private ManageProductsViewModel manageProductsViewModel;
-    private AddProductPopUpViewModel addProductPopUpViewModel;
-    private EditProductPopUpViewModel editProductPopUpViewModel;
+    private ProductManagementViewModel productManagementViewModel;
+    private ProductEditingViewModel productEditingViewModel;
 
     // User management view models.
     private UserViewModel userViewModel;
@@ -30,9 +29,8 @@ public class ViewModelFactory {
         this.basketViewModel = new BasketViewModel(model);
 
         ProductManagementViewState productManagementViewState = new ProductManagementViewState();
-        this.manageProductsViewModel = new ManageProductsViewModel(model, productManagementViewState);
-        this.addProductPopUpViewModel = new AddProductPopUpViewModel(model);
-        this.editProductPopUpViewModel = new EditProductPopUpViewModel(model, productManagementViewState);
+        this.productManagementViewModel = new ProductManagementViewModel(model, productManagementViewState);
+        this.productEditingViewModel = new ProductEditingViewModel(model, productManagementViewState);
 
         UserManagementViewState userManagementViewState = new UserManagementViewState();
         this.userViewModel = new UserViewModel(model, userManagementViewState);
@@ -55,16 +53,12 @@ public class ViewModelFactory {
         return basketViewModel;
     }
 
-    public ManageProductsViewModel getManageProductsViewModel() {
-        return manageProductsViewModel;
+    public ProductManagementViewModel getProductManagementViewModel() {
+        return productManagementViewModel;
     }
 
-    public AddProductPopUpViewModel getAddProductPopUpViewModel() {
-        return addProductPopUpViewModel;
-    }
-
-    public EditProductPopUpViewModel getEditProductPopUpViewModel() {
-        return editProductPopUpViewModel;
+    public ProductEditingViewModel getProductEditingViewModel() {
+        return productEditingViewModel;
     }
 
     public UserViewModel getUserViewModel() {
