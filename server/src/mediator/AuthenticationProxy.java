@@ -18,12 +18,10 @@ import java.util.ArrayList;
 public class AuthenticationProxy implements RemoteServerInterface {
 
     private Model model;
-    private UserList cache;
     private BidirectionalHashMap<RemoteClientInterface, GenericAccessType> authenticatedInstances;
 
     public AuthenticationProxy(Model model) throws InstantiationException {
         this.model = model;
-        cache = model.getAllRegisteredUsers();
         authenticatedInstances = new BidirectionalHashMap<>();
         try {
             UnicastRemoteObject.exportObject(this, 0);
@@ -49,7 +47,7 @@ public class AuthenticationProxy implements RemoteServerInterface {
         if (email == null || email.isEmpty()) throw new IllegalArgumentException("Email value can't be null or empty.");
         if (password == null || password.isEmpty()) throw new IllegalArgumentException("Password value can't be null or empty.");
         // Check if such a user is registered in the system.
-        User tmp = cache.getUser(email);
+        User tmp = model.getAllRegisteredUsers().getUser(email);
         if (tmp == null || !tmp.getPassword().equals(password)) throw new IllegalArgumentException("Invalid email or password.");
         // Checks if the given user is already logged in.
         GenericAccessType toReturn;
@@ -75,7 +73,6 @@ public class AuthenticationProxy implements RemoteServerInterface {
     @Override
     public void register(String email, String password, String firstName, String lastName, LocalDate birthday, char gender) throws RemoteException {
         model.register(email, password, firstName, lastName, birthday, gender);
-        cache = model.getAllRegisteredUsers();
     }
 
     @Override
