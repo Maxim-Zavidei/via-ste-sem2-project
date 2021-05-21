@@ -1,28 +1,29 @@
 package view;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.util.StringConverter;
-import viewmodel.AddProductPopUpViewModel;
-import viewmodel.EditProductPopUpViewModel;
+import viewmodel.ProductEditingViewModel;
 
-public class EditProductPopUpViewController extends ViewController {
+public class ProductEditingViewController extends ViewController {
 
     private ViewHandler viewHandler;
-    private EditProductPopUpViewModel viewModel;
+    private ProductEditingViewModel viewModel;
 
     @FXML public Label errorLabel;
     @FXML public TextField quantityField;
     @FXML public TextField nameField;
     @FXML public TextArea descriptionField;
     @FXML public TextField priceField;
+    @FXML private Button manageButton;
 
     @Override
     protected void init() {
         this.viewHandler = getViewHandler();
-        this.viewModel = getViewModelFactory().getEditProductPopUpViewModel();
+        this.viewModel = getViewModelFactory().getProductEditingViewModel();
 
         errorLabel.textProperty().bind(viewModel.getErrorProperty());
         quantityField.textProperty().bindBidirectional(viewModel.getQuantityProperty(), new StringConverter<>() {
@@ -33,7 +34,7 @@ public class EditProductPopUpViewController extends ViewController {
 
             @Override
             public Integer fromString(String s) {
-                return viewModel.checkerInteger(s);
+                return viewModel.quantityChecker(s);
             }
         });
         nameField.textProperty().bindBidirectional(viewModel.getNameProperty());
@@ -46,10 +47,10 @@ public class EditProductPopUpViewController extends ViewController {
 
             @Override
             public Double fromString(String s) {
-                return viewModel.checkerDouble(s);
+                return viewModel.priceChecker(s);
             }
         });
-
+        manageButton.textProperty().bind(viewModel.getManageButtonTitleProperty());
     }
 
     @Override
@@ -57,19 +58,19 @@ public class EditProductPopUpViewController extends ViewController {
         viewModel.reset();
     }
 
-    public void editProduct() {
+    public void manageProduct() {
         try {
             if (viewModel.editProduct()) viewHandler.openView(View.MANAGEPRODUCTS);
         } catch (Exception e) {
-            errorLabel.textProperty().set(e.getMessage());
+            viewModel.getErrorProperty().set("Could not manage the product at this time. Try later.");
         }
     }
 
-    public void cancelAddProduct() {
+    public void cancel() {
         try {
             viewHandler.openView(View.MANAGEPRODUCTS);
         } catch (Exception e) {
-            errorLabel.textProperty().set(e.getMessage());
+            viewModel.getErrorProperty().set("Could not cancel at this time. Try later.");
         }
     }
 }
