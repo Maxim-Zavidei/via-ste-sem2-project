@@ -16,7 +16,9 @@ public class EmployeeAuthenticated extends GenericAccessType {
     @Override
     protected String[] getChangesToListenFor() {
         return new String[] {
-                "newProduct"
+                "newProduct",
+                "replacedProduct",
+                "deletedProduct"
         };
     }
 
