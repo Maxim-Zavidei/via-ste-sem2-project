@@ -159,6 +159,11 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public void sendEventNotification(String eventText) throws Exception {
+        client.sendEventNotification(eventText);
+    }
+
+    @Override
     public void propertyChange(ObserverEvent<String, Object> event) {
         property.firePropertyChange(event.getPropertyName(), event.getValue1(), event.getValue2());
     }

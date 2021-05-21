@@ -132,6 +132,11 @@ public class Client implements ClientTarget, RemoteClientInterface {
     }
 
     @Override
+    public void sendEventNotification(String eventText) throws Exception {
+        server.sendEventNotification(eventText);
+    }
+
+    @Override
     public void propertyChange(ObserverEvent<String, Object> event) throws RemoteException {
         property.firePropertyChange(event.getPropertyName(), event.getValue1(), event.getValue2());
     }

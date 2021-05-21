@@ -59,4 +59,9 @@ public class EmployeeAuthenticated extends GenericAccessType {
     @Override public void updateUser(String email, User user) throws RemoteException {
         getModel().updateUser(email, user);
     }
+
+    @Override
+    public void sendEventNotification(String eventText) throws RemoteException {
+        getModel().sendEventNotification(eventText);
+    }
 }

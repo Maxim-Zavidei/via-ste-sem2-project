@@ -18,7 +18,8 @@ public class CustomerAuthenticated extends GenericAccessType {
         return new String[] {
                 "newProduct",
                 "replacedProduct",
-                "deletedProduct"
+                "deletedProduct",
+                "newEvent"
         };
     }
 
@@ -64,5 +65,10 @@ public class CustomerAuthenticated extends GenericAccessType {
         throws RemoteException
     {
         throw new IllegalStateException("Only an employee is allowed to add new customers");
+    }
+
+    @Override
+    public void sendEventNotification(String eventText) throws RemoteException {
+        throw new IllegalStateException("Only an employee is allowed to perform this request.");
     }
 }

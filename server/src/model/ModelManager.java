@@ -20,19 +20,6 @@ public class ModelManager implements Model {
         userDAO = UserDAOImpl.getInstance();
         orderDAO = OrderDAOImpl.getInstance();
         property = new PropertyChangeHandler<>(this);
-
-        // Dummy data users.
- //       userDAO.create(new Customer("bob@gmail.com", "Aaaa1234", "Bob", "Bob", new DateTime(2, 3, 2001), 'M'));
-//        userDAO.create(new Customer("george@gmail.com", "Aaaa5678", "George", "George", new DateTime(4, 2, 2001), 'M'));
-//        userDAO.create(new Employee("steve@gmail.com", "Aaaa9876", "Steve", "Steve", new DateTime(26, 8, 2001), 'M'));
-//       userDAO.create(new Employee("katy@gmail.com", "Aaaa123456", "Katy", "Katy", new DateTime(6, 1, 2001), 'F'));
-
-        // Dummy data products.
-//       productDAO.create(3, "Baklava", "Baklava is very tasty", 2.5);
-//        productDAO.create(4, "Pain au Chocolate", "nice", 5);
-//        productDAO.create(1, "Golden Apple", "extra nice", 7.41);
-//        productDAO.create(3, "Sugar Bombs", "niche", 3.22);
-//        productDAO.create(7, "2 kg of Sweets", "niche extra", 1);
     }
 
     @Override
@@ -208,5 +195,10 @@ public class ModelManager implements Model {
         } catch (SQLException e) {
             throw new IllegalStateException("Server is unavailable at the moment. Try Later.");
         }
+    }
+
+    @Override
+    public void sendEventNotification(String eventText) {
+        property.firePropertyChange("newEvent", eventText, null);
     }
 }
