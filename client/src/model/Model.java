@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 public interface Model extends LocalSubject<String, Object>, LocalListener<String, Object> {
     void stop();
+    boolean wasDataQueriedFor(String viewModel);
     void authenticate(String email, String password) throws Exception;
     boolean deauthenticate();
     void register(String email, String password, String firstName, String lastName, LocalDate birthday, char gender) throws Exception;

@@ -8,12 +8,15 @@ import mediator.Client;
 import mediator.ClientTarget;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ModelManager implements Model {
 
     private PropertyChangeHandler<String, Object> property;
     private ClientTarget client;
     private ProductList basket;
+    private Map<String, Boolean> wasDataQueriedFor;
 
     public ModelManager() throws Exception {
         try {
@@ -22,6 +25,7 @@ public class ModelManager implements Model {
             throw new Exception("Could not reach the server.");
         }
         basket = new ProductList();
+        wasDataQueriedFor = new HashMap<>();
         property = new PropertyChangeHandler<>(this);
         client.addListener(this);
     }
@@ -42,6 +46,14 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public boolean wasDataQueriedFor(String viewModel) {
+        Boolean toReturn = wasDataQueriedFor.get(viewModel);
+        if (toReturn == null) toReturn = false;
+        if (!toReturn) wasDataQueriedFor.put(viewModel, true);
+        return toReturn;
+    }
+
+    @Override
     public void authenticate(String email, String password) throws Exception {
         client.authenticate(email, password);
     }
@@ -49,7 +61,10 @@ public class ModelManager implements Model {
     @Override
     public boolean deauthenticate() {
         boolean toReturn = client.deauthenticate();
-        if (toReturn) basket.clear();
+        if (toReturn) {
+            wasDataQueriedFor.clear();
+            basket.clear();
+        }
         return toReturn;
     }
 
