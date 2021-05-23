@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -16,7 +17,8 @@ class OrderDAOImplTest {
     HashMap<Product, Integer> pr = new HashMap<>();
     DateTime dateTime = new DateTime();
     Customer c = new Customer("bob@gmail.com", "Aaaa1234", "Bob", "Bob", new DateTime(2, 3, 2001), 'M');
-    String str = "Order 1 by bob@gmail.com made on 18/05/2021 is pending\nPain -> 6\naBaklava -> 2comments:";
+    String str = "Order 3 by bob@gmail.com made on 18/05/2021 is pending\nPain -> 6\naBaklava -> 2\ncomments:";
+    String str1 = "Order 2 by bob@gmail.com made on 20/05/2021 is pending\ncomment:\nOrder 3 by bob@gmail.com made on 20/05/2021 is pending\nPain Pain au Chocolate -> 6\nBaklava -> 2\ncomment:";
 
     @BeforeEach
     void setUp() {
@@ -40,6 +42,22 @@ class OrderDAOImplTest {
             //userDAO.create(c);
             assertEquals(str, orderDAO.create(pr, dateTime, c, "pending", "").toString());
         } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    @Test
+    void getPendingOrders(){
+        try{
+            orderDAO.create(pr, dateTime, c, "done", "");
+            ArrayList<Order> orders = orderDAO.getPendingOrders();
+            String output = "";
+            for(int i =0; i< orders.size(); i++){
+                output += orders.get(i) + "\n";
+            }
+            assertEquals(str1, output);
+
+        } catch (SQLException throwables){
             throwables.printStackTrace();
         }
     }

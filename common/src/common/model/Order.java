@@ -13,6 +13,14 @@ public class Order implements Serializable {
     private String comment;
 
     /**Constructors*/
+    public Order(String id, HashMap<Product, Integer> products, DateTime date, Customer customer, String status, String comment) {
+        this.id = id;
+        this.products = products;
+        this.customer = customer;
+        this.date = date;
+        this.status = status;
+        this.comment = comment;
+    }
     public Order(String id, HashMap<Product, Integer> products, Customer customer, String status, String comment) {
         this.id = id;
         this.products = products;

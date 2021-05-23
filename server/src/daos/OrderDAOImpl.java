@@ -5,6 +5,8 @@ import common.model.DateTime;
 import common.model.Order;
 import common.model.Product;
 import java.sql.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class OrderDAOImpl implements OrderDAO{
@@ -98,5 +100,43 @@ public class OrderDAOImpl implements OrderDAO{
             }
         }
 
+    }
+
+    @Override
+    public ArrayList<Order> getPendingOrders() throws SQLException {
+        try(Connection connection = getConnection()){
+            PreparedStatement statement =
+                    connection.prepareStatement("SELECT * FROM \"order\" WHERE status = ?");
+            statement.setString(1, "pending");
+            ResultSet orderSet = statement.executeQuery();
+            ArrayList<Order> orderList = new ArrayList<>();
+            while (orderSet.next()){
+                String orderid = String.valueOf(orderSet.getInt("id"));
+                LocalDate d = orderSet.getDate("date").toLocalDate();
+                DateTime date = new DateTime(d.getDayOfMonth(), d.getMonthValue(),d.getYear());
+                String email = orderSet.getString("email");
+                String comment = orderSet.getString("coment");
+                statement =
+                        connection.prepareStatement(
+                                "SELECT productorder.quantity, product.id, product.name, product.description, product.quantity AS available, product.price " +
+                                        "FROM productorder " +
+                                        "INNER JOIN product on productorder.productid = product.id " +
+                                        "WHERE productorder.orderid = ?;");
+                statement.setInt(1,orderSet.getInt("id"));
+                ResultSet productsSet = statement.executeQuery();
+                HashMap<Product, Integer> products = new HashMap<>();
+                while(productsSet.next()){
+                    String productid = String.valueOf(productsSet.getInt("id"));
+                    String name = productsSet.getString("name");
+                    String description = productsSet.getString("description");
+                    int quantity = productsSet.getInt("quantity");
+                    double price = productsSet.getDouble("price");
+                    int available = productsSet.getInt("available");
+                    products.put(new Product(productid, available, name, description, price), quantity);
+                }
+                orderList.add(new Order(orderid, products, date,(Customer) UserDAOImpl.getInstance().readByEmail(email), "pending", comment));
+            }
+            return orderList;
+        }
     }
 }
