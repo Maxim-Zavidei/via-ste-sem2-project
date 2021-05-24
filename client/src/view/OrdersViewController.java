@@ -5,6 +5,7 @@ import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import viewmodel.OrdersDetailedView;
 import viewmodel.OrdersView;
 import viewmodel.OrdersViewModel;
 
@@ -32,11 +33,11 @@ public class OrdersViewController extends ViewController {
     // FXML instance variables of order detailed table.
     // not pronto
     @FXML
-    private TableView orderDetailedTable;
+    private TableView<OrdersDetailedView> orderDetailedTable;
     @FXML
-    private TableColumn orderDetailedQuantityColumn;
+    private TableColumn<OrdersDetailedView,String > orderDetailedQuantityColumn;
     @FXML
-    private TableColumn orderDetailedNameColumn;
+    private TableColumn<OrdersDetailedView,String> orderDetailedNameColumn;
 
     // The rest FXML instance variables of the view.
     @FXML
@@ -68,10 +69,9 @@ public class OrdersViewController extends ViewController {
         orderTable.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> viewModel.setSelectedOrderProperty(newVal));
 
         // Bindings for the order detailed table.
-        //+*+*+*
-        //*+*+*+*
-        //+*+*+*+*
-        //*+*+*+*+*
+        orderDetailedQuantityColumn.setCellValueFactory(cellData -> cellData.getValue().getQuantityProperty());
+        orderDetailedNameColumn.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
+        orderDetailedTable.setItems(viewModel.getOrderDetailedTable());
 
         // Bindings for the rest of the user interface elements.
         usernameLabel.textProperty().bind(viewModel.getUsernameProperty());

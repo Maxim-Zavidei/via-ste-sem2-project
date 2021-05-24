@@ -71,7 +71,7 @@ public class CustomerAuthenticated extends GenericAccessType {
 
     @Override
     public ArrayList<Order> getAllOrders() throws RemoteException {
-        throw new IllegalStateException("Only an employee is allowed to add new customers");    }
+        throw new IllegalStateException("Only an employee is allowed to change this, for now, but look into it");    }
 
     @Override
     public void sendEventNotification(String eventText) throws RemoteException {

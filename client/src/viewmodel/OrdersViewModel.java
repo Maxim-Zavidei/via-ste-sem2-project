@@ -1,5 +1,7 @@
 package viewmodel;
 
+import common.model.Order;
+import common.model.Product;
 import common.model.User;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -8,6 +10,9 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Model;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class OrdersViewModel {
 
@@ -18,7 +23,7 @@ public class OrdersViewModel {
     private ObjectProperty<OrdersView> selectedOrderProperty;
 
     // Instance variables for storing the products of the orders, i.e. order detailed table.
-    //private ObservableList<> orderDetailedTable;
+    private ObservableList<OrdersDetailedView> orderDetailedTable;
 
     // Instance variables for linking and storing the other elements of the user interface.
     private StringProperty usernameProperty;
@@ -37,7 +42,7 @@ public class OrdersViewModel {
         selectedOrderProperty = new SimpleObjectProperty<>();
 
         //to figure out how to represent the products when selecting an order from order table
-        //orderDetailedTable = FXCollections.observableArrayList();
+        orderDetailedTable = FXCollections.observableArrayList();
 
 
         // Initialize the instance variables responsible for storing data of the other ui elements.
@@ -63,6 +68,16 @@ public class OrdersViewModel {
             orderTable.clear();
             try {
                 model.getAllOrders().forEach(order -> orderTable.add(new OrdersView(order)));
+                ArrayList<Order> orders = model.getAllOrders();
+
+                for (int i = 0; i <= orders.size(); i++){
+
+                        for (HashMap.Entry<Product,Integer> entry : orders.get(i).getProducts().entrySet()) {
+                            orderDetailedTable.add(new OrdersDetailedView(entry.getKey(),entry.getValue()));
+                        }
+
+
+                }
             } catch (Exception e) {
                 errorProperty.set(e.getMessage());
             }
@@ -88,6 +103,10 @@ public class OrdersViewModel {
 
     public ObservableList<OrdersView> getOrderTable() {
         return orderTable;
+    }
+
+    public ObservableList<OrdersDetailedView> getOrderDetailedTable() {
+        return orderDetailedTable;
     }
 
     public ObjectProperty<OrdersView> getSelectedOrderProperty() {
