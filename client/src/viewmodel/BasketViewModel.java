@@ -7,6 +7,8 @@ import common.model.User;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableMap;
+import javafx.fxml.FXML;
+import javafx.scene.control.TextArea;
 import model.Model;
 
 import java.util.HashMap;
@@ -29,6 +31,7 @@ public class BasketViewModel {
     private IntegerProperty discountProperty;
     private StringProperty inputCouponProperty;
     private StringProperty finalPriceProperty;
+    private StringProperty inputCommentField;
 
     // Other helper instance variables.
     private boolean wasAuthenticatedUserQueried;
@@ -49,6 +52,7 @@ public class BasketViewModel {
         discountProperty = new SimpleIntegerProperty(0);
         inputCouponProperty = new SimpleStringProperty("");
         finalPriceProperty = new SimpleStringProperty("0.00");
+        inputCommentField = new SimpleStringProperty();
 
         // Initialize the rest of the instance variables.
         wasAuthenticatedUserQueried = false;
@@ -120,6 +124,10 @@ public class BasketViewModel {
         return finalPriceProperty;
     }
 
+    public StringProperty getInputCommentFieldProperty() {
+        return inputCommentField;
+    }
+
     public void setSelectedBasketProductProperty(ProductViewModel productViewModel) {
         selectedBasketProductProperty.set(productViewModel);
     }
@@ -128,6 +136,7 @@ public class BasketViewModel {
         selectedBasketProductProperty.set(null);
         model.clearBasket();
         basketMap.clear();
+        inputCommentField.setValue("");
         updatePrices();
     }
 
@@ -166,7 +175,7 @@ public class BasketViewModel {
         for (HashMap.Entry<String,ProductViewModel> entry : basketMap.entrySet())
             products.put(new Product(entry.getValue().getIdProperty().get(),entry.getValue().getQuantityProperty().get(), entry.getValue().getNameProperty().get(), entry.getValue().getDescriptionProperty().get(), entry.getValue().getPriceProperty().get()), entry.getValue().getQuantityProperty().get());
         try {
-            model.placeOrder(new Order(products, (Customer) model.getAuthenticatedUser()));
+            model.placeOrder(new Order(products, (Customer) model.getAuthenticatedUser(), inputCommentField.get()));
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -104,16 +104,16 @@ public class OrderDAOImpl implements OrderDAO{
 
     @Override
     public ArrayList<Order> getPendingOrders() throws SQLException {
-        try(Connection connection = getConnection()){
+        try (Connection connection = getConnection()) {
             PreparedStatement statement =
                     connection.prepareStatement("SELECT * FROM \"order\" WHERE status = ?");
             statement.setString(1, "pending");
             ResultSet orderSet = statement.executeQuery();
             ArrayList<Order> orderList = new ArrayList<>();
-            while (orderSet.next()){
+            while (orderSet.next()) {
                 String orderid = String.valueOf(orderSet.getInt("id"));
                 LocalDate d = orderSet.getDate("date").toLocalDate();
-                DateTime date = new DateTime(d.getDayOfMonth(), d.getMonthValue(),d.getYear());
+                DateTime date = new DateTime(d.getDayOfMonth(), d.getMonthValue(), d.getYear());
                 String email = orderSet.getString("email");
                 String comment = orderSet.getString("coment");
                 statement =
@@ -122,10 +122,10 @@ public class OrderDAOImpl implements OrderDAO{
                                         "FROM productorder " +
                                         "INNER JOIN product on productorder.productid = product.id " +
                                         "WHERE productorder.orderid = ?;");
-                statement.setInt(1,orderSet.getInt("id"));
+                statement.setInt(1, orderSet.getInt("id"));
                 ResultSet productsSet = statement.executeQuery();
                 HashMap<Product, Integer> products = new HashMap<>();
-                while(productsSet.next()){
+                while (productsSet.next()) {
                     String productid = String.valueOf(productsSet.getInt("id"));
                     String name = productsSet.getString("name");
                     String description = productsSet.getString("description");
@@ -134,9 +134,46 @@ public class OrderDAOImpl implements OrderDAO{
                     int available = productsSet.getInt("available");
                     products.put(new Product(productid, available, name, description, price), quantity);
                 }
-                orderList.add(new Order(orderid, products, date,(Customer) UserDAOImpl.getInstance().readByEmail(email), "pending", comment));
+                orderList.add(new Order(orderid, products, date, (Customer) UserDAOImpl.getInstance().readByEmail(email), "pending", comment));
             }
             return orderList;
         }
+    }
+        @Override
+        public ArrayList<Order> getAllOrders() throws SQLException {
+            try(Connection connection = getConnection()){
+                PreparedStatement statement =
+                        connection.prepareStatement("SELECT * FROM \"order\"");
+                ResultSet orderSet = statement.executeQuery();
+                ArrayList<Order> orderList = new ArrayList<>();
+                while (orderSet.next()){
+                    String orderid = String.valueOf(orderSet.getInt("id"));
+                    LocalDate d = orderSet.getDate("date").toLocalDate();
+                    DateTime date = new DateTime(d.getDayOfMonth(), d.getMonthValue(),d.getYear());
+                    String email = orderSet.getString("email");
+                    String comment = orderSet.getString("coment");
+                    String status = orderSet.getString("status");
+                    statement =
+                            connection.prepareStatement(
+                                    "SELECT productorder.quantity, product.id, product.name, product.description, product.quantity AS available, product.price " +
+                                            "FROM productorder " +
+                                            "INNER JOIN product on productorder.productid = product.id " +
+                                            "WHERE productorder.orderid = ?;");
+                    statement.setInt(1,orderSet.getInt("id"));
+                    ResultSet productsSet = statement.executeQuery();
+                    HashMap<Product, Integer> products = new HashMap<>();
+                    while(productsSet.next()){
+                        String productid = String.valueOf(productsSet.getInt("id"));
+                        String name = productsSet.getString("name");
+                        String description = productsSet.getString("description");
+                        int quantity = productsSet.getInt("quantity");
+                        double price = productsSet.getDouble("price");
+                        int available = productsSet.getInt("available");
+                        products.put(new Product(productid, available, name, description, price), quantity);
+                    }
+                    orderList.add(new Order(orderid, products, date,(Customer) UserDAOImpl.getInstance().readByEmail(email), status, comment));
+                }
+                return orderList;
+            }
     }
 }

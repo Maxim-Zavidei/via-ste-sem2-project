@@ -15,4 +15,5 @@ public interface OrderDAO extends DAO {
     void delete(Order order) throws SQLException;
     void addToProductOrder(HashMap<Product, Integer> products, String orderId) throws SQLException;
     ArrayList<Order> getPendingOrders() throws SQLException;
+    ArrayList<Order> getAllOrders() throws SQLException;
 }

@@ -32,6 +32,7 @@ public class BasketViewController extends ViewController {
     @FXML private Label discountLabel;
     @FXML private TextField inputCouponField;
     @FXML private Label finalPriceLabel;
+    @FXML private TextArea inputCommentField;
 
     @Override
     protected void init() {
@@ -82,6 +83,7 @@ public class BasketViewController extends ViewController {
         Bindings.bindBidirectional(discountLabel.textProperty(), viewModel.getDiscountProperty(), new IntegerToString());
         Bindings.bindBidirectional(inputCouponField.textProperty(), viewModel.getInputCouponProperty());
         finalPriceLabel.textProperty().bind(viewModel.getFinalPriceProperty());
+        inputCommentField.textProperty().bindBidirectional(viewModel.getInputCommentFieldProperty());
     }
 
     public void reset() {

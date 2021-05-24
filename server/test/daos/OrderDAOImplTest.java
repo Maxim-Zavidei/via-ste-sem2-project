@@ -63,6 +63,22 @@ class OrderDAOImplTest {
     }
 
     @Test
+    void getAllOrders(){
+        try{
+           // orderDAO.create(pr, dateTime, c, "done", "");
+            ArrayList<Order> orders = orderDAO.getAllOrders();
+            String output = "";
+            for(int i =0; i< orders.size(); i++){
+                output += orders.get(i) + "\n";
+            }
+            assertEquals(str1, output);
+
+        } catch (SQLException throwables){
+            throwables.printStackTrace();
+        }
+    }
+
+    @Test
     void update() {
     }
 
