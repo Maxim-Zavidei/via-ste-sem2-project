@@ -132,6 +132,11 @@ public class Client implements ClientTarget, RemoteClientInterface {
     }
 
     @Override
+    public ArrayList<Order> getAllOrders() throws Exception {
+        return server.getAllOrders();
+    }
+
+    @Override
     public void sendEventNotification(String eventText) throws Exception {
         server.sendEventNotification(eventText);
     }

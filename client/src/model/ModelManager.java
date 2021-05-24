@@ -159,6 +159,12 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public ArrayList<Order> getAllOrders() throws Exception {
+        return client.getAllOrders();
+    }
+
+
+    @Override
     public void sendEventNotification(String eventText) throws Exception {
         client.sendEventNotification(eventText);
     }

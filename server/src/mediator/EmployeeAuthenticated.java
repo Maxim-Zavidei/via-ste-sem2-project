@@ -1,11 +1,13 @@
 package mediator;
 
+import common.model.Order;
 import common.model.Product;
 import common.model.User;
 import common.model.UserList;
 import model.Model;
 import java.rmi.RemoteException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class EmployeeAuthenticated extends GenericAccessType {
 
@@ -58,6 +60,11 @@ public class EmployeeAuthenticated extends GenericAccessType {
 
     @Override public void updateUser(String email, User user) throws RemoteException {
         getModel().updateUser(email, user);
+    }
+
+    @Override
+    public ArrayList<Order> getAllOrders() throws RemoteException {
+        return getModel().getAllOrders();
     }
 
     @Override

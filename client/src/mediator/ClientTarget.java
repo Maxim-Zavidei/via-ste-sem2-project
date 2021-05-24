@@ -25,5 +25,6 @@ public interface ClientTarget extends LocalSubject<String, Object> {
     void updateProduct(Product product) throws Exception;
     void removeProduct(Product product) throws Exception;
     void placeOrder(Order order) throws Exception;
+    ArrayList<Order> getAllOrders() throws Exception;
     void sendEventNotification(String eventText) throws Exception;
 }

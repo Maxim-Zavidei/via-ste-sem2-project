@@ -1,11 +1,13 @@
 package mediator;
 
+import common.model.Order;
 import common.model.Product;
 import common.model.User;
 import common.model.UserList;
 import model.Model;
 import java.rmi.RemoteException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class CustomerAuthenticated extends GenericAccessType {
 
@@ -66,6 +68,10 @@ public class CustomerAuthenticated extends GenericAccessType {
     {
         throw new IllegalStateException("Only an employee is allowed to add new customers");
     }
+
+    @Override
+    public ArrayList<Order> getAllOrders() throws RemoteException {
+        throw new IllegalStateException("Only an employee is allowed to add new customers");    }
 
     @Override
     public void sendEventNotification(String eventText) throws RemoteException {
