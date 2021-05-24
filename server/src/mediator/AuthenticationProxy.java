@@ -136,6 +136,10 @@ public class AuthenticationProxy implements RemoteServerInterface {
     }
 
     @Override
+    public ArrayList<Order> getAllOrders() throws RemoteException {
+        throw new IllegalStateException("Authenticate in order to perform this request.");    }
+
+    @Override
     public void sendEventNotification(String eventText) throws RemoteException {
         throw new IllegalStateException("Authenticate in order to perform this request.");
     }
