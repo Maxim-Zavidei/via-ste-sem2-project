@@ -22,6 +22,9 @@ public class ViewModelFactory {
     private UserViewModel userViewModel;
     private UserManageViewModel userManageViewModel;
 
+    //Order management view model
+    private OrdersViewModel ordersViewModel;
+
     public ViewModelFactory(Model model) {
         this.authenticationViewModel = new AuthenticationViewModel(model);
         this.registrationViewModel = new RegistrationViewModel(model);
@@ -35,6 +38,8 @@ public class ViewModelFactory {
         UserManagementViewState userManagementViewState = new UserManagementViewState();
         this.userViewModel = new UserViewModel(model, userManagementViewState);
         this.userManageViewModel = new UserManageViewModel(model, userManagementViewState);
+
+        this.ordersViewModel = new OrdersViewModel(model);
     }
 
     public AuthenticationViewModel getAuthenticationViewModel() {
@@ -67,5 +72,9 @@ public class ViewModelFactory {
 
     public UserManageViewModel getUserManageViewModel() {
         return userManageViewModel;
+    }
+
+    public OrdersViewModel getOrdersViewModel() {
+        return ordersViewModel;
     }
 }
