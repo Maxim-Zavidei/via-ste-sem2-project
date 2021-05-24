@@ -68,16 +68,7 @@ public class OrdersViewModel {
             orderTable.clear();
             try {
                 model.getAllOrders().forEach(order -> orderTable.add(new OrdersView(order)));
-                ArrayList<Order> orders = model.getAllOrders();
 
-                for (int i = 0; i <= orders.size(); i++){
-
-                        for (HashMap.Entry<Product,Integer> entry : orders.get(i).getProducts().entrySet()) {
-                            orderDetailedTable.add(new OrdersDetailedView(entry.getKey(),entry.getValue()));
-                        }
-
-
-                }
             } catch (Exception e) {
                 errorProperty.set(e.getMessage());
             }
@@ -97,6 +88,8 @@ public class OrdersViewModel {
             int tmp = model.getAllProductsInBasket().size();
             basketButtonTitleProperty.set(tmp == 0 ? "Basket" : "Basket (" + tmp + ")");
         }
+
+
 
     }
 
@@ -141,6 +134,27 @@ public class OrdersViewModel {
 
     public void setSelectedOrderProperty(OrdersView orderProperty) {
         selectedOrderProperty.set(orderProperty);
+
+
+    }
+
+    public void setOrderDetailedTableProducts(){
+        orderDetailedTable.clear();
+        try {
+            ArrayList<Order> orders = model.getAllOrders();
+
+
+            for (int i = 0; i < orders.size(); i++){
+                if (orders.get(i).getId().equals(selectedOrderProperty.getValue().getId().getValue())){
+                System.out.println(orders.get(i).getId()+"   "+selectedOrderProperty.getValue().getId());
+                    for (HashMap.Entry<Product,Integer> entry : orders.get(i).getProducts().entrySet()) {
+                        orderDetailedTable.add(new OrdersDetailedView(entry.getKey(),entry.getValue()));
+                    }
+                }
+            }
+        }catch (Exception e){
+            errorProperty.set(e.getMessage());
+        }
 
     }
 

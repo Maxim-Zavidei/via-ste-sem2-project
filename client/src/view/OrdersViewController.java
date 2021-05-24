@@ -35,9 +35,9 @@ public class OrdersViewController extends ViewController {
     @FXML
     private TableView<OrdersDetailedView> orderDetailedTable;
     @FXML
-    private TableColumn<OrdersDetailedView,String > orderDetailedQuantityColumn;
+    private TableColumn<OrdersDetailedView, String> orderDetailedQuantityColumn;
     @FXML
-    private TableColumn<OrdersDetailedView,String> orderDetailedNameColumn;
+    private TableColumn<OrdersDetailedView, String> orderDetailedNameColumn;
 
     // The rest FXML instance variables of the view.
     @FXML
@@ -66,7 +66,11 @@ public class OrdersViewController extends ViewController {
         orderCommentColumn.setCellValueFactory(cellData -> cellData.getValue().getComment());
         orderStatusColumn.setCellValueFactory(cellData -> cellData.getValue().getStatus());
         orderTable.setItems(viewModel.getOrderTable());
-        orderTable.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> viewModel.setSelectedOrderProperty(newVal));
+        orderTable.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) ->
+        {
+            viewModel.setSelectedOrderProperty(newVal);
+            viewModel.setOrderDetailedTableProducts();
+        });
 
         // Bindings for the order detailed table.
         orderDetailedQuantityColumn.setCellValueFactory(cellData -> cellData.getValue().getQuantityProperty());
@@ -127,6 +131,7 @@ public class OrdersViewController extends ViewController {
             viewModel.getErrorProperty().set("Can not view the catalog at this time. Try later.");
         }
     }
+
     @FXML
     private void deauthenticate() {
         if (!viewModel.deauthenticate()) {
