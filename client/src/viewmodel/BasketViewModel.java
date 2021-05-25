@@ -167,17 +167,12 @@ public class BasketViewModel {
     }
 
     public void placeOrder() {
-        // TODO: Needs further development of the system.
-        // Here we are going to create an order object based on the products
-        // based on the products that are stored in model's basket.
-        // The created order object we are gonna send to the server for validation.
-        HashMap<Product, Integer> products = new HashMap<>();
-        for (HashMap.Entry<String,ProductViewModel> entry : basketMap.entrySet())
-            products.put(new Product(entry.getValue().getIdProperty().get(),entry.getValue().getQuantityProperty().get(), entry.getValue().getNameProperty().get(), entry.getValue().getDescriptionProperty().get(), entry.getValue().getPriceProperty().get()), entry.getValue().getQuantityProperty().get());
+        HashMap<Product, Integer> productList = new HashMap<>();
+        model.getAllProductsInBasket().forEach(product -> productList.put(product, product.getQuantity()));
         try {
-            model.placeOrder(new Order(products, (Customer) model.getAuthenticatedUser(), inputCommentField.get()));
+            model.placeOrder(new Order(productList, (Customer) model.getAuthenticatedUser(), inputCommentField.get()));
         } catch (Exception e) {
-            e.printStackTrace();
+            errorProperty.set(e.getMessage());
         }
         clearBasket();
     }

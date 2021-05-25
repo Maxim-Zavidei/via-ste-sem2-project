@@ -4,7 +4,6 @@ import common.model.*;
 import common.utility.observer.listener.GeneralListener;
 import common.utility.observer.subject.PropertyChangeHandler;
 import daos.*;
-
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -21,6 +20,11 @@ public class ModelManager implements Model {
         userDAO = UserDAOImpl.getInstance();
         orderDAO = OrderDAOImpl.getInstance();
         property = new PropertyChangeHandler<>(this);
+
+//        userDAO.create(new Customer("bob@gmail.com", "Aaaa1234", "Bob", "Bob", new DateTime(2, 3, 2001), 'M'));
+//        userDAO.create(new Customer("george@gmail.com", "Aaaa5678", "George", "George", new DateTime(4, 2, 2001), 'M'));
+//        userDAO.create(new Employee("steve@gmail.com", "Aaaa9876", "Steve", "Steve", new DateTime(26, 8, 2001), 'M'));
+//        userDAO.create(new Employee("katy@gmail.com", "Aaaa123456", "Katy", "Katy", new DateTime(6, 1, 2001), 'F'));
     }
 
     @Override
@@ -150,7 +154,7 @@ public class ModelManager implements Model {
             if (toReturn == null) throw new IllegalStateException("No such product could be found.");
             return toReturn;
         } catch (SQLException e) {
-            throw new IllegalStateException("Server is unavailable at the moment. Try Later.");
+            throw new IllegalStateException(e.getMessage());
         }
     }
 
@@ -202,11 +206,26 @@ public class ModelManager implements Model {
 
     @Override
     public void placeOrder(Order order) throws IllegalStateException {
-        // TODO: Just a couple checks here to prevent some system exploits.
+        for (Product product : order.getProducts().keySet()) {
+            int availableQuantity = getProductById(product.getId()).getQuantity();
+            if (product.getQuantity() > availableQuantity) throw new IllegalStateException(product.getName() + " has only " + availableQuantity + " units left.");
+        }
         try {
+            for (Product product : order.getProducts().keySet()) {
+                Product old = getProductById(product.getId());
+                Product toUpdate = new Product(
+                        old.getId(),
+                        old.getQuantity() - product.getQuantity(),
+                        old.getName(),
+                        old.getDescription(),
+                        old.getPrice()
+                );
+                productDAO.update(toUpdate);
+                property.firePropertyChange("replacedProduct", product.getId(), toUpdate);
+            }
             orderDAO.create(order.getProducts(), order.getDate(), order.getCustomer(), order.getStatus(), order.getComment());
         } catch (SQLException e) {
-            throw new IllegalStateException("Server is unavailable at the moment. Try Later.");
+            throw new IllegalStateException(e.getMessage());
         }
     }
 

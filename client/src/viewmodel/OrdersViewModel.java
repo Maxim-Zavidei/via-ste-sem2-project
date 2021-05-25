@@ -53,9 +53,6 @@ public class OrdersViewModel {
         toggleButtonProperty = new SimpleObjectProperty<>(false);
         errorProperty = new SimpleStringProperty("");
 
-
-
-
     }
 
     public void reset() {
