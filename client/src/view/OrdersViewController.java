@@ -5,6 +5,7 @@ import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.effect.ColorAdjust;
 import viewmodel.OrdersDetailedView;
 import viewmodel.OrdersView;
 import viewmodel.OrdersViewModel;
@@ -83,6 +84,7 @@ public class OrdersViewController extends ViewController {
         manageProductsButton.visibleProperty().bind(viewModel.getShowProductManagementButtonProperty());
         manageUsersButton.visibleProperty().bind(viewModel.getShowUserManagementButtonProperty());
         toggleOrderButton.selectedProperty().bindBidirectional(viewModel.getToggleButtonProperty());
+        toggleOrderButton.setText("SHOW PENDING ORDERS");
         errorLabel.textProperty().bind(viewModel.getErrorProperty());
 
 
@@ -147,6 +149,19 @@ public class OrdersViewController extends ViewController {
 
     @FXML
     public void changeOrderTable(ActionEvent actionEvent) {
+        if (toggleOrderButton.isSelected()){
+            toggleOrderButton.setText("SHOW ALL ORDERS");
+            ColorAdjust colorAdjust = new ColorAdjust();
+            colorAdjust.setHue(3);
+            toggleOrderButton.setEffect(colorAdjust);
+
+            orderTable.setItems(viewModel.getOrderPendingTable());
+        }else {
+            toggleOrderButton.setText("SHOW PENDING ORDERS");
+            orderTable.getItems().clear();
+            toggleOrderButton.setEffect(null);
+            orderTable.setItems(viewModel.getOrderTable());
+        }
     }
 
     @FXML

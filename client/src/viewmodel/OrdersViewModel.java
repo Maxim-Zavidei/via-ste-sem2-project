@@ -20,6 +20,7 @@ public class OrdersViewModel {
 
     // Instance variables for storing the orders of the order table.
     private ObservableList<OrdersView> orderTable;
+    private ObservableList<OrdersView> orderPendingTable;
     private ObjectProperty<OrdersView> selectedOrderProperty;
 
     // Instance variables for storing the products of the orders, i.e. order detailed table.
@@ -39,6 +40,7 @@ public class OrdersViewModel {
 
         // Initialize the view model instance variables responsible for storing the data of the tables.
         orderTable = FXCollections.observableArrayList();
+        orderPendingTable = FXCollections.observableArrayList();
         selectedOrderProperty = new SimpleObjectProperty<>();
 
         //to figure out how to represent the products when selecting an order from order table
@@ -96,6 +98,20 @@ public class OrdersViewModel {
 
     public ObservableList<OrdersView> getOrderTable() {
         return orderTable;
+    }
+
+    public ObservableList<OrdersView> getOrderPendingTable() {
+        try {
+            model.getAllOrders().forEach(order -> {
+                if (order.getStatus().equals("pending")) {
+                    orderPendingTable.add(new OrdersView(order));
+                }
+            });
+
+        }catch (Exception e){
+            errorProperty.set(e.getMessage());
+        }
+        return orderPendingTable;
     }
 
     public ObservableList<OrdersDetailedView> getOrderDetailedTable() {
