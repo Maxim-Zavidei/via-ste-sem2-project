@@ -78,7 +78,7 @@ public class CatalogViewController extends ViewController {
 
                 JFXDialogLayout dialogLayout = new JFXDialogLayout();
                 JFXButton button = new JFXButton("Okay");
-                JFXDialog dialog = new JFXDialog(rootPane,dialogLayout,JFXDialog.DialogTransition.CENTER);
+                JFXDialog dialog = new JFXDialog(rootPane,dialogLayout,JFXDialog.DialogTransition.TOP);
                 button.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> dialog.close());
 
                 //unprofessional styling, but it works

@@ -11,6 +11,8 @@ import java.util.Optional;
 
 public class UserViewController extends ViewController
 {
+  @FXML private Label usernameLabel;
+  @FXML private Button basketButton;
   /** FXML */
   @FXML private TableView<UserView> usersTable;
   @FXML private TableColumn<UserView, String> firstNameColumn;
@@ -35,6 +37,10 @@ public class UserViewController extends ViewController
   {
     viewHandler = getViewHandler();
     viewModel = getViewModelFactory().getUserViewModel();
+
+    usernameLabel.textProperty().bind(viewModel.getUsernameProperty());
+    basketButton.textProperty().bind(viewModel.getBasketButtonTitleProperty());
+
     this.usersTable.setItems(viewModel.getList());
     this.firstNameColumn
         .setCellValueFactory(cellData -> cellData.getValue().getFirstName());

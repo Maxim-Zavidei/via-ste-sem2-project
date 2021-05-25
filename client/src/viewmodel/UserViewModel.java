@@ -26,6 +26,8 @@ public class UserViewModel
 
   /**Instance variable for other ui elements*/
   private StringProperty errorProperty;
+  private StringProperty usernameProperty;
+  private StringProperty basketButtonTitleProperty;
 
   public UserViewModel(Model model, UserManagementViewState userManagementViewState){
     // Initialize variables for list, selected item, management model
@@ -37,6 +39,8 @@ public class UserViewModel
 
     // Initialize variable for other ui elements
     this.errorProperty = new SimpleStringProperty();
+    usernameProperty = new SimpleStringProperty("");
+    basketButtonTitleProperty = new SimpleStringProperty("Basket");
   }
 
   /**Methods, methods, methods*/
@@ -65,6 +69,21 @@ public class UserViewModel
     {
       System.out.println(e.getMessage());
     }
+
+
+    boolean isEmployee = false;
+    try {
+      User authenticatedUser = model.getAuthenticatedUser();
+      isEmployee = authenticatedUser.isEmployee();
+      usernameProperty.set((isEmployee ? "Employee" : "Customer") + " ● " + authenticatedUser.getFullName());
+    } catch (Exception e) {
+      usernameProperty.set("");
+      errorProperty.set(e.getMessage());
+    }
+
+    // Updates the number of products indicator in the basket button title.
+    int tmp = model.getAllProductsInBasket().size();
+    basketButtonTitleProperty.set(tmp == 0 ? "Basket" : "Basket (" + tmp + ")");
   }
 
   public StringProperty getErrorProperty() {
@@ -155,6 +174,14 @@ public class UserViewModel
     {
       list.add(new UserView(users.get(i)));
     }
+  }
+
+  public StringProperty getBasketButtonTitleProperty() {
+    return basketButtonTitleProperty;
+  }
+
+  public StringProperty getUsernameProperty() {
+    return usernameProperty;
   }
   public boolean deauthenticate() {
     wasAuthenticatedUserQueried = false;
