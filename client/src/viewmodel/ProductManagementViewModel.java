@@ -9,6 +9,7 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Model;
+import viewmodel.object.ProductViewModel;
 import viewmodel.viewstate.ProductManagementViewState;
 
 public class ProductManagementViewModel implements LocalListener<String, Object> {

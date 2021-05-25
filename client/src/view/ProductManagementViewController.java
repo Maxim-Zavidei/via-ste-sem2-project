@@ -6,7 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import viewmodel.ProductManagementViewModel;
-import viewmodel.ProductViewModel;
+import viewmodel.object.ProductViewModel;
 
 public class ProductManagementViewController extends ViewController {
 

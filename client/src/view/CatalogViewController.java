@@ -14,7 +14,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import viewmodel.CatalogViewModel;
-import viewmodel.ProductViewModel;
+import viewmodel.object.ProductViewModel;
 
 public class CatalogViewController extends ViewController {
 

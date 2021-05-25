@@ -7,12 +7,9 @@ import common.model.User;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableMap;
-import javafx.fxml.FXML;
-import javafx.scene.control.TextArea;
 import model.Model;
-
+import viewmodel.object.ProductViewModel;
 import java.util.HashMap;
-import java.util.Map;
 
 public class BasketViewModel {
 

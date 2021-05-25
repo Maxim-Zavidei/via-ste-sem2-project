@@ -1,6 +1,6 @@
 package viewmodel.viewstate;
 
-import viewmodel.ProductViewModel;
+import viewmodel.object.ProductViewModel;
 
 public class ProductManagementViewState {
 
