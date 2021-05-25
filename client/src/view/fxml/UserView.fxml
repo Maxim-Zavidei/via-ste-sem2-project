@@ -48,7 +48,7 @@
                         </HBox>
                         <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="300.0">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#openBasketView" opacity="0.75" prefHeight="50.0" prefWidth="261.0" styleClass="menu-button" text="Basket" textAlignment="CENTER">
+                        <Button fx:id="basketButton" mnemonicParsing="false" onAction="#openBasketView" opacity="0.75" prefHeight="50.0" prefWidth="261.0" styleClass="menu-button" text="Basket" textAlignment="CENTER">
                            <font>
                               <Font name="Forte" size="31.0" />
                            </font>
@@ -152,7 +152,7 @@
                                 <DropShadow height="35.83" radius="8.4575" width="0.0" />
                             </effect>
                             <children>
-                                <Label fx:id="usernameLabel" prefHeight="40.0" prefWidth="350.0" textFill="WHITE">
+                                <Label fx:id="usernameLabel" alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="40.0" prefWidth="350.0" textFill="WHITE">
                                     <font>
                                         <Font name="Bodoni MT Italic" size="31.0" />
                                     </font>
