@@ -26,5 +26,6 @@ public interface RemoteServerInterface extends RemoteSubject<String, Object> {
     void updateUser(String email, User user) throws RemoteException;
     void placeOrder(Order order) throws RemoteException;
     ArrayList<Order> getAllOrders() throws RemoteException;
+    void updateOrderStatus(String orderId, String status) throws RemoteException;
     void sendEventNotification(String eventText) throws RemoteException;
 }

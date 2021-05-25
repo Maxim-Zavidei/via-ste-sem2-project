@@ -33,5 +33,6 @@ public interface Model extends LocalSubject<String, Object>, LocalListener<Strin
     void removeProductFromBasket(String productId) throws IllegalStateException;
     void placeOrder(Order order) throws Exception;
     ArrayList<Order> getAllOrders() throws Exception;
+    void updateOrderStatus(String orderId, String status) throws Exception;
     void sendEventNotification(String eventText) throws Exception;
 }

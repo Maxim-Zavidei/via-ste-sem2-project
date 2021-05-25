@@ -68,6 +68,11 @@ public class EmployeeAuthenticated extends GenericAccessType {
     }
 
     @Override
+    public void updateOrderStatus(String orderId, String status) throws RemoteException {
+        getModel().updateOrderStatus(orderId,status);
+    }
+
+    @Override
     public void sendEventNotification(String eventText) throws RemoteException {
         getModel().sendEventNotification(eventText);
     }

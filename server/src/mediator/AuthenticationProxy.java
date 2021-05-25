@@ -9,6 +9,7 @@ import common.network.RemoteServerInterface;
 import common.utility.collection.BidirectionalHashMap;
 import common.utility.observer.listener.GeneralListener;
 import model.Model;
+
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -45,10 +46,12 @@ public class AuthenticationProxy implements RemoteServerInterface {
     public RemoteServerInterface authenticate(RemoteClientInterface client, String email, String password) throws RemoteException {
         // Validate the provided arguments.
         if (email == null || email.isEmpty()) throw new IllegalArgumentException("Email value can't be null or empty.");
-        if (password == null || password.isEmpty()) throw new IllegalArgumentException("Password value can't be null or empty.");
+        if (password == null || password.isEmpty())
+            throw new IllegalArgumentException("Password value can't be null or empty.");
         // Check if such a user is registered in the system.
         User tmp = model.getAllRegisteredUsers().getUser(email);
-        if (tmp == null || !tmp.getPassword().equals(password)) throw new IllegalArgumentException("Invalid email or password.");
+        if (tmp == null || !tmp.getPassword().equals(password))
+            throw new IllegalArgumentException("Invalid email or password.");
         // Checks if the given user is already logged in.
         GenericAccessType toReturn;
         try {
@@ -56,7 +59,8 @@ public class AuthenticationProxy implements RemoteServerInterface {
         } catch (Exception e) {
             throw new IllegalStateException("Could not authenticate at this moment, try later.");
         }
-        if (authenticatedInstances.getKey(toReturn) != null) throw new IllegalStateException("This user is already authenticated.");
+        if (authenticatedInstances.getKey(toReturn) != null)
+            throw new IllegalStateException("This user is already authenticated.");
         // Return the real subject to be replaced instead of the proxy on the client side.
         authenticatedInstances.put(client, toReturn);
 
@@ -120,13 +124,13 @@ public class AuthenticationProxy implements RemoteServerInterface {
         throw new IllegalStateException("Authenticate in order to perform this request.");
     }
 
-    @Override public void addUser(User user) throws RemoteException
-    {
+    @Override
+    public void addUser(User user) throws RemoteException {
         throw new IllegalStateException("Authenticate in order to perform this request.");
     }
 
-    @Override public void updateUser(String email, User user) throws RemoteException
-    {
+    @Override
+    public void updateUser(String email, User user) throws RemoteException {
         throw new IllegalStateException("Authenticate in order to perform this request.");
     }
 
@@ -137,7 +141,15 @@ public class AuthenticationProxy implements RemoteServerInterface {
 
     @Override
     public ArrayList<Order> getAllOrders() throws RemoteException {
-        throw new IllegalStateException("Authenticate in order to perform this request.");    }
+        throw new IllegalStateException("Authenticate in order to perform this request.");
+    }
+
+    @Override
+    public void updateOrderStatus(String orderId, String status) throws RemoteException {
+        throw new IllegalStateException("Authenticate in order to perform this request.");
+    }
+
+
 
     @Override
     public void sendEventNotification(String eventText) throws RemoteException {

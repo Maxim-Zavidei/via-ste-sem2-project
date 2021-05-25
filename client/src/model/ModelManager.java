@@ -163,6 +163,11 @@ public class ModelManager implements Model {
         return client.getAllOrders();
     }
 
+    @Override
+    public void updateOrderStatus(String orderId, String status) throws Exception {
+        client.updateOrderStatus(orderId, status);
+    }
+
 
     @Override
     public void sendEventNotification(String eventText) throws Exception {

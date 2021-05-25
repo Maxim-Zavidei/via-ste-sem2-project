@@ -137,6 +137,11 @@ public class Client implements ClientTarget, RemoteClientInterface {
     }
 
     @Override
+    public void updateOrderStatus(String orderId, String status) throws Exception {
+        server.updateOrderStatus(orderId,status);
+    }
+
+    @Override
     public void sendEventNotification(String eventText) throws Exception {
         server.sendEventNotification(eventText);
     }

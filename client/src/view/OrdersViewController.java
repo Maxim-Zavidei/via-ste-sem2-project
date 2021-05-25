@@ -166,5 +166,12 @@ public class OrdersViewController extends ViewController {
 
     @FXML
     public void markAsCompleted(ActionEvent actionEvent) {
+        if (!orderTable.getSelectionModel().isEmpty())
+        {
+            viewModel.markOrderAsCompleted(orderTable.getSelectionModel().getSelectedItem().getId().getValue());
+
+        } else {
+            viewModel.getErrorProperty().set("Please select an order first");
+        }
     }
 }

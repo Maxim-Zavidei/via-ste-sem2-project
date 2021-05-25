@@ -74,6 +74,12 @@ public class CustomerAuthenticated extends GenericAccessType {
         throw new IllegalStateException("Only an employee is allowed to change this, for now, but look into it");    }
 
     @Override
+    public void updateOrderStatus(String orderId, String status) throws RemoteException {
+        throw new IllegalStateException("Only an employee is allowed to perform this request.");
+
+    }
+
+    @Override
     public void sendEventNotification(String eventText) throws RemoteException {
         throw new IllegalStateException("Only an employee is allowed to perform this request.");
     }

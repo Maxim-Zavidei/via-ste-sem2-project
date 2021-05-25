@@ -23,5 +23,6 @@ public interface Model extends LocalSubject<String, Object> {
     void removeProduct(Product product) throws IllegalStateException;
     void placeOrder(Order order) throws IllegalStateException;
     ArrayList<Order> getAllOrders() throws IllegalStateException;
+    void updateOrderStatus(String orderId, String status) throws IllegalStateException;
     void sendEventNotification(String eventText);
 }

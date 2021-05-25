@@ -239,6 +239,15 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public void updateOrderStatus(String orderId, String status) throws IllegalStateException {
+        try {
+            orderDAO.updateOrderStatus(orderId,status);
+        } catch (SQLException e) {
+            throw new IllegalStateException("Server is unavailable at the moment. Try Later.");
+        }
+    }
+
+    @Override
     public void sendEventNotification(String eventText) {
         property.firePropertyChange("newEvent", eventText, null);
     }

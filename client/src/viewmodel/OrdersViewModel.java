@@ -171,6 +171,21 @@ public class OrdersViewModel {
 
     }
 
+    public void markOrderAsCompleted(String id)
+    {
+        if (!(selectedOrderProperty == null)){
+            try {
+                model.updateOrderStatus(id,"completed");
+            } catch (Exception e){
+                errorProperty.set(e.getMessage());
+            }
+        } else {
+            errorProperty.set("Please select an order first!");
+        }
+
+
+    }
+
     public boolean deauthenticate() {
         return model.deauthenticate();
     }
