@@ -67,7 +67,7 @@ public class UserManageViewController extends ViewController
     catch (Exception e)
     {
       viewModel.getErrorProperty()
-          .set("Could not modify at this time. Try later.");
+          .set(e.getMessage());
       System.out.println(e.getMessage());
     }
   }

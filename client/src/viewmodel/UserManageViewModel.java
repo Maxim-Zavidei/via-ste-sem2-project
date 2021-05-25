@@ -46,6 +46,7 @@ public class UserManageViewModel {
   }
 
   private void loadFromSelected(){
+    //System.out.println("Selected user: "+ userManagementViewState.getSelectedUser());
     if (!userManagementViewState.getSelectedUser().equals(""))
     {
       try
@@ -84,8 +85,8 @@ public class UserManageViewModel {
       passwordProperty.set("");
       firstNameProperty.set("");
       lastNameProperty.set("");
-      addEditProperty = new SimpleStringProperty("Add");
-      saveAddButtonProperty = new SimpleStringProperty("Add");
+      addEditProperty.set("Add");
+      saveAddButtonProperty.set("Add");
 
       // Default selection of date picker is the present day.
       birthdayPickerProperty.set(LocalDate.now());
@@ -153,8 +154,7 @@ public class UserManageViewModel {
       }
       catch (Exception e)
       {
-        System.out.println(e.getMessage());
-        errorProperty.set("Error creating the new customer");
+        errorProperty.set(e.getMessage());
       }
     }
     else{
@@ -189,7 +189,7 @@ public class UserManageViewModel {
       catch (Exception e)
       {
         System.out.println(e.getMessage());
-        errorProperty.set("Error in editing the existing customer");
+        errorProperty.set(e.getMessage());
       }
     }
   }

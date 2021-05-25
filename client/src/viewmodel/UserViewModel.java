@@ -51,6 +51,7 @@ public class UserViewModel
 
   public void reset(){
     errorProperty.set("");
+    getUserManagementViewState().setSelectedUser("");
     if (!wasAuthenticatedUserQueried) {
       try {
         User authenticatedUser = model.getAuthenticatedUser();

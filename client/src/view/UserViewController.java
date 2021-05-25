@@ -118,9 +118,14 @@ public class UserViewController extends ViewController
     try
     {
       String email = usersTable.getSelectionModel().getSelectedItem().getEmail().get();
+      //System.out.println("Debug point 1");
+      viewModel.getUserManagementViewState().setSelectedUser(email);
       viewModel.addEdit(email);
-      if(confirmation(true))
+      if(confirmation(true)){
+        //System.out.println("Selected user: "+ viewModel.getUserManagementViewState().getSelectedUser());
         viewHandler.openView(View.MANAGEUSERS);
+      }
+
       else {
         usersTable.getSelectionModel().clearSelection();
         viewModel.getUserManagementViewState().setSelectedUser("");
@@ -128,7 +133,9 @@ public class UserViewController extends ViewController
     }
     catch (Exception e)
     {
+      viewModel.getUserManagementViewState().setSelectedUser("");
       viewModel.addEdit("");
+      //System.out.println("Selected user is empty: "+ viewModel.getUserManagementViewState().getSelectedUser());
       try
       {
         viewHandler.openView(View.MANAGEUSERS);
