@@ -6,7 +6,6 @@ import common.model.User;
 import common.model.UserList;
 import model.Model;
 import java.rmi.RemoteException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class EmployeeAuthenticated extends GenericAccessType {
@@ -20,7 +19,11 @@ public class EmployeeAuthenticated extends GenericAccessType {
         return new String[] {
                 "newProduct",
                 "replacedProduct",
-                "deletedProduct"
+                "deletedProduct",
+                "newUser",
+                "deletedUser",
+                "newOrder",
+                "completedOrder"
         };
     }
 
@@ -30,8 +33,8 @@ public class EmployeeAuthenticated extends GenericAccessType {
     }
 
     @Override
-    public void updateUser(String oldEmail, String newEmail, String password, String firstName, String lastName, LocalDate birthday, char gender, boolean isEmployee) throws RemoteException {
-        getModel().updateUser(oldEmail, newEmail, password, firstName, lastName, birthday, gender, isEmployee);
+    public void updateUser(String email, User user) throws RemoteException {
+        getModel().updateUser(email, user);
     }
 
     @Override
@@ -54,22 +57,14 @@ public class EmployeeAuthenticated extends GenericAccessType {
         getModel().removeProduct(product);
     }
 
-    @Override public void addUser(User user) throws RemoteException {
-        getModel().addUser(user);
-    }
-
-    @Override public void updateUser(String email, User user) throws RemoteException {
-        getModel().updateUser(email, user);
+    @Override
+    public void updateOrderStatus(String orderId, String status) throws RemoteException {
+        getModel().updateOrderStatus(orderId, status);
     }
 
     @Override
     public ArrayList<Order> getAllOrders() throws RemoteException {
         return getModel().getAllOrders();
-    }
-
-    @Override
-    public void updateOrderStatus(String orderId, String status) throws RemoteException {
-        getModel().updateOrderStatus(orderId,status);
     }
 
     @Override

@@ -6,8 +6,8 @@ import common.model.User;
 import common.model.UserList;
 import model.Model;
 import java.rmi.RemoteException;
-import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class CustomerAuthenticated extends GenericAccessType {
 
@@ -21,7 +21,9 @@ public class CustomerAuthenticated extends GenericAccessType {
                 "newProduct",
                 "replacedProduct",
                 "deletedProduct",
-                "newEvent"
+                "newEvent",
+                "newOrder",
+                "completedOrder"
         };
     }
 
@@ -31,11 +33,9 @@ public class CustomerAuthenticated extends GenericAccessType {
     }
 
     @Override
-    public void updateUser(String oldEmail, String newEmail, String password, String firstName, String lastName, LocalDate birthday, char gender, boolean isEmployee) throws RemoteException {
-        if (oldEmail != null && oldEmail.equals(getEmail())) {
-            getModel().updateUser(oldEmail, newEmail, password, firstName, lastName, birthday, gender, isEmployee);
-        }
-        throw new IllegalArgumentException("A customer can only change his account settings.");
+    public void updateUser(String email, User user) throws RemoteException {
+        if (email == null || !email.equals(getEmail())) throw new IllegalArgumentException("A customer can only change his account settings.");
+        getModel().updateUser(email, user);
     }
 
     @Override
@@ -58,25 +58,14 @@ public class CustomerAuthenticated extends GenericAccessType {
         throw new IllegalStateException("Only an employee is allowed to perform this request.");
     }
 
-    @Override public void addUser(User user) throws RemoteException
-    {
+    @Override
+    public void updateOrderStatus(String orderId, String status) throws RemoteException {
         throw new IllegalStateException("Only an employee is allowed to perform this request.");
-    }
-
-    @Override public void updateUser(String email, User user)
-        throws RemoteException
-    {
-        throw new IllegalStateException("Only an employee is allowed to add new customers");
     }
 
     @Override
     public ArrayList<Order> getAllOrders() throws RemoteException {
-        throw new IllegalStateException("Only an employee is allowed to change this, for now, but look into it");    }
-
-    @Override
-    public void updateOrderStatus(String orderId, String status) throws RemoteException {
-        throw new IllegalStateException("Only an employee is allowed to perform this request.");
-
+        return getModel().getAllOrders().stream().filter(order -> getEmail().equals(order.getCustomer().getEmail())).collect(Collectors.toCollection(ArrayList::new));
     }
 
     @Override

@@ -81,7 +81,8 @@ public class ProductManagementViewController extends ViewController {
         }
     }
 
-    @FXML public void openOrdersView() {
+    @FXML
+    public void openOrdersView() {
         try {
             viewHandler.openView(View.ORDERS);
         } catch (Exception e) {

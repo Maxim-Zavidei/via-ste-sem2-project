@@ -42,10 +42,6 @@ public abstract class GenericAccessType implements RemoteServerInterface, LocalL
         return email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
     @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof GenericAccessType)) return false;
@@ -120,6 +116,12 @@ public abstract class GenericAccessType implements RemoteServerInterface, LocalL
             case "newProduct" : {
                 String whoAdded = event.getValue1();
                 property.firePropertyChange(event.getPropertyName(), email.equals(whoAdded) ? whoAdded : "", event.getValue2());
+                break;
+            }
+            case "completedOrder" :
+            case "newOrder" : {
+                if (this instanceof CustomerAuthenticated && !email.equals(event.getValue1())) return;
+                property.firePropertyChange(event.getPropertyName(), event.getValue1(), event.getValue2());
                 break;
             }
             default : {

@@ -168,10 +168,10 @@ public class BasketViewModel {
         model.getAllProductsInBasket().forEach(product -> productList.put(product, product.getQuantity()));
         try {
             model.placeOrder(new Order(productList, (Customer) model.getAuthenticatedUser(), inputCommentField.get()));
+            clearBasket();
         } catch (Exception e) {
             errorProperty.set(e.getMessage());
         }
-        clearBasket();
     }
 
     public boolean deauthenticate() {

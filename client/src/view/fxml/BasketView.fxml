@@ -282,27 +282,64 @@
                                           </Lighting>
                                        </effect>
                                     </Button>
-                                    <Label fx:id="priceLabel" layoutX="836.0" layoutY="56.0" prefHeight="35.0" prefWidth="176.0" text="0" textFill="WHITE">
-                                       <font>
-                                          <Font name="System Bold" size="20.0" />
-                                       </font>
+                                    <VBox layoutX="706.0" layoutY="32.0" prefHeight="146.0" prefWidth="180.0">
+                                       <children>
+                                          <Label fx:id="priceLabel" text="0" textFill="WHITE">
+                                             <font>
+                                                <Font name="System Bold" size="20.0" />
+                                             </font>
+                                             <graphic>
+                                                <Label text="Total: " textFill="WHITE">
+                                                   <font>
+                                                      <Font name="System Bold" size="20.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets right="79.0" />
+                                                   </padding>
+                                                </Label>
+                                             </graphic>
+                                             <padding>
+                                                <Insets bottom="5.0" />
+                                             </padding>
+                                          </Label>
+                                          <Label fx:id="discountLabel" text="0" textFill="#79df25">
+                                             <font>
+                                                <Font name="System Bold" size="20.0" />
+                                             </font>
+                                             <graphic>
+                                                <Label text="Discount:" textFill="#79df25">
+                                                   <font>
+                                                      <Font name="System Bold" size="20.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets right="50.0" />
+                                                   </padding>
+                                                </Label>
+                                             </graphic>
+                                             <padding>
+                                                <Insets bottom="5.0" />
+                                             </padding>
+                                          </Label>
+                                          <Label fx:id="finalPriceLabel" text="0" textFill="WHITE">
+                                             <font>
+                                                <Font name="System Bold" size="20.0" />
+                                             </font>
+                                             <graphic>
+                                                <Label text="Final Price: " textFill="WHITE">
+                                                   <font>
+                                                      <Font name="System Bold" size="20.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets bottom="5.0" right="30.0" />
+                                                   </padding>
+                                                </Label>
+                                             </graphic>
+                                          </Label>
+                                       </children>
                                        <padding>
-                                          <Insets bottom="5.0" />
+                                          <Insets bottom="20.0" top="20.0" />
                                        </padding>
-                                    </Label>
-                                    <Label fx:id="discountLabel" layoutX="836.0" layoutY="89.0" prefHeight="35.0" prefWidth="176.0" text="0" textFill="#79df25">
-                                       <font>
-                                          <Font name="System Bold" size="20.0" />
-                                       </font>
-                                       <padding>
-                                          <Insets bottom="5.0" />
-                                       </padding>
-                                    </Label>
-                                    <Label fx:id="finalPriceLabel" layoutX="836.0" layoutY="120.0" prefHeight="35.0" prefWidth="50.0" text="0" textFill="WHITE">
-                                       <font>
-                                          <Font name="System Bold" size="20.0" />
-                                       </font>
-                                    </Label>
+                                    </VBox>
                                     <TextArea fx:id="inputCommentField" layoutX="190.0" layoutY="55.0" prefHeight="91.0" prefWidth="300.0" promptText="Type here the prefferences...">
                                        <effect>
                                           <InnerShadow choke="0.62" color="#461d5e" />
@@ -311,30 +348,6 @@
                                           <Font size="16.0" />
                                        </font>
                                     </TextArea>
-                                    <Label contentDisplay="CENTER" layoutX="704.0" layoutY="89.0" prefHeight="30.0" prefWidth="140.0" text="Discount:" textFill="#79df25">
-                                       <font>
-                                          <Font name="System Bold" size="20.0" />
-                                       </font>
-                                       <padding>
-                                          <Insets right="50.0" />
-                                       </padding>
-                                    </Label>
-                                    <Label layoutX="705.0" layoutY="58.0" text="Total: " textFill="WHITE">
-                                       <font>
-                                          <Font name="System Bold" size="20.0" />
-                                       </font>
-                                       <padding>
-                                          <Insets right="79.0" />
-                                       </padding>
-                                    </Label>
-                                    <Label layoutX="706.0" layoutY="120.0" text="Final Price: " textFill="WHITE">
-                                       <font>
-                                          <Font name="System Bold" size="20.0" />
-                                       </font>
-                                       <padding>
-                                          <Insets bottom="5.0" right="30.0" />
-                                       </padding>
-                                    </Label>
                                  </children></Pane>
                            </children>
                         </StackPane>

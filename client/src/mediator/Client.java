@@ -82,23 +82,13 @@ public class Client implements ClientTarget, RemoteClientInterface {
     }
 
     @Override
-    public void updateUser(String oldEmail, String newEmail, String password, String firstName, String lastName, LocalDate birthday, char gender, boolean isEmployee) throws Exception {
-        server.updateUser(oldEmail, newEmail, password, firstName, lastName, birthday, gender, isEmployee);
-    }
-
-    @Override public void updateUser(String email, User user) throws Exception
-    {
+    public void updateUser(String email, User user) throws Exception {
         server.updateUser(email, user);
     }
 
     @Override
     public void removeUser(String email) throws Exception {
         server.removeUser(email);
-    }
-
-    @Override public void addUser(User user) throws Exception
-    {
-        server.addUser(user);
     }
 
     @Override
@@ -127,18 +117,18 @@ public class Client implements ClientTarget, RemoteClientInterface {
     }
 
     @Override
-    public void placeOrder(Order order) throws Exception{
+    public void placeOrder(Order order) throws Exception {
         server.placeOrder(order);
+    }
+
+    @Override
+    public void updateOrderStatus(String orderId, String status) throws Exception {
+        server.updateOrderStatus(orderId, status);
     }
 
     @Override
     public ArrayList<Order> getAllOrders() throws Exception {
         return server.getAllOrders();
-    }
-
-    @Override
-    public void updateOrderStatus(String orderId, String status) throws Exception {
-        server.updateOrderStatus(orderId,status);
     }
 
     @Override

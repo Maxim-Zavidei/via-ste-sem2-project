@@ -128,6 +128,39 @@ public class CatalogViewController extends ViewController {
                 viewModel.getShowEventProperty().set(false);
             }
         });
+
+        // Code for completed order notifications.
+        viewModel.getShowCompletedOrderProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal) {
+                Image image = new Image("file:assets/cakeArt.png");
+
+                ImageInput imageInput = new ImageInput();
+                imageInput.setX(250);
+                imageInput.setY(100);
+                imageInput.setSource(image);
+
+                //blur.setInput(imageInput);
+
+                BoxBlur blur = new BoxBlur(3, 3, 3);
+
+                JFXDialogLayout dialogLayout = new JFXDialogLayout();
+                JFXButton button = new JFXButton("Okay");
+                JFXDialog dialog = new JFXDialog(rootPane,dialogLayout,JFXDialog.DialogTransition.CENTER);
+                button.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> dialog.close());
+
+                //unprofessional styling, but it works
+                button.setStyle("-fx-background-color: #461d5e; -fx-text-fill: white;");
+                dialog.setStyle("-fx-background-color: #ffb1b1cc;");
+                dialogLayout.setStyle("-fx-background-color: #ffb1b1cc;");
+
+                dialogLayout.setHeading(new Label("Congrats your order from " + viewModel.getCompletedOrder().getDate().getValue().toString() + " has been completed!"));
+                dialogLayout.setActions(button);
+                dialog.show();
+                dialog.setOnDialogClosed((JFXDialogEvent event) -> borderPane.setEffect(null));
+                borderPane.setEffect(blur);
+                viewModel.getShowCompletedOrderProperty().set(false);
+            }
+        });
     }
 
     public void reset() {

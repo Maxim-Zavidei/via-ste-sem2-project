@@ -1,5 +1,6 @@
 package viewmodel;
 
+import common.model.Order;
 import common.model.Product;
 import common.model.User;
 import common.utility.observer.event.ObserverEvent;
@@ -9,6 +10,7 @@ import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Model;
+import viewmodel.object.OrderViewModel;
 import viewmodel.object.ProductViewModel;
 
 public class CatalogViewModel implements LocalListener<String, Object> {
@@ -33,7 +35,9 @@ public class CatalogViewModel implements LocalListener<String, Object> {
     private ProductViewModel newNotificationProduct;
     private ObjectProperty<Boolean> showNotificationProperty;
     private ObjectProperty<Boolean> showEventProperty;
+    private ObjectProperty<Boolean> showCompletedOrderProperty;
     private String newEventText;
+    private OrderViewModel completedOrder;
 
     public CatalogViewModel(Model model) {
         this.model = model;
@@ -56,7 +60,9 @@ public class CatalogViewModel implements LocalListener<String, Object> {
         newNotificationProduct = null;
         showNotificationProperty = new SimpleObjectProperty<>(false);
         showEventProperty = new SimpleObjectProperty<>(false);
+        showCompletedOrderProperty = new SimpleObjectProperty<>(false);
         newEventText = "";
+        completedOrder = null;
 
         model.addListener(this);
     }
@@ -142,8 +148,16 @@ public class CatalogViewModel implements LocalListener<String, Object> {
         return showEventProperty;
     }
 
+    public ObjectProperty<Boolean> getShowCompletedOrderProperty() {
+        return showCompletedOrderProperty;
+    }
+
     public String getNewEventText() {
         return newEventText;
+    }
+
+    public OrderViewModel getCompletedOrder() {
+        return completedOrder;
     }
 
     public void setSelectedCatalogProductProperty(ProductViewModel productViewModel) {
@@ -213,6 +227,17 @@ public class CatalogViewModel implements LocalListener<String, Object> {
                 case "newEvent" : {
                     newEventText = event.getValue1();
                     showEventProperty.set(true);
+                    break;
+                }
+                case "completedOrder" : {
+                    try {
+                        if (event.getValue1().equals(model.getAuthenticatedUser().getEmail())) {
+                            completedOrder = new OrderViewModel((Order) event.getValue2());
+                            showCompletedOrderProperty.set(true);
+                        }
+                    } catch (Exception e) {
+                        // Do nothing.
+                    }
                     break;
                 }
             }

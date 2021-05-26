@@ -188,7 +188,7 @@
                                           </Lighting>
                                        </effect>
                                     </Button>
-                                    <JFXToggleButton fx:id="toggleButton" layoutX="226.0" layoutY="4.0" onAction="#updateOrderTable" prefHeight="82.0" prefWidth="274.0" size="14.0" text="PENDIND " textFill="WHITE" toggleColor="#a15bcf" toggleLineColor="#a874ca">
+                                    <JFXToggleButton fx:id="toggleOrderButton" layoutX="226.0" layoutY="4.0" onAction="#changeOrderTable" prefHeight="82.0" prefWidth="274.0" size="14.0" text="PENDIND " textFill="WHITE" toggleColor="#a15bcf" toggleLineColor="#a874ca">
                                        <font>
                                           <Font name="System Bold" size="16.0" />
                                        </font>

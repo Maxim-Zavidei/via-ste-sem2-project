@@ -1,68 +1,51 @@
 package view;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTabPane;
 import com.jfoenix.controls.JFXToggleButton;
 import common.model.DateTime;
-import javafx.beans.binding.Bindings;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.effect.ColorAdjust;
-import javafx.scene.text.TextAlignment;
-import viewmodel.OrdersDetailedView;
-import viewmodel.OrdersView;
+import viewmodel.object.OrderViewModel;
 import viewmodel.OrdersViewModel;
+import viewmodel.object.ProductViewModel;
 
 public class OrdersViewController extends ViewController {
-
 
     private ViewHandler viewHandler;
     private OrdersViewModel viewModel;
 
-
     // FXML instance variables of order table.
-    @FXML
-    private TableView<OrdersView> orderTable;
-    @FXML
-    private TableColumn<OrdersView, String> orderIDColumn;
-    @FXML
-    private TableColumn<OrdersView, DateTime> orderDateColumn;
-    @FXML
-    private TableColumn<OrdersView, String> orderEmailColumn;
-    @FXML
-    private TableColumn<OrdersView, String> orderCommentColumn;
-    @FXML
-    private TableColumn<OrdersView, String> orderStatusColumn;
+    @FXML private TableView<OrderViewModel> orderTable;
+    @FXML private TableColumn<OrderViewModel, String> orderIDColumn;
+    @FXML private TableColumn<OrderViewModel, DateTime> orderDateColumn;
+    @FXML private TableColumn<OrderViewModel, String> orderEmailColumn;
+    @FXML private TableColumn<OrderViewModel, String> orderCommentColumn;
+    @FXML private TableColumn<OrderViewModel, String> orderStatusColumn;
 
     // FXML instance variables of order detailed table.
-    // not pronto
-    @FXML
-    private TableView<OrdersDetailedView> orderDetailedTable;
-    @FXML
-    private TableColumn<OrdersDetailedView, String> orderDetailedQuantityColumn;
-    @FXML
-    private TableColumn<OrdersDetailedView, String> orderDetailedNameColumn;
+    @FXML private TableView<ProductViewModel> orderDetailedTable;
+    @FXML private TableColumn<ProductViewModel, Integer> orderDetailedQuantityColumn;
+    @FXML private TableColumn<ProductViewModel, String> orderDetailedNameColumn;
 
     // The rest FXML instance variables of the view.
-    @FXML
-    private Label usernameLabel;
-
-    @FXML
-    private JFXToggleButton toggleButton;
-
-    @FXML
-    private Label errorLabel;
-    @FXML
-    private Button basketButton;
-    @FXML
-    private Button manageProductsButton;
-    @FXML
-    private Button manageUsersButton;
-
+    @FXML private Label usernameLabel;
+    @FXML private Button basketButton;
+    @FXML private Button manageProductsButton;
+    @FXML private Button manageUsersButton;
+    @FXML private Button markAsCompletedButton;
+    @FXML private JFXToggleButton toggleOrderButton;
+    @FXML private Label errorLabel;
 
     @Override
     protected void init() {
         viewHandler = getViewHandler();
         viewModel = getViewModelFactory().getOrdersViewModel();
+
+        // Bindings for the order product list table.
+        orderDetailedQuantityColumn.setCellValueFactory(cellData -> cellData.getValue().getQuantityProperty());
+        orderDetailedNameColumn.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
 
         // Bindings for the order table.
         orderIDColumn.setCellValueFactory(cellData -> cellData.getValue().getId());
@@ -70,27 +53,21 @@ public class OrdersViewController extends ViewController {
         orderEmailColumn.setCellValueFactory(cellData -> cellData.getValue().getEmail());
         orderCommentColumn.setCellValueFactory(cellData -> cellData.getValue().getComment());
         orderStatusColumn.setCellValueFactory(cellData -> cellData.getValue().getStatus());
-        orderTable.setItems(viewModel.getOrderTable());
-        orderTable.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) ->
-        {
+        orderTable.setItems(viewModel.getAllOrderList());
+        orderTable.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
             viewModel.setSelectedOrderProperty(newVal);
-            viewModel.setOrderDetailedTableProducts();
+            orderDetailedTable.setItems(newVal.getProductList());
         });
-
-        // Bindings for the order detailed table.
-        orderDetailedQuantityColumn.setCellValueFactory(cellData -> cellData.getValue().getQuantityProperty());
-        orderDetailedNameColumn.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
-        orderDetailedTable.setItems(viewModel.getOrderDetailedTable());
 
         // Bindings for the rest of the user interface elements.
         usernameLabel.textProperty().bind(viewModel.getUsernameProperty());
         basketButton.textProperty().bind(viewModel.getBasketButtonTitleProperty());
         manageProductsButton.visibleProperty().bind(viewModel.getShowProductManagementButtonProperty());
         manageUsersButton.visibleProperty().bind(viewModel.getShowUserManagementButtonProperty());
-        toggleButton.selectedProperty().bindBidirectional(viewModel.getToggleButtonProperty());
+        markAsCompletedButton.visibleProperty().bind(viewModel.getShowMarkAsCompletedButtonProperty());
+        toggleOrderButton.selectedProperty().bindBidirectional(viewModel.getToggleButtonProperty());
+        toggleOrderButton.setText("PENDING");
         errorLabel.textProperty().bind(viewModel.getErrorProperty());
-
-
     }
 
     @Override
@@ -98,7 +75,15 @@ public class OrdersViewController extends ViewController {
         // Deselect any items upon reopening the window.
         orderTable.getSelectionModel().clearSelection();
         viewModel.reset();
+    }
 
+    @FXML
+    private void openCatalogView() {
+        try {
+            viewHandler.openView(View.CATALOG);
+        } catch (Exception e) {
+            viewModel.getErrorProperty().set("Can not view the catalog at this time. Try later.");
+        }
     }
 
     @FXML
@@ -129,11 +114,21 @@ public class OrdersViewController extends ViewController {
     }
 
     @FXML
-    private void openCatalogView() {
-        try {
-            viewHandler.openView(View.CATALOG);
-        } catch (Exception e) {
-            viewModel.getErrorProperty().set("Can not view the catalog at this time. Try later.");
+    public void markAsCompleted() {
+        viewModel.markAsCompleted();
+    }
+
+
+    @FXML
+    public void changeOrderTable() {
+        if (toggleOrderButton.isSelected()) {
+            toggleOrderButton.contentDisplayProperty().set(ContentDisplay.RIGHT);
+            toggleOrderButton.setText("ALL");
+            orderTable.setItems(viewModel.getPendingOrderList());
+        } else {
+            toggleOrderButton.setText("PENDING");
+            toggleOrderButton.contentDisplayProperty().set(ContentDisplay.LEFT);
+            orderTable.setItems(viewModel.getAllOrderList());
         }
     }
 
@@ -147,31 +142,6 @@ public class OrdersViewController extends ViewController {
             viewHandler.openView(View.AUTHENTICATION);
         } catch (Exception e) {
             viewModel.getErrorProperty().set("Could not logout at this time. Try later.");
-        }
-    }
-
-
-
-    @FXML
-    public void markAsCompleted(ActionEvent actionEvent) {
-        if (!orderTable.getSelectionModel().isEmpty()) {
-            viewModel.markOrderAsCompleted(orderTable.getSelectionModel().getSelectedItem().getId().getValue());
-
-        } else {
-            viewModel.getErrorProperty().set("Please select an order first");
-        }
-    }
-
-    public void updateOrderTable(ActionEvent actionEvent) {
-        if (toggleButton.isSelected()) {
-            toggleButton.contentDisplayProperty().set(ContentDisplay.RIGHT);
-            toggleButton.setText("ALL");
-            orderTable.setItems(viewModel.getOrderPendingTable());
-        } else {
-            toggleButton.setText("PENDING");
-            toggleButton.contentDisplayProperty().set(ContentDisplay.LEFT);
-            orderTable.getItems().clear();
-            orderTable.setItems(viewModel.getOrderTable());
         }
     }
 }
