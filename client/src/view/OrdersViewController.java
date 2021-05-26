@@ -1,11 +1,13 @@
 package view;
 
+import com.jfoenix.controls.JFXToggleButton;
 import common.model.DateTime;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.effect.ColorAdjust;
+import javafx.scene.text.TextAlignment;
 import viewmodel.OrdersDetailedView;
 import viewmodel.OrdersView;
 import viewmodel.OrdersViewModel;
@@ -43,8 +45,10 @@ public class OrdersViewController extends ViewController {
     // The rest FXML instance variables of the view.
     @FXML
     private Label usernameLabel;
+
     @FXML
-    private ToggleButton toggleOrderButton;
+    private JFXToggleButton toggleButton;
+
     @FXML
     private Label errorLabel;
     @FXML
@@ -83,8 +87,7 @@ public class OrdersViewController extends ViewController {
         basketButton.textProperty().bind(viewModel.getBasketButtonTitleProperty());
         manageProductsButton.visibleProperty().bind(viewModel.getShowProductManagementButtonProperty());
         manageUsersButton.visibleProperty().bind(viewModel.getShowUserManagementButtonProperty());
-        toggleOrderButton.selectedProperty().bindBidirectional(viewModel.getToggleButtonProperty());
-        toggleOrderButton.setText("SHOW PENDING ORDERS");
+        toggleButton.selectedProperty().bindBidirectional(viewModel.getToggleButtonProperty());
         errorLabel.textProperty().bind(viewModel.getErrorProperty());
 
 
@@ -147,31 +150,28 @@ public class OrdersViewController extends ViewController {
         }
     }
 
-    @FXML
-    public void changeOrderTable(ActionEvent actionEvent) {
-        if (toggleOrderButton.isSelected()){
-            toggleOrderButton.setText("SHOW ALL ORDERS");
-            ColorAdjust colorAdjust = new ColorAdjust();
-            colorAdjust.setHue(3);
-            toggleOrderButton.setEffect(colorAdjust);
 
-            orderTable.setItems(viewModel.getOrderPendingTable());
-        }else {
-            toggleOrderButton.setText("SHOW PENDING ORDERS");
-            orderTable.getItems().clear();
-            toggleOrderButton.setEffect(null);
-            orderTable.setItems(viewModel.getOrderTable());
-        }
-    }
 
     @FXML
     public void markAsCompleted(ActionEvent actionEvent) {
-        if (!orderTable.getSelectionModel().isEmpty())
-        {
+        if (!orderTable.getSelectionModel().isEmpty()) {
             viewModel.markOrderAsCompleted(orderTable.getSelectionModel().getSelectedItem().getId().getValue());
 
         } else {
             viewModel.getErrorProperty().set("Please select an order first");
+        }
+    }
+
+    public void updateOrderTable(ActionEvent actionEvent) {
+        if (toggleButton.isSelected()) {
+            toggleButton.contentDisplayProperty().set(ContentDisplay.RIGHT);
+            toggleButton.setText("ALL");
+            orderTable.setItems(viewModel.getOrderPendingTable());
+        } else {
+            toggleButton.setText("PENDING");
+            toggleButton.contentDisplayProperty().set(ContentDisplay.LEFT);
+            orderTable.getItems().clear();
+            orderTable.setItems(viewModel.getOrderTable());
         }
     }
 }

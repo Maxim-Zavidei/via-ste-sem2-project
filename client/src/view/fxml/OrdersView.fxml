@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXToggleButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.layout.*?>
@@ -186,18 +188,14 @@
                                           </Lighting>
                                        </effect>
                                     </Button>
-                                    <ToggleButton fx:id="toggleOrderButton" layoutX="286.0" layoutY="27.0" mnemonicParsing="false" onAction="#changeOrderTable" text="ONLY PENDIND ORDERS">
+                                    <JFXToggleButton fx:id="toggleButton" layoutX="226.0" layoutY="4.0" onAction="#updateOrderTable" prefHeight="82.0" prefWidth="274.0" size="14.0" text="PENDIND " textFill="WHITE" toggleColor="#a15bcf" toggleLineColor="#a874ca">
                                        <font>
                                           <Font name="System Bold" size="16.0" />
                                        </font>
-                                       <effect>
-                                          <Blend opacity="0.63">
-                                             <topInput>
-                                                <InnerShadow choke="0.38" color="#d045da" />
-                                             </topInput>
-                                          </Blend>
-                                       </effect>
-                                    </ToggleButton>
+                                       <cursor>
+                                          <Cursor fx:constant="CLOSED_HAND" />
+                                       </cursor>
+                                    </JFXToggleButton>
                                  </children>
                               </Pane>
                            </children>
