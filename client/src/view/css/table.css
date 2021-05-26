@@ -11,6 +11,7 @@
 }
 
 .table-view .column-header-background{
+    -fx-alignment: CENTER;
     -fx-background-color: linear-gradient(to bottom, #ae298fcc,#ffb1b1cc );
     -fx-background-radius: 9px 9px 0px 0px;
     -fx-background-insets: 0 0 0 0;
@@ -19,6 +20,8 @@
 
 .table-view .column-header {
     -fx-background-color: transparent;
+
+
 }
 .table-view .table-cell{
     -fx-border-color: transparent;
@@ -66,4 +69,8 @@
 .table-row-cell:selected .text {
     -fx-fill: #461d5e ;
 
+}
+
+.table-column {
+    -fx-alignment: CENTER;
 }
