@@ -1,4 +1,4 @@
-package viewmodel;
+package viewmodel.object;
 
 import common.model.Product;
 import javafx.beans.property.ObjectProperty;

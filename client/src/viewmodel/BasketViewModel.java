@@ -7,12 +7,9 @@ import common.model.User;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableMap;
-import javafx.fxml.FXML;
-import javafx.scene.control.TextArea;
 import model.Model;
-
+import viewmodel.object.ProductViewModel;
 import java.util.HashMap;
-import java.util.Map;
 
 public class BasketViewModel {
 
@@ -171,10 +168,10 @@ public class BasketViewModel {
         model.getAllProductsInBasket().forEach(product -> productList.put(product, product.getQuantity()));
         try {
             model.placeOrder(new Order(productList, (Customer) model.getAuthenticatedUser(), inputCommentField.get()));
+            clearBasket();
         } catch (Exception e) {
             errorProperty.set(e.getMessage());
         }
-        clearBasket();
     }
 
     public boolean deauthenticate() {

@@ -1,18 +1,20 @@
 package viewmodel.viewstate;
 
+import viewmodel.object.UserViewModel;
+
 public class UserManagementViewState {
 
-    private String selectedUser;
+    private UserViewModel selectedUserToBeEdited;
 
     public UserManagementViewState() {
-        this.selectedUser = "";
+        selectedUserToBeEdited = null;
     }
 
-    public String getSelectedUser() {
-        return selectedUser;
+    public void setSelectedUser(UserViewModel user) {
+        selectedUserToBeEdited = user;
     }
 
-    public void setSelectedUser(String selectedUser) {
-        this.selectedUser = selectedUser;
+    public UserViewModel getSelectedUser() {
+        return selectedUserToBeEdited;
     }
 }

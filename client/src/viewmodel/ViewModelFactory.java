@@ -19,10 +19,10 @@ public class ViewModelFactory {
     private ProductEditingViewModel productEditingViewModel;
 
     // User management view models.
-    private UserViewModel userViewModel;
-    private UserManageViewModel userManageViewModel;
+    private UserManagementViewModel userManagementViewModel;
+    private UserEditingViewModel userEditingViewModel;
 
-    //Order management view model
+    // Order view model.
     private OrdersViewModel ordersViewModel;
 
     public ViewModelFactory(Model model) {
@@ -36,8 +36,8 @@ public class ViewModelFactory {
         this.productEditingViewModel = new ProductEditingViewModel(model, productManagementViewState);
 
         UserManagementViewState userManagementViewState = new UserManagementViewState();
-        this.userViewModel = new UserViewModel(model, userManagementViewState);
-        this.userManageViewModel = new UserManageViewModel(model, userManagementViewState);
+        this.userManagementViewModel = new UserManagementViewModel(model, userManagementViewState);
+        this.userEditingViewModel = new UserEditingViewModel(model, userManagementViewState);
 
         this.ordersViewModel = new OrdersViewModel(model);
     }
@@ -66,12 +66,12 @@ public class ViewModelFactory {
         return productEditingViewModel;
     }
 
-    public UserViewModel getUserViewModel() {
-        return userViewModel;
+    public UserManagementViewModel getUserManagementViewModel() {
+        return userManagementViewModel;
     }
 
-    public UserManageViewModel getUserManageViewModel() {
-        return userManageViewModel;
+    public UserEditingViewModel getUserEditingViewModel() {
+        return userEditingViewModel;
     }
 
     public OrdersViewModel getOrdersViewModel() {

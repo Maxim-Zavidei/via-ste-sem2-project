@@ -1,60 +1,56 @@
 package viewmodel;
 
 import common.model.Order;
-import common.model.Product;
 import common.model.User;
+import common.utility.observer.event.ObserverEvent;
+import common.utility.observer.listener.LocalListener;
+import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import model.Model;
+import viewmodel.object.OrderViewModel;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
-public class OrdersViewModel {
+public class OrdersViewModel implements LocalListener<String, Object> {
 
     private Model model;
 
     // Instance variables for storing the orders of the order table.
-    private ObservableList<OrdersView> orderTable;
-    private ObservableList<OrdersView> orderPendingTable;
-    private ObjectProperty<OrdersView> selectedOrderProperty;
-
-    // Instance variables for storing the products of the orders, i.e. order detailed table.
-    private ObservableList<OrdersDetailedView> orderDetailedTable;
+    private ObservableList<OrderViewModel> allOrderList;
+    private FilteredList<OrderViewModel> pendingOrderList;
+    private ObjectProperty<OrderViewModel> selectedOrderProperty;
 
     // Instance variables for linking and storing the other elements of the user interface.
     private StringProperty usernameProperty;
     private StringProperty basketButtonTitleProperty;
     private ObjectProperty<Boolean> showProductManagementButtonProperty;
     private ObjectProperty<Boolean> showUserManagementButtonProperty;
+    private ObjectProperty<Boolean> showMarkAsCompletedButtonProperty;
     private ObjectProperty<Boolean> toggleButtonProperty;
     private StringProperty errorProperty;
-
 
     public OrdersViewModel(Model model) {
         this.model = model;
 
         // Initialize the view model instance variables responsible for storing the data of the tables.
-        orderTable = FXCollections.observableArrayList();
-        orderPendingTable = FXCollections.observableArrayList();
+        allOrderList = FXCollections.observableArrayList();
+        pendingOrderList = new FilteredList<>(allOrderList, orderViewModel -> orderViewModel.getStatus().getValue().equalsIgnoreCase("pending"));
         selectedOrderProperty = new SimpleObjectProperty<>();
-
-        //to figure out how to represent the products when selecting an order from order table
-        orderDetailedTable = FXCollections.observableArrayList();
-
 
         // Initialize the instance variables responsible for storing data of the other ui elements.
         usernameProperty = new SimpleStringProperty("");
         basketButtonTitleProperty = new SimpleStringProperty("Basket");
         showProductManagementButtonProperty = new SimpleObjectProperty<>(false);
         showUserManagementButtonProperty = new SimpleObjectProperty<>(false);
+        showMarkAsCompletedButtonProperty = new SimpleObjectProperty<>(false);
         toggleButtonProperty = new SimpleObjectProperty<>(false);
         errorProperty = new SimpleStringProperty("");
 
+        model.addListener(this);
     }
 
     public void reset() {
@@ -64,10 +60,9 @@ public class OrdersViewModel {
         selectedOrderProperty.set(null);
 
         if (!model.wasDataQueriedFor("Orders")) {
-            orderTable.clear();
+            allOrderList.clear();
             try {
-                model.getAllOrders().forEach(order -> orderTable.add(new OrdersView(order)));
-
+                model.getAllOrders().forEach(order -> allOrderList.add(new OrderViewModel(order)));
             } catch (Exception e) {
                 errorProperty.set(e.getMessage());
             }
@@ -82,41 +77,21 @@ public class OrdersViewModel {
             }
             showProductManagementButtonProperty.set(isEmployee);
             showUserManagementButtonProperty.set(isEmployee);
-
-            // Updates the number of products indicator in the basket button title.
-            int tmp = model.getAllProductsInBasket().size();
-            basketButtonTitleProperty.set(tmp == 0 ? "Basket" : "Basket (" + tmp + ")");
+            showMarkAsCompletedButtonProperty.set(isEmployee);
         }
 
-
-
+        // Updates the number of products indicator in the basket button title.
+        int tmp = model.getAllProductsInBasket().size();
+        basketButtonTitleProperty.set(tmp == 0 ? "Basket" : "Basket (" + tmp + ")");
     }
 
 
-    public ObservableList<OrdersView> getOrderTable() {
-        return orderTable;
+    public ObservableList<OrderViewModel> getAllOrderList() {
+        return allOrderList;
     }
 
-    public ObservableList<OrdersView> getOrderPendingTable() {
-        try {
-            model.getAllOrders().forEach(order -> {
-                if (order.getStatus().equals("pending")) {
-                    orderPendingTable.add(new OrdersView(order));
-                }
-            });
-
-        }catch (Exception e){
-            errorProperty.set(e.getMessage());
-        }
-        return orderPendingTable;
-    }
-
-    public ObservableList<OrdersDetailedView> getOrderDetailedTable() {
-        return orderDetailedTable;
-    }
-
-    public ObjectProperty<OrdersView> getSelectedOrderProperty() {
-        return selectedOrderProperty;
+    public FilteredList<OrderViewModel> getPendingOrderList() {
+        return pendingOrderList;
     }
 
     public StringProperty getUsernameProperty() {
@@ -131,62 +106,63 @@ public class OrdersViewModel {
         return showProductManagementButtonProperty;
     }
 
-    public ObjectProperty<Boolean> getToggleButtonProperty() {
-        return toggleButtonProperty;
-    }
-
-
     public ObjectProperty<Boolean> getShowUserManagementButtonProperty() {
         return showUserManagementButtonProperty;
+    }
+
+    public ObjectProperty<Boolean> getShowMarkAsCompletedButtonProperty() {
+        return showMarkAsCompletedButtonProperty;
+    }
+
+    public ObjectProperty<Boolean> getToggleButtonProperty() {
+        return toggleButtonProperty;
     }
 
     public StringProperty getErrorProperty() {
         return errorProperty;
     }
 
-
-    public void setSelectedOrderProperty(OrdersView orderProperty) {
+    public void setSelectedOrderProperty(OrderViewModel orderProperty) {
         selectedOrderProperty.set(orderProperty);
-
-
     }
 
-    public void setOrderDetailedTableProducts(){
-        orderDetailedTable.clear();
+    public void markAsCompleted() {
         try {
-            ArrayList<Order> orders = model.getAllOrders();
-
-
-            for (int i = 0; i < orders.size(); i++){
-                if (orders.get(i).getId().equals(selectedOrderProperty.getValue().getId().getValue())){
-                System.out.println(orders.get(i).getId()+"   "+selectedOrderProperty.getValue().getId());
-                    for (HashMap.Entry<Product,Integer> entry : orders.get(i).getProducts().entrySet()) {
-                        orderDetailedTable.add(new OrdersDetailedView(entry.getKey(),entry.getValue()));
-                    }
-                }
-            }
-        }catch (Exception e){
+            OrderViewModel selectedOrder = selectedOrderProperty.getValue();
+            if (selectedOrder == null) throw new Exception("Select an order to mark as completed.");
+            model.updateOrderStatus(selectedOrder.getId().getValue(), "completed");
+        } catch (Exception e) {
             errorProperty.set(e.getMessage());
         }
-
-    }
-
-    public void markOrderAsCompleted(String id)
-    {
-        if (!(selectedOrderProperty == null)){
-            try {
-                model.updateOrderStatus(id,"completed");
-            } catch (Exception e){
-                errorProperty.set(e.getMessage());
-            }
-        } else {
-            errorProperty.set("Please select an order first!");
-        }
-
-
     }
 
     public boolean deauthenticate() {
         return model.deauthenticate();
+    }
+
+    @Override
+    public void propertyChange(ObserverEvent<String, Object> event) {
+        Platform.runLater(() -> {
+            switch (event.getPropertyName()) {
+                case "newOrder" : {
+                    allOrderList.add(new OrderViewModel((Order) event.getValue2()));
+                    break;
+                }
+                case "completedOrder" : {
+                    OrderViewModel completedOrder = new OrderViewModel((Order) event.getValue2());
+                    OrderViewModel toRemove = null;
+                    for (OrderViewModel order : allOrderList) if (completedOrder.equals(order)) {
+                        toRemove = order;
+                        break;
+                    }
+                    if (toRemove != null) {
+                        toRemove.getStatus().set("completed");
+                        allOrderList.remove(toRemove);
+                    }
+                    allOrderList.add(toRemove);
+                    break;
+                }
+            }
+        });
     }
 }

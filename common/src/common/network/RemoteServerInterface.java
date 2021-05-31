@@ -15,17 +15,15 @@ public interface RemoteServerInterface extends RemoteSubject<String, Object> {
     void register(String email, String password, String firstName, String lastName, LocalDate birthday, char gender) throws RemoteException;
     User getAuthenticatedUser() throws RemoteException;
     UserList getAllRegisteredUsers() throws RemoteException;
-    void updateUser(String oldEmail, String newEmail, String password, String firstName, String lastName, LocalDate birthday, char gender, boolean isEmployee) throws RemoteException;
+    void updateUser(String email, User user) throws RemoteException;
     void removeUser(String email) throws RemoteException;
     ArrayList<Product> getCatalogOfProducts() throws RemoteException;
     Product getProductById(String productId) throws RemoteException;
     void addProduct(int quantity, String name, String description, double price) throws RemoteException;
     void updateProduct(Product product) throws RemoteException;
     void removeProduct(Product product) throws RemoteException;
-    void addUser(User user) throws RemoteException;
-    void updateUser(String email, User user) throws RemoteException;
     void placeOrder(Order order) throws RemoteException;
-    ArrayList<Order> getAllOrders() throws RemoteException;
     void updateOrderStatus(String orderId, String status) throws RemoteException;
+    ArrayList<Order> getAllOrders() throws RemoteException;
     void sendEventNotification(String eventText) throws RemoteException;
 }

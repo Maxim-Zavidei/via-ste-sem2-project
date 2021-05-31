@@ -8,8 +8,8 @@ public enum View {
     BASKET("fxml/BasketView.fxml"),
     MANAGEPRODUCTS("fxml/ProductManagementView.fxml"),
     EDITPRODUCTS("fxml/ProductEditingView.fxml"),
-    USERS("fxml/UserView.fxml"),
-    MANAGEUSERS("fxml/UserManageView.fxml"),
+    USERS("fxml/UserManagementView.fxml"),
+    MANAGEUSERS("fxml/UserEditingView.fxml"),
     ORDERS("fxml/OrdersView.fxml");
 
 

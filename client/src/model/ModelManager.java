@@ -84,23 +84,13 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void updateUser(String oldEmail, String newEmail, String password, String firstName, String lastName, LocalDate birthday, char gender, boolean isEmployee) throws Exception {
-        client.updateUser(oldEmail, newEmail, password, firstName, lastName, birthday, gender, isEmployee);
-    }
-
-    @Override public void updateUser(String email, User user) throws Exception
-    {
+    public void updateUser(String email, User user) throws Exception {
         client.updateUser(email, user);
     }
 
     @Override
     public void removeUser(String email) throws Exception {
         client.removeUser(email);
-    }
-
-    @Override public void addUser(User user) throws Exception
-    {
-        client.addUser(user);
     }
 
     @Override
@@ -115,7 +105,7 @@ public class ModelManager implements Model {
 
     @Override
     public void addProduct(int quantity, String name, String description, double price) throws Exception {
-        client.addProduct(quantity,name, description, price);
+        client.addProduct(quantity, name, description, price);
     }
 
     @Override
@@ -159,15 +149,14 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public ArrayList<Order> getAllOrders() throws Exception {
-        return client.getAllOrders();
-    }
-
-    @Override
     public void updateOrderStatus(String orderId, String status) throws Exception {
         client.updateOrderStatus(orderId, status);
     }
 
+    @Override
+    public ArrayList<Order> getAllOrders() throws Exception {
+        return client.getAllOrders();
+    }
 
     @Override
     public void sendEventNotification(String eventText) throws Exception {

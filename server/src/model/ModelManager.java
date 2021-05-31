@@ -20,11 +20,6 @@ public class ModelManager implements Model {
         userDAO = UserDAOImpl.getInstance();
         orderDAO = OrderDAOImpl.getInstance();
         property = new PropertyChangeHandler<>(this);
-
-//        userDAO.create(new Customer("bob@gmail.com", "Aaaa1234", "Bob", "Bob", new DateTime(2, 3, 2001), 'M'));
-//        userDAO.create(new Customer("george@gmail.com", "Aaaa5678", "George", "George", new DateTime(4, 2, 2001), 'M'));
-//        userDAO.create(new Employee("steve@gmail.com", "Aaaa9876", "Steve", "Steve", new DateTime(26, 8, 2001), 'M'));
-//        userDAO.create(new Employee("katy@gmail.com", "Aaaa123456", "Katy", "Katy", new DateTime(6, 1, 2001), 'F'));
     }
 
     @Override
@@ -52,10 +47,10 @@ public class ModelManager implements Model {
             // Validate first the arguments through creating an object of type customer.
             User toCreate = new Customer(email, password, firstName, lastName, birthday, gender);
             // Checks if an user with this email is already registered.
-            if (userDAO.readByEmail(email) != null)
-                throw new IllegalStateException("An user with this email is already registered.");
+            if (userDAO.readByEmail(email) != null) throw new IllegalStateException("An user with this email is already registered.");
             // Store the newly registered user in the database.
             userDAO.create(toCreate);
+            property.firePropertyChange("newUser", toCreate.getEmail(), toCreate);
         } catch (SQLException e) {
             throw new IllegalStateException("Server is unavailable at the moment. Try Later.");
         }
@@ -74,37 +69,22 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void updateUser(String oldEmail, String newEmail, String password, String firstName, String lastName, LocalDate birthday, char gender, boolean isEmployee) throws IllegalArgumentException, IllegalStateException {
+    public void updateUser(String email, User user) throws IllegalStateException, IllegalArgumentException {
+        if (email == null) throw new IllegalArgumentException("Old email of a user can't not be null.");
         try {
-            User old = userDAO.readByEmail(oldEmail);
-            // Checks if an user with this old email exists.
-            if (old == null) throw new IllegalStateException("No registered user with such email could be found.");
-            // Check if the new email is not already taken.
-            if (userDAO.readByEmail(newEmail) != null && !newEmail.equals(oldEmail))
-                throw new IllegalStateException("The given new email is already taken.");
-            // Validate first the arguments through creating an object of type user.
-            User current = isEmployee ? new Employee(newEmail, password, firstName, lastName, birthday, gender) : new Customer(newEmail, password, firstName, lastName, birthday, gender);
-            // Update the newly registered user in the database and remove the old one.
-            userDAO.delete(oldEmail);
-            userDAO.create(current);
-        } catch (SQLException e) {
-            throw new IllegalStateException("Server is unavailable at the moment. Try Later.");
-        }
-    }
-
-    @Override
-    public void updateUser(String email, User user)
-            throws IllegalStateException, IllegalArgumentException {
-        try {
-            User old = userDAO.readByEmail(email);
-            // Checks if an user with this old email exists.
-            if (old == null) throw new IllegalStateException("No registered user with such email could be found.");
-            // Check if the new email is not already taken.
-            if (userDAO.readByEmail(user.getEmail()) != null && !user.getEmail().equals(email))
-                throw new IllegalStateException("The given new email is already taken.");
-            // Update the newly registered user in the database and remove the old one.
-            userDAO.delete(email);
+            if (!email.isEmpty()) {
+                // Checks if an user with this old email exists.
+                if (userDAO.readByEmail(email) == null) throw new IllegalStateException("No registered user with this old email could be found.");
+                // Check if the new email is not already taken when modifying an existing user.
+                if (!email.equals(user.getEmail()) && userDAO.readByEmail(user.getEmail()) != null) throw new IllegalStateException("The given new email is already taken.");
+                userDAO.delete(email);
+                property.firePropertyChange("deletedUser", email, null);
+            } else {
+                // Check if the new email is not already taken when creating a new user.
+                if (userDAO.readByEmail(user.getEmail()) != null) throw new IllegalStateException("The provided email is already taken.");
+            }
             userDAO.create(user);
+            property.firePropertyChange("newUser", user.getEmail(), user);
         } catch (SQLException e) {
             throw new IllegalStateException("Server is unavailable at the moment. Try Later.");
         }
@@ -114,23 +94,9 @@ public class ModelManager implements Model {
     public void removeUser(String email) throws IllegalArgumentException, IllegalStateException {
         if (email == null || email.isEmpty()) throw new IllegalArgumentException("Email can not be empty.");
         try {
-            if (userDAO.readByEmail(email) == null)
-                throw new IllegalStateException("No registered user with such email could be found.");
+            if (userDAO.readByEmail(email) == null) throw new IllegalStateException("No registered user with such email could be found.");
             userDAO.delete(email);
-        } catch (SQLException e) {
-            throw new IllegalStateException("Server is unavailable at the moment. Try Later.");
-        }
-    }
-
-    @Override
-    public void addUser(User user)
-            throws IllegalArgumentException, IllegalStateException {
-        if (user == null || user.getEmail() == null || user.getEmail().isEmpty())
-            throw new IllegalArgumentException("Email can not be empty.");
-        try {
-            if (userDAO.readByEmail(user.getEmail()) != null)
-                throw new IllegalStateException("Registered user with such email could be found.");
-            userDAO.create(user);
+            property.firePropertyChange("deletedUser", email, null);
         } catch (SQLException e) {
             throw new IllegalStateException("Server is unavailable at the moment. Try Later.");
         }
@@ -147,14 +113,13 @@ public class ModelManager implements Model {
 
     @Override
     public Product getProductById(String productId) throws IllegalArgumentException, IllegalStateException {
-        if (productId == null || productId.isEmpty())
-            throw new IllegalArgumentException("Product id can not be empty.");
+        if (productId == null || productId.isEmpty()) throw new IllegalArgumentException("Product id can not be empty.");
         try {
             Product toReturn = productDAO.getById(productId);
             if (toReturn == null) throw new IllegalStateException("No such product could be found.");
             return toReturn;
         } catch (SQLException e) {
-            throw new IllegalStateException(e.getMessage());
+            throw new IllegalStateException("Server is unavailable at the moment. Try Later.");
         }
     }
 
@@ -164,12 +129,10 @@ public class ModelManager implements Model {
         if (name == null || name.isEmpty()) throw new IllegalArgumentException("Product name can't be empty.");
         if (name.length() > 100) throw new IllegalArgumentException("Product name can't be longer then 100 chars.");
         if (description == null) description = "";
-        if (description.length() > 10000)
-            throw new IllegalArgumentException("Product description can't be longer then 10 000 chars.");
+        if (description.length() > 10000) throw new IllegalArgumentException("Product description can't be longer then 10 000 chars.");
         if (price < 0) throw new IllegalArgumentException("Product price can't be negative.");
         try {
-            if (!productDAO.readByName(name).isEmpty())
-                throw new IllegalStateException("A product with this name already exists.");
+            if (!productDAO.readByName(name).isEmpty()) throw new IllegalStateException("A product with this name already exists.");
             property.firePropertyChange("newProduct", emailOfWhoAdded, productDAO.create(quantity, name, description, price));
         } catch (SQLException e) {
             throw new IllegalStateException("Server is unavailable at the moment. Try Later.");
@@ -179,12 +142,10 @@ public class ModelManager implements Model {
     @Override
     public void updateProduct(Product product) throws IllegalStateException {
         try {
-            if (productDAO.getById(product.getId()) == null)
-                throw new IllegalStateException("No such product could be found.");
+            if (productDAO.getById(product.getId()) == null) throw new IllegalStateException("No such product could be found.");
             // Check if the new name of the product conflicts with another product's name.
             Product tmp = productDAO.readByName(product.getName()).isEmpty() ? null : productDAO.readByName(product.getName()).get(0);
-            if (tmp != null && !tmp.getId().equals(product.getId()))
-                throw new IllegalStateException("This product name is already taken.");
+            if (tmp != null && !tmp.getId().equals(product.getId())) throw new IllegalStateException("This product name is already taken.");
             productDAO.update(product);
             property.firePropertyChange("replacedProduct", product.getId(), product);
         } catch (SQLException e) {
@@ -195,8 +156,7 @@ public class ModelManager implements Model {
     @Override
     public void removeProduct(Product product) throws IllegalStateException {
         try {
-            if (productDAO.getById(product.getId()) == null)
-                throw new IllegalStateException("No such product could be found.");
+            if (productDAO.getById(product.getId()) == null) throw new IllegalStateException("No such product could be found.");
             productDAO.delete(product);
             property.firePropertyChange("deletedProduct", product.getId(), product);
         } catch (SQLException e) {
@@ -206,26 +166,43 @@ public class ModelManager implements Model {
 
     @Override
     public void placeOrder(Order order) throws IllegalStateException {
-        for (Product product : order.getProducts().keySet()) {
-            int availableQuantity = getProductById(product.getId()).getQuantity();
-            if (product.getQuantity() > availableQuantity) throw new IllegalStateException(product.getName() + " has only " + availableQuantity + " units left.");
+        ArrayList<Product> tmpCache = getCatalogOfProducts();
+        for (Product toCompare : order.getProducts().keySet()) {
+            Product match = tmpCache.stream().filter(product -> product.equals(toCompare)).findFirst().orElse(null);
+            if (match == null) throw new IllegalStateException("Could not place the order at the moment. Try later.");
+            if (toCompare.getQuantity() > match.getQuantity()) throw new IllegalStateException(toCompare.getName() + " has only " + match.getQuantity() + " units in stock left.");
         }
         try {
-            for (Product product : order.getProducts().keySet()) {
-                Product old = getProductById(product.getId());
+            for (Product toCompare : order.getProducts().keySet()) {
+                Product old = tmpCache.stream().filter(product -> product.equals(toCompare)).findFirst().orElse(null);
+                if (old == null) continue;
                 Product toUpdate = new Product(
                         old.getId(),
-                        old.getQuantity() - product.getQuantity(),
+                        old.getQuantity() - toCompare.getQuantity(),
                         old.getName(),
                         old.getDescription(),
                         old.getPrice()
                 );
                 productDAO.update(toUpdate);
-                property.firePropertyChange("replacedProduct", product.getId(), toUpdate);
+                property.firePropertyChange("replacedProduct", toUpdate.getId(), toUpdate);
             }
-            orderDAO.create(order.getProducts(), order.getDate(), order.getCustomer(), order.getStatus(), order.getComment());
+            property.firePropertyChange("newOrder", order.getCustomer().getEmail(), orderDAO.create(order.getProducts(), order.getDate(), order.getCustomer(), order.getStatus(), order.getComment()));
         } catch (SQLException e) {
-            throw new IllegalStateException(e.getMessage());
+            throw new IllegalStateException("Server is unavailable at the moment. Try Later.");
+        }
+    }
+
+    @Override
+    public void updateOrderStatus(String orderId, String status) throws IllegalArgumentException {
+        if (orderId == null || orderId.isEmpty()) throw new IllegalArgumentException("Order id can not be empty.");
+        if (status == null || status.isEmpty()) throw new IllegalArgumentException("Status of order can not be empty.");
+        if (!(status.equals("completed") || status.equals("pending"))) throw new IllegalArgumentException("Status can only be set to completed or pending.");
+        try {
+            orderDAO.updateOrderStatus(orderId, status);
+            Order toSend = orderDAO.getOrderById(orderId).get(0);
+            property.firePropertyChange("completedOrder", toSend.getCustomer().getEmail(), toSend);
+        } catch (SQLException e) {
+            throw new IllegalStateException("Server is unavailable at the moment. Try Later.");
         }
     }
 
@@ -233,15 +210,6 @@ public class ModelManager implements Model {
     public ArrayList<Order> getAllOrders() throws IllegalStateException {
         try {
             return orderDAO.getAllOrders();
-        } catch (SQLException e) {
-            throw new IllegalStateException("Server is unavailable at the moment. Try Later.");
-        }
-    }
-
-    @Override
-    public void updateOrderStatus(String orderId, String status) throws IllegalStateException {
-        try {
-            orderDAO.updateOrderStatus(orderId,status);
         } catch (SQLException e) {
             throw new IllegalStateException("Server is unavailable at the moment. Try Later.");
         }

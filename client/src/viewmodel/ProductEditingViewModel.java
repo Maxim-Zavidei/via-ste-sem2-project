@@ -6,6 +6,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import model.Model;
+import viewmodel.object.ProductViewModel;
 import viewmodel.viewstate.ProductManagementViewState;
 
 public class ProductEditingViewModel {

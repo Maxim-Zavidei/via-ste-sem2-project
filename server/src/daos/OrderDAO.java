@@ -18,4 +18,5 @@ public interface OrderDAO extends DAO {
     ArrayList<Order> getAllOrders() throws SQLException;
     void updateOrderStatus(String orderId, String status) throws SQLException;
     ArrayList<Order> getAllCustomerOrderByEmail(String email) throws SQLException;
+    ArrayList<Order> getOrderById(String id) throws SQLException;
 }

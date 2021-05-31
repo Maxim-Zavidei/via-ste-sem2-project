@@ -9,7 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.StringConverter;
 import viewmodel.BasketViewModel;
-import viewmodel.ProductViewModel;
+import viewmodel.object.ProductViewModel;
 
 public class BasketViewController extends ViewController {
 

@@ -17,10 +17,8 @@ public interface Model extends LocalSubject<String, Object>, LocalListener<Strin
     void register(String email, String password, String firstName, String lastName, LocalDate birthday, char gender) throws Exception;
     User getAuthenticatedUser() throws Exception;
     UserList getAllRegisteredUsers() throws Exception;
-    void updateUser(String oldEmail, String newEmail, String password, String firstName, String lastName, LocalDate birthday, char gender, boolean isEmployee) throws Exception;
     void updateUser(String email, User user) throws Exception;
     void removeUser(String email) throws Exception;
-    void addUser(User user) throws Exception;
     ArrayList<Product> getCatalogOfProducts() throws Exception;
     Product getProductById(String productId) throws Exception;
     void addProduct(int quantity, String name, String description, double price) throws Exception;
@@ -32,7 +30,7 @@ public interface Model extends LocalSubject<String, Object>, LocalListener<Strin
     void replaceProductInBasket(Product product) throws IllegalStateException;
     void removeProductFromBasket(String productId) throws IllegalStateException;
     void placeOrder(Order order) throws Exception;
-    ArrayList<Order> getAllOrders() throws Exception;
     void updateOrderStatus(String orderId, String status) throws Exception;
+    ArrayList<Order> getAllOrders() throws Exception;
     void sendEventNotification(String eventText) throws Exception;
 }
