@@ -56,7 +56,8 @@ public class OrdersViewController extends ViewController {
         orderTable.setItems(viewModel.getAllOrderList());
         orderTable.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
             viewModel.setSelectedOrderProperty(newVal);
-            orderDetailedTable.setItems(newVal.getProductList());
+            if (newVal != null)  orderDetailedTable.setItems(newVal.getProductList());
+
         });
 
         // Bindings for the rest of the user interface elements.
