@@ -186,7 +186,7 @@
                               </Button>
                            </children>
                         </Pane>
-                        <Label fx:id="usernameLabel" alignment="CENTER_RIGHT" prefHeight="40.0" prefWidth="350.0" textFill="WHITE">
+                        <Label fx:id="usernameLabel" alignment="CENTER_RIGHT" prefHeight="40.0" prefWidth="482.0" textFill="WHITE">
                            <font>
                               <Font name="Bodoni MT Italic" size="31.0" />
                            </font>
@@ -282,14 +282,14 @@
                                           </Lighting>
                                        </effect>
                                     </Button>
-                                    <VBox layoutX="706.0" layoutY="32.0" prefHeight="146.0" prefWidth="194.0">
+                                    <VBox layoutX="692.0" layoutY="33.0" prefHeight="146.0" prefWidth="208.0">
                                        <children>
-                                          <Label fx:id="priceLabel" prefHeight="35.0" prefWidth="194.0" text="0" textFill="WHITE">
+                                          <Label fx:id="priceLabel" prefHeight="35.0" prefWidth="211.0" text="0" textFill="WHITE">
                                              <font>
                                                 <Font name="System Bold" size="20.0" />
                                              </font>
                                              <graphic>
-                                                <Label prefHeight="30.0" prefWidth="141.0" text="Total: " textFill="WHITE">
+                                                <Label prefHeight="30.0" prefWidth="142.0" text="Total: " textFill="WHITE">
                                                    <font>
                                                       <Font name="System Bold" size="20.0" />
                                                    </font>
@@ -302,7 +302,7 @@
                                                 <Insets bottom="5.0" />
                                              </padding>
                                           </Label>
-                                          <Label fx:id="discountLabel" prefHeight="35.0" prefWidth="202.0" text="0" textFill="#79df25">
+                                          <Label fx:id="discountLabel" prefHeight="35.0" prefWidth="217.0" text="0" textFill="#79df25">
                                              <font>
                                                 <Font name="System Bold" size="20.0" />
                                              </font>
