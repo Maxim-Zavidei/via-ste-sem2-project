@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="assets/logo.png" alt="Project Logo">
+    <img src="common/assets/logo.png" alt="Project Logo">
 </p>
 <h1 align="center">Cake Store Client/Server System</h1>
 

@@ -10,13 +10,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class OrderDAOImpl implements OrderDAO{
-    private  static OrderDAOImpl instance;
+    private static OrderDAOImpl instance;
 
     private OrderDAOImpl() throws SQLException {
         DriverManager.registerDriver(new org.postgresql.Driver());
     }
 
-    public static  synchronized OrderDAOImpl getInstance() throws  SQLException{
+    public static synchronized OrderDAOImpl getInstance() throws  SQLException{
         if(instance == null){
             instance = new OrderDAOImpl();
         }

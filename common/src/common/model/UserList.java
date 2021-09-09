@@ -17,40 +17,33 @@ public class UserList implements Serializable {
         return new ArrayList<>(userList.values()).size();
     }
 
-    public ArrayList<User> getAllUsers() throws IllegalStateException{
-        if(getSize()!=0)
-        return new ArrayList<>(userList.values());
+    public ArrayList<User> getAllUsers() throws IllegalStateException {
+        if (getSize() != 0) return new ArrayList<>(userList.values());
         throw new IllegalStateException("No users to return!");
     }
 
-    public void addUser(User user) throws IllegalArgumentException{
-        if(user!=null)
-        userList.put(user.getEmail(), user);
+    public void addUser(User user) throws IllegalArgumentException {
+        if (user != null) userList.put(user.getEmail(), user);
         else throw new IllegalArgumentException("User argument cannot be null");
     }
 
-    public User removeUser(String email) throws IllegalArgumentException{
-        if(email!=null)
-            return userList.remove(email);
+    public User removeUser(String email) throws IllegalArgumentException {
+        if (email != null) return userList.remove(email);
         else throw new IllegalArgumentException("Email cannot be null");
-
     }
 
-    public User removeUser(User user) throws IllegalArgumentException{
-        if(user!=null)
-        return removeUser(user.getEmail());
+    public User removeUser(User user) throws IllegalArgumentException {
+        if (user != null) return removeUser(user.getEmail());
         else throw new IllegalArgumentException("User argument cannot be null");
     }
 
     public User getUser(String email) throws IllegalArgumentException {
-        if(email!=null)
-        return userList.get(email);
+        if (email != null) return userList.get(email);
         else throw new IllegalArgumentException("Email cannot be null");
     }
 
-    public User getUser(User user) throws IllegalArgumentException{
-        if(user!=null)
-            return userList.get(user.getEmail());
+    public User getUser(User user) throws IllegalArgumentException {
+        if (user != null) return userList.get(user.getEmail());
         else throw new IllegalArgumentException("User argument cannot be null");
     }
 }

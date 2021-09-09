@@ -1,12 +1,9 @@
 package view;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXTabPane;
 import com.jfoenix.controls.JFXToggleButton;
 import common.model.DateTime;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.effect.ColorAdjust;
 import viewmodel.object.OrderViewModel;
 import viewmodel.OrdersViewModel;
 import viewmodel.object.ProductViewModel;
